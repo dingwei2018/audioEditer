@@ -41,7 +41,6 @@ declare module 'vue' {
     SegmentationDialog: typeof import('./src/components/SegmentationDialog.vue')['default']
     SegmentEditor: typeof import('./src/components/SegmentEditor.vue')['default']
     SegmentEditPanel: typeof import('./src/components/SegmentEditPanel.vue')['default']
-    SentenceVoiceEditor: typeof import('./src/components/SentenceVoiceEditor.vue')['default']
     SentenceVoiceEditorWrapper: typeof import('./src/components/SentenceVoiceEditorWrapper.vue')['default']
     TextInputArea: typeof import('./src/components/TextInputArea.vue')['default']
     TimelineSegmentsWrapper: typeof import('./src/components/TimelineSegmentsWrapper.vue')['default']
