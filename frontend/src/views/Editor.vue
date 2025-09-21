@@ -273,8 +273,12 @@ const performSegmentation = (text: string, method: 'punctuation' | 'paragraph' |
 
     segmentTrack(trackId, segmentsWithDuration, method)
 
+    // 确保在segmentTrack完成后立即初始化gaps
     if (segments.length > 1) {
+      console.log('Editor - performSegmentation: About to initialize gaps for trackId:', trackId)
+      console.log('Editor - performSegmentation: segments count:', segments.length)
       audioStore.initializeGaps(trackId)
+      console.log('Editor - performSegmentation: gaps initialization completed')
     }
 
     ElMessage.success(`成功分句为 ${segments.length} 个句子`)
@@ -322,14 +326,28 @@ const handleAddText = (position: number) => {
 }
 
 const handleUpdateSegmentText = (segmentId: string, newText: string) => {
+  console.log('Editor - handleUpdateSegmentText:', segmentId, newText)
+
+  // 找到包含此segment的track
   const track = tracks.value.find(t => t.isSegmented && t.segments)
   if (track && track.segments) {
     const segment = track.segments.find(s => s.id === segmentId)
     if (segment) {
-      segment.text = newText
-      track.text = track.segments.map(seg => seg.text).join(' ')
+      // 使用store方法来更新文本，确保响应式更新
+      audioStore.updateSegmentText(track.id, segmentId, newText)
+
+      // 如果当前编辑的是选中的语音编辑器中的句子，也要更新它
+      if (selectedSegmentForVoice.value && selectedSegmentForVoice.value.id === segmentId) {
+        selectedSegmentForVoice.value.text = newText
+      }
+
       ElMessage.success('句子内容已更新')
+      console.log('Editor - segment text updated via store:', newText)
+    } else {
+      console.error('Editor - segment not found:', segmentId)
     }
+  } else {
+    console.error('Editor - track or segments not found')
   }
 }
 
@@ -385,14 +403,31 @@ const handleSelectGap = (gap: any) => {
 }
 
 const handleUpdateGapDuration = (gapId: string, duration: number) => {
+  console.log('=== Editor - handleUpdateGapDuration START ===')
+  console.log('Received gapId:', gapId)
+  console.log('Received duration:', duration)
+  console.log('Duration type:', typeof duration)
+  console.log('Duration is NaN?', isNaN(duration))
+
   const track = tracks.value.find(t => t.isSegmented && t.gaps)
+  console.log('Found track for gap update:', track ? track.id : 'NOT FOUND')
+
   if (track && track.gaps) {
     const gap = track.gaps.find(g => g.id === gapId)
+    console.log('Found gap in track:', gap ? gap : 'NOT FOUND')
+
     if (gap) {
+      console.log('Gap current duration before update:', gap.duration, 'type:', typeof gap.duration)
       audioStore.updateGapDuration(track.id, gapId, duration)
       ElMessage.success('间隔时长已更新')
+    } else {
+      console.error('Gap not found with gapId:', gapId)
     }
+  } else {
+    console.error('Track not found or has no gaps')
   }
+
+  console.log('=== Editor - handleUpdateGapDuration END ===')
 }
 
 const handleRemoveGap = (gapId: string) => {
@@ -465,6 +500,9 @@ const handlePitchUpdate = (pitch: number) => {
 
 // 监控tracks变化
 watch(tracks, (newTracks) => {
+  console.log('=== Editor - tracks watch triggered ===')
+  console.log('newTracks count:', newTracks.length)
+
   if (newTracks.length > 0 && !selectedSegmentId.value && timelineSegments.value.length > 0) {
     const firstSegment = timelineSegments.value[0]
     if (firstSegment && firstSegment.id) {
@@ -473,11 +511,71 @@ watch(tracks, (newTracks) => {
       handleOpenVoiceEditor(firstSegment)
     }
   }
+
+  // 检查新tracks是否需要初始化gaps
+  newTracks.forEach((track, index) => {
+    if (track.isSegmented && track.segments && track.segments.length > 1) {
+      console.log(`Editor - watch: checking track ${index} (${track.id}) for gaps...`)
+
+      if (!track.gaps || track.gaps.length === 0) {
+        console.log(`Editor - watch: initializing gaps for track ${track.id}...`)
+        audioStore.initializeGaps(track.id)
+      } else {
+        // 检查现有gaps是否有NaN值
+        let hasNaN = false
+        track.gaps.forEach((gap, gapIndex) => {
+          if (isNaN(gap.duration)) {
+            console.log(`  WARNING: Found NaN in gap ${gapIndex} during watch, fixing...`)
+            gap.duration = 1
+            hasNaN = true
+          }
+        })
+        if (hasNaN) {
+          console.log(`Editor - watch: fixed NaN values in track ${track.id} gaps`)
+        }
+      }
+    }
+  })
+
+  console.log('=== Editor - tracks watch completed ===')
 }, { immediate: true, deep: true })
 
 // 生命周期
 onMounted(() => {
+  console.log('=== Editor - onMounted START ===')
   appStore.init()
+
+  // 检查现有的分句数据并初始化gaps
+  console.log('Editor - checking existing tracks for gap initialization...')
+  tracks.value.forEach((track, index) => {
+    console.log(`Editor - checking track ${index} (${track.id}):`)
+    console.log(`  isSegmented: ${track.isSegmented}`)
+    console.log(`  segments count: ${track.segments?.length || 0}`)
+    console.log(`  gaps count: ${track.gaps?.length || 0}`)
+
+    if (track.isSegmented && track.segments && track.segments.length > 1) {
+      if (!track.gaps || track.gaps.length === 0) {
+        console.log(`Editor - initializing gaps for track ${track.id}...`)
+        audioStore.initializeGaps(track.id)
+      } else {
+        console.log(`Editor - track ${track.id} already has gaps, checking for NaN values...`)
+        // 检查现有gaps是否有NaN值
+        let hasNaN = false
+        track.gaps.forEach((gap, gapIndex) => {
+          if (isNaN(gap.duration)) {
+            console.log(`  WARNING: Found NaN in gap ${gapIndex}, fixing...`)
+            gap.duration = 1
+            hasNaN = true
+          }
+        })
+        if (hasNaN) {
+          console.log(`Editor - fixed NaN values in track ${track.id} gaps`)
+        }
+      }
+    }
+  })
+
+  console.log('=== Editor - onMounted END ===')
 })
 </script>
 

@@ -125,14 +125,21 @@ export const useAudioStore = defineStore('audio', () => {
   }
 
   const updateSegmentText = (trackId: string, segmentId: string, newText: string) => {
+    console.log('AudioStore - updateSegmentText:', trackId, segmentId, newText)
     const track = tracks.value.find(track => track.id === trackId)
     if (track && track.segments) {
       const segment = track.segments.find(seg => seg.id === segmentId)
       if (segment) {
+        console.log('AudioStore - segment found, updating text from:', segment.text, 'to:', newText)
         segment.text = newText
         // 重新计算整个轨道的文本
         track.text = track.segments.map(seg => seg.text).join(' ')
+        console.log('AudioStore - track text updated to:', track.text)
+      } else {
+        console.error('AudioStore - segment not found:', segmentId)
       }
+    } else {
+      console.error('AudioStore - track not found or no segments:', trackId)
     }
   }
 
@@ -159,26 +166,76 @@ export const useAudioStore = defineStore('audio', () => {
 
   // 间隔管理方法
   const addGap = (trackId: string, beforeSegmentId: string, afterSegmentId: string, duration: number = 1) => {
+    console.log('=== AudioStore - addGap START ===')
+    console.log('trackId:', trackId)
+    console.log('beforeSegmentId:', beforeSegmentId)
+    console.log('afterSegmentId:', afterSegmentId)
+    console.log('duration:', duration, 'type:', typeof duration)
+    console.log('duration is NaN?', isNaN(duration))
+
     const track = tracks.value.find(t => t.id === trackId)
     if (track && track.isSegmented) {
       if (!track.gaps) {
         track.gaps = []
       }
-      
-      const gap: SegmentGap = createSegmentGap(beforeSegmentId, afterSegmentId, duration)
-      
+
+      // 确保 duration 是有效数字
+      const safeDuration = isNaN(duration) ? 1 : Number(duration)
+      console.log('safeDuration after check:', safeDuration)
+
+      const gap: SegmentGap = createSegmentGap(beforeSegmentId, afterSegmentId, safeDuration)
+      console.log('Created gap:', gap)
+
       track.gaps.push(gap)
+      console.log('Gap added to track, total gaps:', track.gaps.length)
+    } else {
+      console.error('Track not found or not segmented')
     }
+
+    console.log('=== AudioStore - addGap END ===')
   }
 
   const updateGapDuration = (trackId: string, gapId: string, duration: number) => {
+    console.log('=== AudioStore - updateGapDuration START ===')
+    console.log('trackId:', trackId)
+    console.log('gapId:', gapId)
+    console.log('duration:', duration)
+    console.log('duration type:', typeof duration)
+    console.log('duration is NaN?', isNaN(duration))
+
     const track = tracks.value.find(t => t.id === trackId)
+    console.log('Found track:', track ? track.id : 'NOT FOUND')
+
     if (track && track.gaps) {
+      console.log('Track has gaps:', track.gaps.length)
+
+      // 先清理所有现有的 NaN 数据
+      track.gaps.forEach((g, index) => {
+        if (isNaN(g.duration)) {
+          console.log(`WARNING: Found NaN duration in gap ${index}, fixing to 1`)
+          g.duration = 1
+        }
+        console.log(`  Gap ${index}: id=${g.id}, beforeSegmentId=${g.beforeSegmentId}, duration=${g.duration} (type: ${typeof g.duration})`)
+      })
+
       const gap = track.gaps.find(g => g.id === gapId)
+      console.log('Found gap by gapId:', gap ? gap : 'NOT FOUND')
+
       if (gap) {
-        gap.duration = Math.max(0, duration) // 确保间隔时间不为负数
+        const oldDuration = gap.duration
+        // 确保输入的 duration 是有效数字
+        const safeDuration = isNaN(duration) ? 1 : Math.max(0, Number(duration))
+        gap.duration = safeDuration
+        console.log('Gap duration updated from', oldDuration, 'to', gap.duration)
+        console.log('Updated duration type:', typeof gap.duration, 'isNaN:', isNaN(gap.duration))
+      } else {
+        console.error('Gap not found with gapId:', gapId)
       }
+    } else {
+      console.error('Track not found or has no gaps')
     }
+
+    console.log('=== AudioStore - updateGapDuration END ===')
   }
 
   const removeGap = (trackId: string, gapId: string) => {
@@ -205,27 +262,69 @@ export const useAudioStore = defineStore('audio', () => {
   }
 
   const initializeGaps = (trackId: string) => {
+    console.log('=== AudioStore - initializeGaps START ===')
+    console.log('trackId:', trackId)
+
     const track = tracks.value.find(t => t.id === trackId)
+    console.log('Found track:', track ? track.id : 'NOT FOUND')
+
     if (track && track.isSegmented && track.segments && track.segments.length > 1) {
+      console.log('Track has segments:', track.segments.length)
+
       if (!track.gaps) {
         track.gaps = []
+        console.log('Initialized empty gaps array')
+      } else {
+        console.log('Track already has gaps:', track.gaps.length)
       }
-      
+
       // 为每对相邻分句创建间隔
       for (let i = 0; i < track.segments.length - 1; i++) {
         const beforeSegmentId = track.segments[i].id
         const afterSegmentId = track.segments[i + 1].id
-        
+
+        console.log(`Checking gap ${i}: ${beforeSegmentId} -> ${afterSegmentId}`)
+
         // 检查是否已存在间隔
-        const existingGap = track.gaps.find(gap => 
+        const existingGap = track.gaps.find(gap =>
           gap.beforeSegmentId === beforeSegmentId && gap.afterSegmentId === afterSegmentId
         )
-        
+
         if (!existingGap) {
+          console.log(`Creating new gap ${i} with duration 1`)
           addGap(trackId, beforeSegmentId, afterSegmentId, 1) // 默认1秒间隔
+        } else {
+          console.log(`Gap ${i} already exists with duration:`, existingGap.duration)
         }
       }
+    } else {
+      console.log('Track not eligible for gap initialization')
     }
+
+    console.log('=== AudioStore - initializeGaps END ===')
+  }
+
+  // 清理所有 NaN 数据的函数
+  const cleanupNaNData = () => {
+    console.log('=== AudioStore - cleanupNaNData START ===')
+    let fixedCount = 0
+
+    tracks.value.forEach((track, trackIndex) => {
+      if (track.gaps && track.gaps.length > 0) {
+        console.log(`Checking track ${trackIndex} (${track.id}) gaps:`)
+
+        track.gaps.forEach((gap, gapIndex) => {
+          if (isNaN(gap.duration)) {
+            console.log(`  WARNING: Fixed NaN duration in gap ${gapIndex} (${gap.id})`)
+            gap.duration = 1
+            fixedCount++
+          }
+        })
+      }
+    })
+
+    console.log(`=== AudioStore - cleanupNaNData END === Fixed ${fixedCount} NaN values`)
+    return fixedCount
   }
 
   return {
@@ -260,6 +359,7 @@ export const useAudioStore = defineStore('audio', () => {
     updateGapDuration,
     removeGap,
     selectGap,
-    initializeGaps
+    initializeGaps,
+    cleanupNaNData
   }
 })

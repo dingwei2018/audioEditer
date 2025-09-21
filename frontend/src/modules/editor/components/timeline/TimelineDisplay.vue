@@ -47,7 +47,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, nextTick } from 'vue'
 import SentenceBlock from './SentenceBlock.vue'
 import GapControl from './GapControl.vue'
 import type { TextSegment } from '@/utils/textSegmentation'
@@ -120,6 +120,9 @@ const timelineItems = computed(() => {
     return items
   }
 
+  // 强制依赖于gaps的变化，确保计算属性在gaps更新时重新计算
+  const gapsData = props.gaps
+
   props.segments.forEach((segment, index) => {
     if (!segment || !segment.id) {
       return
@@ -134,28 +137,63 @@ const timelineItems = computed(() => {
 
     // 如果不是最后一个句子，添加间隔
     if (index < props.segments.length - 1) {
+      const gapDuration = getGapDuration(index)
+      const nextSegment = props.segments[index + 1]
+
+      // 尝试找到真正的gap对象
+      const realGap = gapsData?.find(g => g.beforeSegmentId === segment.id)
+
       items.push({
         type: 'gap',
         data: {
-          id: `gap_${segment.id}_${index}`,
+          id: realGap ? realGap.id : `gap_${segment.id}_${index}`,
+          beforeSegmentId: segment.id,
+          afterSegmentId: nextSegment?.id,
           index: index,
-          duration: getGapDuration(index)
+          duration: gapDuration,
+          isSelected: false,
+          startTime: 0, // TODO: 计算实际开始时间
+          endTime: 0    // TODO: 计算实际结束时间
         },
         index: index
       })
     }
   })
+  console.log('TimelineDisplay - timelineItems computed, total items:', items.length)
   return items
 })
 
 // 方法
 function getGapDuration(index: number) {
   try {
+    console.log('TimelineDisplay - getGapDuration called with index:', index)
+
     if (!props.gaps || !props.segments || !props.segments[index]) {
+      console.log('TimelineDisplay - getGapDuration: no gaps or segments, returning default 1')
       return 1
     }
-    const gap = props.gaps.find(g => g.beforeSegmentId === props.segments[index]?.id)
-    return gap ? gap.duration : 1
+
+    const currentSegment = props.segments[index]
+    console.log('TimelineDisplay - currentSegment:', currentSegment.id)
+
+    const gap = props.gaps.find(g => g.beforeSegmentId === currentSegment?.id)
+    console.log('TimelineDisplay - found gap:', gap)
+
+    if (gap) {
+      console.log('TimelineDisplay - gap.duration type:', typeof gap.duration, 'value:', gap.duration)
+      console.log('TimelineDisplay - gap.duration is NaN?', isNaN(gap.duration))
+
+      // 添加 NaN 检查
+      if (isNaN(gap.duration)) {
+        console.error('TimelineDisplay - WARNING: gap.duration is NaN, using default 1')
+        return 1
+      }
+
+      return gap.duration
+    } else {
+      console.log('TimelineDisplay - no gap found for segment, using default 1')
+      return 1
+    }
   } catch (error) {
     console.error('TimelineDisplay - error in getGapDuration:', error)
     return 1
@@ -169,9 +207,17 @@ function handleEditStart(segmentId: string, text: string) {
 }
 
 function handleEditFinish(segmentId: string, text: string) {
-  editingSegmentId.value = ''
-  editingText.value = ''
+  console.log('TimelineDisplay - handleEditFinish:', segmentId, text)
+
+  // 发出编辑完成事件
   emit('edit-segment-finish', segmentId, text)
+
+  // 延迟清空编辑状态，确保数据更新完成
+  setTimeout(() => {
+    editingSegmentId.value = ''
+    editingText.value = ''
+    console.log('TimelineDisplay - editing state cleared after timeout')
+  }, 100)
 }
 
 function handleEditCancel(segmentId: string) {
@@ -190,6 +236,18 @@ watch(() => props.segments, (newSegments) => {
     console.log('TimelineDisplay - segments changed:', newSegments?.length, 'segments')
   } catch (error) {
     console.error('TimelineDisplay - error processing segments:', error)
+  }
+}, { immediate: true, deep: true })
+
+// 监听gaps变化
+watch(() => props.gaps, (newGaps) => {
+  try {
+    console.log('TimelineDisplay - gaps changed:', newGaps?.length, 'gaps')
+    newGaps?.forEach(gap => {
+      console.log(`Gap ${gap.id}: ${gap.beforeSegmentId} -> ${gap.afterSegmentId}, duration: ${gap.duration}`)
+    })
+  } catch (error) {
+    console.error('TimelineDisplay - error processing gaps:', error)
   }
 }, { immediate: true, deep: true })
 </script>

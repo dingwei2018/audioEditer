@@ -88,11 +88,26 @@ export const createSegmentGap = (
   afterSegmentId: string,
   duration = 1
 ): SegmentGap => {
-  return {
+  console.log('=== createSegmentGap START ===')
+  console.log('beforeSegmentId:', beforeSegmentId)
+  console.log('afterSegmentId:', afterSegmentId)
+  console.log('duration:', duration, 'type:', typeof duration)
+  console.log('duration is NaN?', isNaN(duration))
+
+  // 确保 duration 是有效数字
+  const safeDuration = isNaN(duration) ? 1 : Number(duration)
+  console.log('safeDuration after check:', safeDuration)
+
+  const gap: SegmentGap = {
     id: `gap_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
     beforeSegmentId,
     afterSegmentId,
-    duration,
+    duration: safeDuration,
     isSelected: false
   }
+
+  console.log('Created gap:', gap)
+  console.log('=== createSegmentGap END ===')
+
+  return gap
 }

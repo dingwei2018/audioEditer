@@ -19,7 +19,7 @@
           size="small"
           placeholder="输入句子内容..."
           @blur="finishEdit"
-          @keydown.enter.prevent="finishEdit"
+          @keydown.enter="handleEnterKey"
           @keydown.escape="cancelEdit"
           ref="editInput"
           class="sentence-edit-input"
@@ -121,17 +121,29 @@ const emit = defineEmits<Emits>()
 // 响应式数据
 const editInput = ref<any>(null)
 const localEditingText = ref('')
+const isFinishing = ref(false)  // 防止重复调用
 
 // 监听editingText变化
 watch(() => props.editingText, (newText) => {
-  if (newText !== undefined) {
+  console.log('SentenceBlock - watch editingText changed:', newText)
+  if (newText !== undefined && props.isEditing) {
     localEditingText.value = newText
+    console.log('SentenceBlock - localEditingText updated to:', localEditingText.value)
   }
 }, { immediate: true })
+
+// 监听编辑状态变化，重置finishing标志
+watch(() => props.isEditing, (newEditing) => {
+  if (!newEditing) {
+    isFinishing.value = false
+  }
+})
 
 // 方法
 function startEdit() {
   localEditingText.value = props.segment.text
+  isFinishing.value = false  // 重置标志
+  console.log('SentenceBlock - startEdit:', props.segment.id, props.segment.text)
   emit('edit-start', props.segment.id, props.segment.text)
 
   // 延迟聚焦，确保DOM已更新
@@ -144,12 +156,41 @@ function startEdit() {
 }
 
 function finishEdit() {
+  // 防止重复调用
+  if (isFinishing.value) {
+    console.log('SentenceBlock - finishEdit: already finishing, ignoring duplicate call')
+    return
+  }
+
+  isFinishing.value = true
+
+  console.log('SentenceBlock - finishEdit: localEditingText.value =', localEditingText.value)
+  console.log('SentenceBlock - finishEdit: localEditingText.value.length =', localEditingText.value.length)
+
   const trimmedText = localEditingText.value.trim()
+  console.log('SentenceBlock - finishEdit: trimmedText =', trimmedText)
+  console.log('SentenceBlock - finishEdit: trimmedText.length =', trimmedText.length)
+
   emit('edit-finish', props.segment.id, trimmedText)
 }
 
+function handleEnterKey(event: KeyboardEvent) {
+  // 阻止默认行为（换行）
+  event.preventDefault()
+
+  console.log('SentenceBlock - handleEnterKey triggered')
+  console.log('SentenceBlock - handleEnterKey: localEditingText.value =', localEditingText.value)
+
+  // 只有在没有按住Shift键时才完成编辑（Shift+Enter允许换行）
+  if (!event.shiftKey) {
+    finishEdit()
+  }
+}
+
 function cancelEdit() {
+  isFinishing.value = false  // 重置标志
   localEditingText.value = props.segment.text
+  console.log('SentenceBlock - cancelEdit:', props.segment.id)
   emit('edit-cancel', props.segment.id)
 }
 </script>

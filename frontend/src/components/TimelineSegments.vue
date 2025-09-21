@@ -14,7 +14,8 @@
       @audio-synthesize="$emit('audio-synthesize', $event)"
       @audio-play="$emit('audio-play', $event)"
       @gap-select="$emit('gap-select', $event)"
-      @gap-update="$emit('gap-update', $event)"
+      @gap-update="handleGapUpdate"
+      @gap-remove="$emit('gap-remove', $event)"
     />
   </div>
 </template>
@@ -67,6 +68,12 @@ interface Emits {
 
 const props = defineProps<Props>()
 const emit = defineEmits<Emits>()
+
+// 处理gap更新，确保正确传递多个参数
+function handleGapUpdate(gapId: string, duration: number) {
+  console.log('Wrapper TimelineSegments - handleGapUpdate:', gapId, duration)
+  emit('gap-update', gapId, duration)
+}
 </script>
 
 <script lang="ts">

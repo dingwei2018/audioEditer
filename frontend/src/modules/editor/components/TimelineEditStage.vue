@@ -15,7 +15,8 @@
           @segment-delete="$emit('delete-segment', $event)"
           @segment-add-after="$emit('add-sentence-after', $event.segmentId || $event[0], $event.index || $event[1])"
           @gap-select="$emit('select-gap', $event)"
-          @gap-update="$emit('update-gap-duration', $event.gapId || $event[0], $event.duration || $event[1])"
+          @gap-update="handleGapUpdate"
+          @gap-remove="$emit('remove-gap', $event)"
           @audio-synthesize="$emit('synthesize-audio', $event)"
         />
       </div>
@@ -83,9 +84,39 @@ defineProps<Props>()
 const emit = defineEmits<Emits>()
 
 // 处理文本编辑事件
-function handleSegmentEdit(segmentId: string, newText: string) {
-  console.log('TimelineEditStage - handleSegmentEdit:', segmentId, newText)
+function handleSegmentEdit(data: { segmentId: string, newText: string }) {
+  console.log('TimelineEditStage - handleSegmentEdit received data:', data)
+
+  const { segmentId, newText } = data
+
+  // 验证参数
+  if (!segmentId) {
+    console.error('TimelineEditStage - segmentId is missing')
+    return
+  }
+  if (newText === undefined || newText === null) {
+    console.error('TimelineEditStage - newText is undefined or null')
+    return
+  }
+
+  console.log('TimelineEditStage - handleSegmentEdit extracted:', segmentId, newText)
   emit('update-segment-text', segmentId, newText)
+}
+
+// 处理间隔更新事件
+function handleGapUpdate(gapId: string, duration: number) {
+  console.log('=== TimelineEditStage - handleGapUpdate START ===')
+  console.log('Received gapId:', gapId)
+  console.log('Received duration:', duration)
+  console.log('Duration type:', typeof duration)
+
+  // 确保 duration 是有效的
+  const safeDuration = duration !== undefined && !isNaN(duration) ? Number(duration) : 1
+  console.log('Safe duration:', safeDuration)
+
+  emit('update-gap-duration', gapId, safeDuration)
+
+  console.log('=== TimelineEditStage - handleGapUpdate END ===')
 }
 
 const getCurrentVoice = (voiceId?: string) => {
