@@ -64,6 +64,7 @@ interface Emits {
   (e: 'audio-play', segment: SegmentWithTiming): void
   (e: 'gap-select', gap: SegmentGap): void
   (e: 'gap-update', gapId: string, duration: number): void
+  (e: 'gap-remove', gapId: string): void
 }
 
 const props = defineProps<Props>()

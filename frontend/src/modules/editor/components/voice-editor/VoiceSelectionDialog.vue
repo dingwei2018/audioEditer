@@ -181,3 +181,9 @@ function handleCategoryChange(categoryId: string) {
   }
 }
 </style>
+
+<script lang="ts">
+export default {
+  name: 'VoiceSelectionDialog'
+}
+</script>

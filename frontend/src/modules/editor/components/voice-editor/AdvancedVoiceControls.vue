@@ -68,6 +68,19 @@
       <div v-if="showPolyphoneSelection" class="control-item polyphone-control">
         <div class="control-header">
           <span class="control-label">多音字设置</span>
+          <div class="polyphone-buttons-inline">
+            <el-button
+              @click="handleCancelPronunciation"
+              type="danger"
+              size="small"
+              icon="Close"
+              :disabled="!hasSelectedChar || !selectedPronunciation"
+              class="polyphone-action-btn cancel-pronunciation-btn"
+              title="取消多音字设置"
+            >
+              取消
+            </el-button>
+          </div>
         </div>
         <div class="control-content">
           <div class="pronunciation-select-container">
@@ -120,6 +133,7 @@ interface Emits {
   (e: 'add-pause', duration: number): void
   (e: 'remove-pause'): void
   (e: 'update-pronunciation', pinyin: string): void
+  (e: 'cancel-pronunciation'): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -147,6 +161,10 @@ function handleRemovePause() {
 
 function handlePronunciationChange(pinyin: string) {
   emit('update-pronunciation', pinyin)
+}
+
+function handleCancelPronunciation() {
+  emit('cancel-pronunciation')
 }
 
 // 监听属性变化
@@ -239,6 +257,19 @@ watch(() => props.initialPitch, (newPitch) => {
 }
 
 .pause-action-btn {
+  font-size: 11px;
+  padding: 2px 6px;
+  min-width: auto;
+}
+
+/* 多音字控制按钮样式 */
+.polyphone-buttons-inline {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.polyphone-action-btn {
   font-size: 11px;
   padding: 2px 6px;
   min-width: auto;
@@ -361,3 +392,9 @@ watch(() => props.initialPitch, (newPitch) => {
   }
 }
 </style>
+
+<script lang="ts">
+export default {
+  name: 'AdvancedVoiceControls'
+}
+</script>

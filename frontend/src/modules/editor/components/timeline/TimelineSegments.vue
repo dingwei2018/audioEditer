@@ -346,7 +346,6 @@ function removeGap() {
     ).then(() => {
       if (currentGap.value) {
         emit('gap-remove', currentGap.value.id)
-        ElMessage.success('间隔已删除')
         closeGapDialog()
       }
     }).catch(() => {

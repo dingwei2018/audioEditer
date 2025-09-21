@@ -13,7 +13,7 @@
           @audio-play="$emit('play-audio', $event)"
           @segment-edit="handleSegmentEdit"
           @segment-delete="$emit('delete-segment', $event)"
-          @segment-add-after="$emit('add-sentence-after', $event.segmentId || $event[0], $event.index || $event[1])"
+          @segment-add-after="(...args) => $emit('add-sentence-after', ...args)"
           @gap-select="$emit('select-gap', $event)"
           @gap-update="handleGapUpdate"
           @gap-remove="$emit('remove-gap', $event)"

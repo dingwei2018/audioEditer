@@ -375,8 +375,37 @@ const handleDeleteSegment = (segmentId: string) => {
 }
 
 const handleAddSentenceAfter = (segmentId: string, index: number) => {
+  console.log('=== Editor - handleAddSentenceAfter START ===')
+  console.log('segmentId:', segmentId)
+  console.log('index passed from UI:', index)
+
   const track = tracks.value.find(t => t.isSegmented && t.segments)
   if (track && track.segments) {
+    console.log('Track found with segments:', track.segments.length)
+    console.log('BEFORE INSERTION - Current segments order:')
+    track.segments.forEach((seg, idx) => {
+      console.log(`  ${idx}: ${seg.id} - "${seg.text}"`)
+    })
+
+    // 确认当前选中的segment的实际位置
+    const actualIndex = track.segments.findIndex(seg => seg.id === segmentId)
+    console.log('Actual index of selected segment in track.segments:', actualIndex)
+
+    // 检查是否存在原来的间隔需要处理
+    let originalGapToRemove = null
+    if (actualIndex < track.segments.length - 1) {
+      const nextSegment = track.segments[actualIndex + 1]
+      if (nextSegment && track.gaps) {
+        // 查找原来的间隔
+        originalGapToRemove = track.gaps.find(gap =>
+          gap.beforeSegmentId === segmentId && gap.afterSegmentId === nextSegment.id
+        )
+        if (originalGapToRemove) {
+          console.log('Found original gap to replace:', originalGapToRemove.id)
+        }
+      }
+    }
+
     const newSegment = {
       id: `segment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
       text: '',
@@ -385,13 +414,71 @@ const handleAddSentenceAfter = (segmentId: string, index: number) => {
       type: 'sentence' as const
     }
 
-    const insertIndex = index + 1
+    // 使用实际找到的索引位置，在其后面插入
+    const insertIndex = actualIndex + 1
+    console.log('Will insert new segment at index:', insertIndex)
+    console.log('This means after segment at actual index:', actualIndex, 'which is:', track.segments[actualIndex]?.id)
+
     track.segments.splice(insertIndex, 0, newSegment)
 
-    audioStore.initializeGaps(track.id)
+    console.log('AFTER INSERTION - New segments order:')
+    track.segments.forEach((seg, idx) => {
+      console.log(`  ${idx}: ${seg.id} - "${seg.text}"`)
+    })
+
+    // 处理间隔：
+    // 1. 如果存在原来的间隔，先删除它
+    if (originalGapToRemove && track.gaps) {
+      const gapIndex = track.gaps.findIndex(g => g.id === originalGapToRemove.id)
+      if (gapIndex > -1) {
+        track.gaps.splice(gapIndex, 1)
+        console.log('Removed original gap:', originalGapToRemove.id)
+      }
+    }
+
+    // 2. 创建新的间隔
+    // 创建 "前一句 -> 新句子" 的间隔
+    const prevSegment = track.segments[insertIndex - 1]
+    if (prevSegment) {
+      console.log('Creating gap: prev -> new:', prevSegment.id, '->', newSegment.id)
+      audioStore.addGap(track.id, prevSegment.id, newSegment.id, 1)
+    }
+
+    // 创建 "新句子 -> 后一句" 的间隔
+    if (insertIndex < track.segments.length - 1) {
+      const nextSegment = track.segments[insertIndex + 1]
+      if (nextSegment) {
+        console.log('Creating gap: new -> next:', newSegment.id, '->', nextSegment.id)
+        audioStore.addGap(track.id, newSegment.id, nextSegment.id, 1)
+      }
+    }
+
     selectedSegmentId.value = newSegment.id
 
+    // 打印最终的时间轴数据
+    console.log('=== FINAL DATA CHECK ===')
+    console.log('Final track.segments:')
+    track.segments.forEach((seg, idx) => {
+      console.log(`  segments[${idx}]: ${seg.id} - "${seg.text}"`)
+    })
+
+    console.log('Final track.gaps:')
+    if (track.gaps) {
+      track.gaps.forEach((gap, idx) => {
+        console.log(`  gaps[${idx}]: ${gap.beforeSegmentId} -> ${gap.afterSegmentId} (${gap.duration}s)`)
+      })
+    }
+
+    console.log('Final timelineSegments computed:')
+    const finalTimelineSegments = timelineSegments.value
+    finalTimelineSegments.forEach((seg, idx) => {
+      console.log(`  timelineSegments[${idx}]: ${seg.id} - "${seg.text}"`)
+    })
+
+    console.log('=== Editor - handleAddSentenceAfter END ===')
     ElMessage.success('新句子已添加，请编辑内容')
+  } else {
+    console.error('Track not found or no segments')
   }
 }
 
@@ -431,14 +518,39 @@ const handleUpdateGapDuration = (gapId: string, duration: number) => {
 }
 
 const handleRemoveGap = (gapId: string) => {
+  console.log('=== Editor - handleRemoveGap START ===')
+  console.log('gapId to remove:', gapId)
+
   const track = tracks.value.find(t => t.isSegmented && t.gaps)
+  console.log('Found track for gap removal:', track ? track.id : 'NOT FOUND')
+
   if (track && track.gaps) {
+    console.log('Track has gaps before removal:', track.gaps.length)
+
+    // 调用store方法删除gap
     audioStore.removeGap(track.id, gapId)
+
+    // 清理选中状态
     if (selectedGapId.value === gapId) {
+      console.log('Clearing selected gap as it was removed')
       selectedGapId.value = ''
     }
+
+    // 清理语音编辑器状态（如果当前正在编辑）
+    if (showSentenceVoiceEditor.value) {
+      console.log('Closing voice editor after gap removal')
+      showSentenceVoiceEditor.value = false
+      selectedSegmentForVoice.value = null
+    }
+
+    console.log('Gap removal completed successfully')
     ElMessage.success('间隔已删除')
+  } else {
+    console.error('Track not found or has no gaps')
+    ElMessage.error('删除间隔失败：未找到对应的轨道数据')
   }
+
+  console.log('=== Editor - handleRemoveGap END ===')
 }
 
 // 语音编辑相关事件处理

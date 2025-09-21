@@ -26,6 +26,7 @@ export interface AudioTrack {
   isSegmented: boolean
   segmentMethod?: 'punctuation' | 'paragraph' | 'ai'
   gaps?: SegmentGap[]
+  deletedGaps?: string[] // 存储用户主动删除的间隔的唯一标识
 }
 
 export interface SegmentGap {

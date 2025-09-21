@@ -1,5 +1,6 @@
 <template>
-  <div class="control-section combined-controls">
+  <div class="basic-voice-controls">
+    <div class="control-section combined-controls">
     <div class="combined-row">
       <!-- 音色选择 -->
       <div class="control-item voice-control">
@@ -71,13 +72,14 @@
     </div>
   </div>
 
-  <!-- 语音音色选择对话框 -->
-  <VoiceSelectionDialog
-    v-model="showVoiceDialog"
-    :current-voice="currentVoice"
-    :voice-categories="voiceCategories"
-    @confirm="handleVoiceConfirm"
-  />
+    <!-- 语音音色选择对话框 -->
+    <VoiceSelectionDialog
+      v-model="showVoiceDialog"
+      :current-voice="currentVoice"
+      :voice-categories="voiceCategories"
+      @confirm="handleVoiceConfirm"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -321,3 +323,9 @@ watch(() => props.initialSpeed, (newSpeed) => {
   }
 }
 </style>
+
+<script lang="ts">
+export default {
+  name: 'BasicVoiceControls'
+}
+</script>

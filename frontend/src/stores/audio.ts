@@ -239,13 +239,48 @@ export const useAudioStore = defineStore('audio', () => {
   }
 
   const removeGap = (trackId: string, gapId: string) => {
+    console.log('=== AudioStore - removeGap START ===')
+    console.log('trackId:', trackId)
+    console.log('gapId:', gapId)
+
     const track = tracks.value.find(t => t.id === trackId)
+    console.log('Found track:', track ? track.id : 'NOT FOUND')
+
     if (track && track.gaps) {
+      console.log('Track has gaps:', track.gaps.length)
+
       const index = track.gaps.findIndex(g => g.id === gapId)
+      console.log('Gap index to remove:', index)
+
       if (index > -1) {
+        const removedGap = track.gaps[index]
+        console.log('Removing gap:', removedGap)
+
+        // 创建删除间隔的唯一标识
+        const deletedGapKey = `${removedGap.beforeSegmentId}->${removedGap.afterSegmentId}`
+
+        // 初始化 deletedGaps 数组
+        if (!track.deletedGaps) {
+          track.deletedGaps = []
+        }
+
+        // 记录用户删除的间隔，防止重新创建
+        if (!track.deletedGaps.includes(deletedGapKey)) {
+          track.deletedGaps.push(deletedGapKey)
+          console.log('Added to deletedGaps:', deletedGapKey)
+        }
+
         track.gaps.splice(index, 1)
+        console.log('Gap removed successfully, remaining gaps:', track.gaps.length)
+        console.log('Deleted gaps list:', track.deletedGaps)
+      } else {
+        console.error('Gap not found with gapId:', gapId)
       }
+    } else {
+      console.error('Track not found or has no gaps')
     }
+
+    console.log('=== AudioStore - removeGap END ===')
   }
 
   const selectGap = (trackId: string, gapId: string) => {
@@ -278,12 +313,26 @@ export const useAudioStore = defineStore('audio', () => {
         console.log('Track already has gaps:', track.gaps.length)
       }
 
+      // 确保 deletedGaps 数组存在
+      if (!track.deletedGaps) {
+        track.deletedGaps = []
+      }
+
+      console.log('Current deletedGaps:', track.deletedGaps)
+
       // 为每对相邻分句创建间隔
       for (let i = 0; i < track.segments.length - 1; i++) {
         const beforeSegmentId = track.segments[i].id
         const afterSegmentId = track.segments[i + 1].id
+        const gapKey = `${beforeSegmentId}->${afterSegmentId}`
 
-        console.log(`Checking gap ${i}: ${beforeSegmentId} -> ${afterSegmentId}`)
+        console.log(`Checking gap ${i}: ${gapKey}`)
+
+        // 检查用户是否已经主动删除了这个间隔
+        if (track.deletedGaps.includes(gapKey)) {
+          console.log(`Skipping gap ${i} - user deleted: ${gapKey}`)
+          continue
+        }
 
         // 检查是否已存在间隔
         const existingGap = track.gaps.find(gap =>

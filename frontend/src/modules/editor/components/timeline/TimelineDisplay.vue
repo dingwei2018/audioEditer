@@ -24,7 +24,7 @@
             @edit-cancel="handleEditCancel"
             @synthesize="$emit('synthesize-audio', item.data)"
             @play="$emit('play-audio', item.data)"
-            @add-after="$emit('add-sentence-after', item.data.id, item.index)"
+            @add-after="handleAddAfterClick"
             @delete="$emit('delete-segment', item.data.id)"
           />
 
@@ -115,9 +115,28 @@ const timelineWidth = computed(() => {
 
 // 生成包含句子和间隔的时间轴项目
 const timelineItems = computed(() => {
+  console.log('=== TimelineDisplay - timelineItems computed START ===')
+  console.log('props.segments:', props.segments?.length || 0, 'segments')
+  console.log('props.gaps:', props.gaps?.length || 0, 'gaps')
+
   const items = []
   if (!props.segments || !Array.isArray(props.segments)) {
+    console.log('TimelineDisplay - no segments, returning empty items')
     return items
+  }
+
+  // 打印输入的segments
+  console.log('Input segments:')
+  props.segments.forEach((segment, index) => {
+    console.log(`  segments[${index}]: ${segment.id} - "${segment.text}"`)
+  })
+
+  // 打印输入的gaps
+  console.log('Input gaps:')
+  if (props.gaps) {
+    props.gaps.forEach((gap, index) => {
+      console.log(`  gaps[${index}]: ${gap.beforeSegmentId} -> ${gap.afterSegmentId} (${gap.duration}s)`)
+    })
   }
 
   // 强制依赖于gaps的变化，确保计算属性在gaps更新时重新计算
@@ -125,6 +144,7 @@ const timelineItems = computed(() => {
 
   props.segments.forEach((segment, index) => {
     if (!segment || !segment.id) {
+      console.log(`Skipping invalid segment at index ${index}`)
       return
     }
 
@@ -134,32 +154,55 @@ const timelineItems = computed(() => {
       data: segment,
       index: index
     })
+    console.log(`Added segment to timeline: index=${index}, id=${segment.id}`)
 
-    // 如果不是最后一个句子，添加间隔
+    // 检查是否存在真正的gap数据，只有存在时才添加间隔
     if (index < props.segments.length - 1) {
-      const gapDuration = getGapDuration(index)
       const nextSegment = props.segments[index + 1]
 
       // 尝试找到真正的gap对象
       const realGap = gapsData?.find(g => g.beforeSegmentId === segment.id)
 
-      items.push({
-        type: 'gap',
-        data: {
-          id: realGap ? realGap.id : `gap_${segment.id}_${index}`,
-          beforeSegmentId: segment.id,
-          afterSegmentId: nextSegment?.id,
-          index: index,
-          duration: gapDuration,
-          isSelected: false,
-          startTime: 0, // TODO: 计算实际开始时间
-          endTime: 0    // TODO: 计算实际结束时间
-        },
-        index: index
-      })
+      // 只有当确实存在gap数据时才显示间隔
+      if (realGap && realGap.duration > 0) {
+        console.log(`TimelineDisplay - Adding gap between ${segment.id} and ${nextSegment?.id}, duration: ${realGap.duration}`)
+
+        items.push({
+          type: 'gap',
+          data: {
+            id: realGap.id,
+            beforeSegmentId: segment.id,
+            afterSegmentId: nextSegment?.id,
+            index: index,
+            duration: realGap.duration,
+            isSelected: realGap.isSelected || false,
+            startTime: 0, // TODO: 计算实际开始时间
+            endTime: 0    // TODO: 计算实际结束时间
+          },
+          index: index
+        })
+      } else {
+        console.log(`TimelineDisplay - No gap found or gap duration is 0 between ${segment.id} and ${nextSegment?.id}`)
+        if (realGap) {
+          console.log(`  - realGap exists but duration is: ${realGap.duration}`)
+        } else {
+          console.log(`  - realGap does not exist at all`)
+        }
+      }
     }
   })
+
+  console.log('=== TimelineDisplay - Final timeline items ===')
+  items.forEach((item, idx) => {
+    if (item.type === 'segment') {
+      console.log(`  item[${idx}] SEGMENT: index=${item.index}, id=${item.data.id}, text="${item.data.text}"`)
+    } else {
+      console.log(`  item[${idx}] GAP: ${item.data.beforeSegmentId} -> ${item.data.afterSegmentId}`)
+    }
+  })
+
   console.log('TimelineDisplay - timelineItems computed, total items:', items.length)
+  console.log('=== TimelineDisplay - timelineItems computed END ===')
   return items
 })
 
@@ -228,6 +271,24 @@ function handleEditCancel(segmentId: string) {
 
 function handleGapSelect(gap: any) {
   emit('select-gap', gap)
+}
+
+function handleAddAfterClick(segmentId: string, index: number) {
+  console.log('=== TimelineDisplay - handleAddAfterClick ===')
+  console.log('segmentId:', segmentId)
+  console.log('index from SentenceBlock:', index)
+  console.log('props.segments length:', props.segments?.length)
+
+  // 找到这个segment在props.segments中的实际位置
+  const actualIndex = props.segments?.findIndex(seg => seg.id === segmentId) ?? -1
+  console.log('actualIndex found in props.segments:', actualIndex)
+
+  // 检查传入的index和实际index是否匹配
+  if (actualIndex !== index) {
+    console.warn('WARNING: index mismatch! Passed index:', index, 'Actual index:', actualIndex)
+  }
+
+  emit('add-sentence-after', segmentId, actualIndex)
 }
 
 // 监听segments变化

@@ -39,6 +39,7 @@
         @add-pause="handleAddPause"
         @remove-pause="handleRemovePause"
         @update-pronunciation="handlePronunciationUpdate"
+        @cancel-pronunciation="handleCancelPronunciation"
       />
     </div>
 
@@ -262,7 +263,7 @@ function handleCharSelect(index: number) {
 
     // 设置当前选中的发音
     const existingPronunciation = pronunciationMarks.value.find(p => p.charIndex === index)
-    selectedPronunciation.value = existingPronunciation ? existingPronunciation.pinyin : polyphoneData[0].pinyin
+    selectedPronunciation.value = existingPronunciation ? existingPronunciation.pinyin : ''
   } else {
     showPolyphoneSelection.value = false
   }
@@ -354,6 +355,19 @@ function handlePronunciationUpdate(pinyin: string) {
     })
 
     updateSSML()
+  }
+}
+
+function handleCancelPronunciation() {
+  if (selectedCharIndex.value !== null) {
+    // 移除该字符的发音标记
+    pronunciationMarks.value = pronunciationMarks.value.filter(p => p.charIndex !== selectedCharIndex.value)
+    
+    // 重置选中的发音
+    selectedPronunciation.value = ''
+    
+    updateSSML()
+    ElMessage.success(`已取消"${displayText.value[selectedCharIndex.value]}"的多音字设置`)
   }
 }
 

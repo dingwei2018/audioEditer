@@ -138,3 +138,9 @@ function copySSML() {
   word-break: break-all;
 }
 </style>
+
+<script lang="ts">
+export default {
+  name: 'SSMLPreview'
+}
+</script>

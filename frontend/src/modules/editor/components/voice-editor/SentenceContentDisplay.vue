@@ -278,3 +278,9 @@ defineExpose({ displayText })
   justify-content: center;
 }
 </style>
+
+<script lang="ts">
+export default {
+  name: 'SentenceContentDisplay'
+}
+</script>

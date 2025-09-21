@@ -57,7 +57,7 @@
         :disabled="!segment.audioUrl"
       />
       <el-button
-        @click.stop="$emit('add-after', segment.id, index)"
+        @click.stop="handleAddAfterClick"
         type="primary"
         size="small"
         icon="Plus"
@@ -192,6 +192,14 @@ function cancelEdit() {
   localEditingText.value = props.segment.text
   console.log('SentenceBlock - cancelEdit:', props.segment.id)
   emit('edit-cancel', props.segment.id)
+}
+
+function handleAddAfterClick() {
+  console.log('=== SentenceBlock - handleAddAfterClick ===')
+  console.log('segment.id:', props.segment.id)
+  console.log('index from props:', props.index)
+  console.log('segment.text:', props.segment.text)
+  emit('add-after', props.segment.id, props.index)
 }
 </script>
 
