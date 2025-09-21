@@ -252,11 +252,13 @@ function getDefaultVoice(): Voice {
 }
 
 function handleCharSelect(index: number) {
+  console.log('SentenceVoiceEditor - 选择字符:', index, '字符:', displayText.value[index])
   selectedCharIndex.value = index
   const selectedItem = displayText.value[index]
 
   // 检查是否为多音字
   const polyphoneData = getPolyphoneData(selectedItem)
+  console.log('SentenceVoiceEditor - 多音字数据:', polyphoneData)
   if (polyphoneData && polyphoneData.length > 1) {
     polyphoneOptions.value = polyphoneData
     showPolyphoneSelection.value = true
@@ -264,6 +266,7 @@ function handleCharSelect(index: number) {
     // 设置当前选中的发音
     const existingPronunciation = pronunciationMarks.value.find(p => p.charIndex === index)
     selectedPronunciation.value = existingPronunciation ? existingPronunciation.pinyin : ''
+    console.log('SentenceVoiceEditor - 设置选中发音:', selectedPronunciation.value)
   } else {
     showPolyphoneSelection.value = false
   }
@@ -344,6 +347,7 @@ function handleRemovePause() {
 }
 
 function handlePronunciationUpdate(pinyin: string) {
+  console.log('SentenceVoiceEditor - 处理发音更新:', pinyin, '选中字符索引:', selectedCharIndex.value)
   if (selectedCharIndex.value !== null && pinyin) {
     // 移除现有的发音标记
     pronunciationMarks.value = pronunciationMarks.value.filter(p => p.charIndex !== selectedCharIndex.value)
@@ -354,7 +358,12 @@ function handlePronunciationUpdate(pinyin: string) {
       pinyin: pinyin
     })
 
+    // 更新选中的发音
+    selectedPronunciation.value = pinyin
+
+    console.log('SentenceVoiceEditor - 更新后的发音标记:', pronunciationMarks.value)
     updateSSML()
+    ElMessage.success(`已设置"${displayText.value[selectedCharIndex.value]}"的发音为：${pinyin}`)
   }
 }
 

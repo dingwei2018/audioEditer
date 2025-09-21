@@ -18,6 +18,8 @@
             :is-playing="playingSegmentId === item.data.id"
             :is-editing="editingSegmentId === item.data.id"
             :editing-text="editingText"
+            :total-segments="props.segments?.length || 0"
+            :has-gap-after="hasGapAfter(item.data.id)"
             @select="$emit('select-segment', item.data)"
             @edit-start="handleEditStart"
             @edit-finish="handleEditFinish"
@@ -25,6 +27,7 @@
             @synthesize="$emit('synthesize-audio', item.data)"
             @play="$emit('play-audio', item.data)"
             @add-after="handleAddAfterClick"
+            @add-gap="handleAddGapClick"
             @delete="$emit('delete-segment', item.data.id)"
           />
 
@@ -92,6 +95,7 @@ interface Emits {
   (e: 'synthesize-audio', segment: SegmentWithTiming): void
   (e: 'play-audio', segment: SegmentWithTiming): void
   (e: 'add-sentence-after', segmentId: string, index: number): void
+  (e: 'add-gap-after', segmentId: string, index: number): void
   (e: 'delete-segment', segmentId: string): void
   (e: 'select-gap', gap: SegmentGap): void
 }

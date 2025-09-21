@@ -86,7 +86,7 @@
           <div class="pronunciation-select-container">
             <el-select
               :model-value="selectedPronunciation"
-              @change="handlePronunciationChange"
+              @update:model-value="handlePronunciationChange"
               placeholder="选择发音"
               class="pronunciation-select"
               size="small"
@@ -160,6 +160,7 @@ function handleRemovePause() {
 }
 
 function handlePronunciationChange(pinyin: string) {
+  console.log('AdvancedVoiceControls - 发音选择改变:', pinyin)
   emit('update-pronunciation', pinyin)
 }
 
