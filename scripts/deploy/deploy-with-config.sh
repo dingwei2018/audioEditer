@@ -19,14 +19,16 @@ print_error() { echo -e "${RED}[ERROR]${NC} $1"; }
 
 # 检查配置文件
 check_config() {
-    if [[ ! -f "deploy.config" ]]; then
+    local config_file="$(dirname "$0")/../../deploy.config"
+    if [[ ! -f "$config_file" ]]; then
         print_error "配置文件 deploy.config 不存在"
         print_info "请先创建配置文件或使用 deploy.config.example 作为模板"
+        print_info "配置文件应在项目根目录: $config_file"
         exit 1
     fi
     
     print_info "加载配置文件..."
-    source deploy.config
+    source "$config_file"
     
     # 验证必要的配置项
     if [[ -z "$SERVER_IP" || -z "$SSH_USER" || -z "$SSH_PASSWORD" ]]; then
@@ -402,7 +404,7 @@ deploy_frontend() {
     print_info "开始部署前端..."
     
     # 确保在项目根目录
-    cd /Users/dingwei/suxing/audioediter
+    cd "$(dirname "$0")/../.."
     
     # 构建前端
     print_info "构建前端项目..."
@@ -431,7 +433,7 @@ deploy_backend() {
     print_info "开始部署后端..."
     
     # 确保在项目根目录
-    cd /Users/dingwei/suxing/audioediter
+    cd "$(dirname "$0")/../.."
     
     # 同步后端文件
     print_info "同步后端文件到服务器..."

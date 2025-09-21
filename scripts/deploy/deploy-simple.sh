@@ -47,17 +47,30 @@ quick_config() {
 deploy_frontend() {
     print_info "部署前端..."
     
+    # 确保在项目根目录
+    cd "$(dirname "$0")/../.."
+    
+    # 进入前端目录构建
     cd frontend
     npm install
     npm run build
     
-    if command -v sshpass &> /dev/null; then
-        sshpass -p "$SSH_PASSWORD" rsync -avz --progress -e "ssh -o StrictHostKeyChecking=no" dist/ $SSH_USER@$SERVER_IP:$DEPLOY_PATH/frontend/
-    else
-        rsync -avz --progress -e "ssh -o StrictHostKeyChecking=no" dist/ $SSH_USER@$SERVER_IP:$DEPLOY_PATH/frontend/
+    # 检查构建结果
+    if [[ ! -d "dist" ]]; then
+        print_error "前端构建失败，dist目录不存在"
+        exit 1
     fi
     
+    # 返回项目根目录
     cd ..
+    
+    # 使用绝对路径进行rsync同步
+    if command -v sshpass &> /dev/null; then
+        sshpass -p "$SSH_PASSWORD" rsync -avz --progress -e "ssh -o StrictHostKeyChecking=no" ./frontend/dist/ $SSH_USER@$SERVER_IP:$DEPLOY_PATH/frontend/
+    else
+        rsync -avz --progress -e "ssh -o StrictHostKeyChecking=no" ./frontend/dist/ $SSH_USER@$SERVER_IP:$DEPLOY_PATH/frontend/
+    fi
+    
     print_success "前端部署完成"
 }
 
@@ -65,11 +78,14 @@ deploy_frontend() {
 deploy_backend() {
     print_info "部署后端..."
     
+    # 确保在项目根目录
+    cd "$(dirname "$0")/../.."
+    
     if command -v sshpass &> /dev/null; then
-        sshpass -p "$SSH_PASSWORD" rsync -avz --progress -e "ssh -o StrictHostKeyChecking=no" --exclude=node_modules --exclude=logs backend/ $SSH_USER@$SERVER_IP:$DEPLOY_PATH/backend/
+        sshpass -p "$SSH_PASSWORD" rsync -avz --progress -e "ssh -o StrictHostKeyChecking=no" --exclude=node_modules --exclude=logs ./backend/ $SSH_USER@$SERVER_IP:$DEPLOY_PATH/backend/
         sshpass -p "$SSH_PASSWORD" ssh -o StrictHostKeyChecking=no $SSH_USER@$SERVER_IP "cd $DEPLOY_PATH/backend && npm install --production"
     else
-        rsync -avz --progress -e "ssh -o StrictHostKeyChecking=no" --exclude=node_modules --exclude=logs backend/ $SSH_USER@$SERVER_IP:$DEPLOY_PATH/backend/
+        rsync -avz --progress -e "ssh -o StrictHostKeyChecking=no" --exclude=node_modules --exclude=logs ./backend/ $SSH_USER@$SERVER_IP:$DEPLOY_PATH/backend/
         ssh -o StrictHostKeyChecking=no $SSH_USER@$SERVER_IP "cd $DEPLOY_PATH/backend && npm install --production"
     fi
     
