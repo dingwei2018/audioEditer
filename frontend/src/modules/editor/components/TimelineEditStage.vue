@@ -2,7 +2,7 @@
   <div class="timeline-edit-stage">
     <div class="timeline-container">
       <div class="segments-timeline-view">
-        <TimelineSegments
+        <TimelineSegmentsWrapper
           :segments="timelineSegments"
           :gaps="timelineGaps"
           :total-duration="totalTimelineDuration"
@@ -10,11 +10,10 @@
           :playing-segment-id="playingSegmentId"
           :selected-gap-id="selectedGapId"
           @segment-select="$emit('select-segment', $event)"
-          @audio-play="$emit('play-audio', $event)"
           @segment-edit="handleSegmentEdit"
           @segment-delete="$emit('delete-segment', $event)"
           @segment-add-after="(...args) => $emit('add-sentence-after', ...args)"
-          @gap-add="(...args) => $emit('add-gap', ...args)"
+          @gap-add="handleGapAdd"
           @gap-select="$emit('select-gap', $event)"
           @gap-update="handleGapUpdate"
           @gap-remove="$emit('remove-gap', $event)"
@@ -24,7 +23,7 @@
     </div>
 
     <div v-if="showVoiceEditor" class="voice-editor-container">
-      <SentenceVoiceEditor
+      <SentenceVoiceEditorWrapper
         :sentence-text="selectedSegmentForVoice?.text || ''"
         :sentence-index="selectedSegmentIndex"
         :sentence-duration="selectedSegmentForVoice?.duration || 0"
@@ -32,11 +31,16 @@
         :initial-volume="getTrackVolume(selectedSegmentForVoice)"
         :initial-speed="selectedSegmentForVoice?.speed || 1"
         :initial-pitch="selectedSegmentForVoice?.pitch || 1"
+        :current-segment="selectedSegmentForVoice"
         @update-ssml="$emit('ssml-update', $event)"
         @update-voice="$emit('voice-update', $event)"
         @update-volume="$emit('volume-update', $event)"
         @update-speed="$emit('speed-update', $event)"
         @update-pitch="$emit('pitch-update', $event)"
+        @update-pause-marks="handlePauseMarksEvent"
+        @update-pronunciation-marks="$emit('update-pronunciation-marks', $event)"
+        @synthesize-audio="$emit('synthesize-audio', $event)"
+        @play-audio="$emit('play-audio', $event)"
         @close="$emit('close-voice-editor')"
       />
     </div>
@@ -44,8 +48,8 @@
 </template>
 
 <script setup lang="ts">
-import TimelineSegments from '@/components/TimelineSegments.vue'
-import SentenceVoiceEditor from '@/components/SentenceVoiceEditor.vue'
+import TimelineSegmentsWrapper from '@/components/TimelineSegmentsWrapper.vue'
+import SentenceVoiceEditorWrapper from '@/components/SentenceVoiceEditorWrapper.vue'
 
 interface Props {
   timelineSegments: any[]
@@ -79,15 +83,22 @@ interface Emits {
   (e: 'volume-update', volume: number): void
   (e: 'speed-update', speed: number): void
   (e: 'pitch-update', pitch: number): void
+  (e: 'update-pause-marks', pauseMarks: any[]): void
+  (e: 'update-pronunciation-marks', pronunciationMarks: any[]): void
   (e: 'close-voice-editor'): void
 }
 
 defineProps<Props>()
 const emit = defineEmits<Emits>()
 
+// 处理停顿标记更新事件
+function handlePauseMarksEvent(pauseMarks: any[]) {
+  emit('update-pause-marks', pauseMarks)
+}
+
+
 // 处理文本编辑事件
 function handleSegmentEdit(data: { segmentId: string, newText: string }) {
-  console.log('TimelineEditStage - handleSegmentEdit received data:', data)
 
   const { segmentId, newText } = data
 
@@ -101,24 +112,21 @@ function handleSegmentEdit(data: { segmentId: string, newText: string }) {
     return
   }
 
-  console.log('TimelineEditStage - handleSegmentEdit extracted:', segmentId, newText)
   emit('update-segment-text', segmentId, newText)
+}
+
+function handleGapAdd(beforeSegmentId: string, afterSegmentId: string) {
+  emit('add-gap', beforeSegmentId, afterSegmentId)
 }
 
 // 处理间隔更新事件
 function handleGapUpdate(gapId: string, duration: number) {
-  console.log('=== TimelineEditStage - handleGapUpdate START ===')
-  console.log('Received gapId:', gapId)
-  console.log('Received duration:', duration)
-  console.log('Duration type:', typeof duration)
 
   // 确保 duration 是有效的
   const safeDuration = duration !== undefined && !isNaN(duration) ? Number(duration) : 1
-  console.log('Safe duration:', safeDuration)
 
   emit('update-gap-duration', gapId, safeDuration)
 
-  console.log('=== TimelineEditStage - handleGapUpdate END ===')
 }
 
 const getCurrentVoice = (voiceId?: string) => {
@@ -127,7 +135,7 @@ const getCurrentVoice = (voiceId?: string) => {
       id: 'zhichu',
       name: '知初',
       category: '现代人物',
-      avatar: 'https://via.placeholder.com/60x60/50E3C2/FFFFFF?text=知',
+      avatar: '/header/zc.jpeg',
       description: '清新自然，适合日常对话',
       ssmlName: 'zh-CN-XiaoxiaoNeural'
     },
@@ -135,7 +143,7 @@ const getCurrentVoice = (voiceId?: string) => {
       id: 'zhimei',
       name: '知美',
       category: '现代人物',
-      avatar: 'https://via.placeholder.com/60x60/BD10E0/FFFFFF?text=美',
+      avatar: '/header/zc.jpeg',
       description: '温柔甜美，适合情感表达',
       ssmlName: 'zh-CN-XiaohanNeural'
     },
@@ -143,7 +151,7 @@ const getCurrentVoice = (voiceId?: string) => {
       id: 'zhiwen',
       name: '知文',
       category: '现代人物',
-      avatar: 'https://via.placeholder.com/60x60/B8E986/FFFFFF?text=文',
+      avatar: '/header/zc.jpeg',
       description: '文雅知性，适合知识讲解',
       ssmlName: 'zh-CN-YunxiNeural'
     }

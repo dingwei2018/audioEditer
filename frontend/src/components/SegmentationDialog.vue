@@ -82,14 +82,11 @@ const selectMethod = (method: 'punctuation' | 'paragraph' | 'ai') => {
 }
 
 const confirmSelection = () => {
-  console.log('SegmentationDialog - confirmSelection called, selectedMethod:', selectedMethod.value)
   if (selectedMethod.value) {
-    console.log('SegmentationDialog - emitting confirm event with method:', selectedMethod.value)
     emit('confirm', selectedMethod.value)
     visible.value = false
     selectedMethod.value = null
   } else {
-    console.log('SegmentationDialog - no method selected, not emitting event')
   }
 }
 </script>

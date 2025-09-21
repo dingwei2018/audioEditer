@@ -25,7 +25,6 @@ const pendingText = ref('')
 
 // 处理开始分句事件
 const handleStartSegmentation = (text: string) => {
-  console.log('TextInputStage - handleStartSegmentation called with text:', text)
   pendingText.value = text
   showSegmentationDialog.value = true
   emit('start-segmentation', text)
@@ -33,7 +32,6 @@ const handleStartSegmentation = (text: string) => {
 
 // 处理分句方式确认事件
 const handleSegmentationConfirm = (method: 'punctuation' | 'paragraph' | 'ai') => {
-  console.log('TextInputStage - handleSegmentationConfirm called with method:', method, 'text:', pendingText.value)
   emit('segmentation-confirm', method, pendingText.value)
   showSegmentationDialog.value = false
 }

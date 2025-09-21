@@ -37,43 +37,24 @@
 
     <!-- 操作按钮 -->
     <div v-if="isSelected && !isEditing" class="sentence-actions">
-      <el-button
-        @click.stop="$emit('synthesize', segment)"
-        type="success"
-        size="small"
-        icon="Microphone"
-        circle
-        class="action-btn synthesize-btn"
-        title="合成音频"
-      />
-      <el-button
-        @click.stop="$emit('play', segment)"
-        type="info"
-        size="small"
-        icon="VideoPlay"
-        circle
-        class="action-btn play-btn"
-        title="播放音频"
-        :disabled="!segment.audioUrl"
-      />
-      <el-button
+      <button
         @click.stop="handleAddAfterClick"
-        type="primary"
-        size="small"
-        icon="Plus"
-        circle
         class="action-btn add-btn"
         title="在此句后添加新句子"
-      />
-      <el-button
+      >
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+        </svg>
+      </button>
+      <button
         @click.stop="$emit('delete', segment.id)"
-        type="danger"
-        size="small"
-        icon="Delete"
-        circle
         class="action-btn delete-btn"
         title="删除此句子"
-      />
+      >
+        <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+        </svg>
+      </button>
     </div>
   </div>
 </template>
@@ -109,8 +90,6 @@ interface Emits {
   (e: 'edit-start', segmentId: string, text: string): void
   (e: 'edit-finish', segmentId: string, text: string): void
   (e: 'edit-cancel', segmentId: string): void
-  (e: 'synthesize', segment: SegmentWithTiming): void
-  (e: 'play', segment: SegmentWithTiming): void
   (e: 'add-after', segmentId: string, index: number): void
   (e: 'delete', segmentId: string): void
 }
@@ -125,10 +104,8 @@ const isFinishing = ref(false)  // 防止重复调用
 
 // 监听editingText变化
 watch(() => props.editingText, (newText) => {
-  console.log('SentenceBlock - watch editingText changed:', newText)
   if (newText !== undefined && props.isEditing) {
     localEditingText.value = newText
-    console.log('SentenceBlock - localEditingText updated to:', localEditingText.value)
   }
 }, { immediate: true })
 
@@ -143,7 +120,6 @@ watch(() => props.isEditing, (newEditing) => {
 function startEdit() {
   localEditingText.value = props.segment.text
   isFinishing.value = false  // 重置标志
-  console.log('SentenceBlock - startEdit:', props.segment.id, props.segment.text)
   emit('edit-start', props.segment.id, props.segment.text)
 
   // 延迟聚焦，确保DOM已更新
@@ -158,18 +134,13 @@ function startEdit() {
 function finishEdit() {
   // 防止重复调用
   if (isFinishing.value) {
-    console.log('SentenceBlock - finishEdit: already finishing, ignoring duplicate call')
     return
   }
 
   isFinishing.value = true
 
-  console.log('SentenceBlock - finishEdit: localEditingText.value =', localEditingText.value)
-  console.log('SentenceBlock - finishEdit: localEditingText.value.length =', localEditingText.value.length)
 
   const trimmedText = localEditingText.value.trim()
-  console.log('SentenceBlock - finishEdit: trimmedText =', trimmedText)
-  console.log('SentenceBlock - finishEdit: trimmedText.length =', trimmedText.length)
 
   emit('edit-finish', props.segment.id, trimmedText)
 }
@@ -178,8 +149,6 @@ function handleEnterKey(event: KeyboardEvent) {
   // 阻止默认行为（换行）
   event.preventDefault()
 
-  console.log('SentenceBlock - handleEnterKey triggered')
-  console.log('SentenceBlock - handleEnterKey: localEditingText.value =', localEditingText.value)
 
   // 只有在没有按住Shift键时才完成编辑（Shift+Enter允许换行）
   if (!event.shiftKey) {
@@ -190,15 +159,10 @@ function handleEnterKey(event: KeyboardEvent) {
 function cancelEdit() {
   isFinishing.value = false  // 重置标志
   localEditingText.value = props.segment.text
-  console.log('SentenceBlock - cancelEdit:', props.segment.id)
   emit('edit-cancel', props.segment.id)
 }
 
 function handleAddAfterClick() {
-  console.log('=== SentenceBlock - handleAddAfterClick ===')
-  console.log('segment.id:', props.segment.id)
-  console.log('index from props:', props.index)
-  console.log('segment.text:', props.segment.text)
   emit('add-after', props.segment.id, props.index)
 }
 </script>
@@ -377,35 +341,10 @@ function handleAddAfterClick() {
   border-color: #f78989;
 }
 
-.synthesize-btn {
-  background: #67c23a;
-  border-color: #67c23a;
+.btn-icon {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
 }
 
-.synthesize-btn:hover {
-  background: #85ce61;
-  border-color: #85ce61;
-}
-
-.play-btn {
-  background: #409eff;
-  border-color: #409eff;
-}
-
-.play-btn:hover {
-  background: #66b1ff;
-  border-color: #66b1ff;
-}
-
-.play-btn:disabled {
-  background: #c0c4cc;
-  border-color: #c0c4cc;
-  cursor: not-allowed;
-}
-
-.play-btn:disabled:hover {
-  background: #c0c4cc;
-  border-color: #c0c4cc;
-  transform: none;
-}
 </style>

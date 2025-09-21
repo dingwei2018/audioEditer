@@ -8,7 +8,7 @@
       "style": "清新自然",
       "language": "zh-CN",
       "category": "现代人物",
-      "avatar": "https://via.placeholder.com/60x60/50E3C2/FFFFFF?text=知",
+      "avatar": "/header/zc.jpeg",
       "description": "清新自然，适合日常对话",
       "ssmlName": "zh-CN-XiaoxiaoNeural",
       "previewUrl": "/mock/audio/zhichu_preview.mp3"
@@ -34,7 +34,7 @@
       "style": "文雅知性",
       "language": "zh-CN",
       "category": "现代人物",
-      "avatar": "https://via.placeholder.com/60x60/B8E986/FFFFFF?text=文",
+      "avatar": "/header/zc.jpeg",
       "description": "文雅知性，适合知识讲解",
       "ssmlName": "zh-CN-YunxiNeural",
       "previewUrl": "/mock/audio/zhiwen_preview.mp3"
@@ -47,7 +47,7 @@
       "style": "磁性低沉",
       "language": "zh-CN",
       "category": "现代人物",
-      "avatar": "https://via.placeholder.com/60x60/FF6B6B/FFFFFF?text=越",
+      "avatar": "/header/zc.jpeg",
       "description": "磁性低沉，适合新闻播报",
       "ssmlName": "zh-CN-YunjianNeural",
       "previewUrl": "/mock/audio/zhiyue_preview.mp3"
@@ -60,7 +60,7 @@
       "style": "活泼可爱",
       "language": "zh-CN",
       "category": "现代人物",
-      "avatar": "https://via.placeholder.com/60x60/FFD93D/FFFFFF?text=灵",
+      "avatar": "/header/zc.jpeg",
       "description": "活泼可爱，适合儿童故事",
       "ssmlName": "zh-CN-XiaoyiNeural",
       "previewUrl": "/mock/audio/zhiling_preview.mp3"

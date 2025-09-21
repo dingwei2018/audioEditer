@@ -36,17 +36,11 @@ const inputText = ref('欢迎使用云听文转声精修界面！这是一个基
 
 // 方法
 const startSegmentation = () => {
-  console.log('TextInputArea - startSegmentation called')
-  console.log('TextInputArea - inputText.value:', inputText.value)
-  console.log('TextInputArea - inputText.value.length:', inputText.value.length)
-  console.log('TextInputArea - inputText.value.trim():', inputText.value.trim())
   
   if (inputText.value.trim()) {
     const trimmedText = inputText.value.trim()
-    console.log('TextInputArea - emitting start-segmentation event with text:', trimmedText)
     emit('start-segmentation', trimmedText)
   } else {
-    console.log('TextInputArea - inputText is empty, not emitting event')
   }
 }
 </script>

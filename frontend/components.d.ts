@@ -7,7 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElButtonGroup: typeof import('element-plus/es')['ElButtonGroup']
     ElCol: typeof import('element-plus/es')['ElCol']
@@ -37,14 +36,14 @@ declare module 'vue' {
     ElSwitch: typeof import('element-plus/es')['ElSwitch']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
-    ElTag: typeof import('element-plus/es')['ElTag']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SegmentationDialog: typeof import('./src/components/SegmentationDialog.vue')['default']
     SegmentEditor: typeof import('./src/components/SegmentEditor.vue')['default']
     SegmentEditPanel: typeof import('./src/components/SegmentEditPanel.vue')['default']
     SentenceVoiceEditor: typeof import('./src/components/SentenceVoiceEditor.vue')['default']
+    SentenceVoiceEditorWrapper: typeof import('./src/components/SentenceVoiceEditorWrapper.vue')['default']
     TextInputArea: typeof import('./src/components/TextInputArea.vue')['default']
-    TimelineSegments: typeof import('./src/components/TimelineSegments.vue')['default']
+    TimelineSegmentsWrapper: typeof import('./src/components/TimelineSegmentsWrapper.vue')['default']
   }
 }

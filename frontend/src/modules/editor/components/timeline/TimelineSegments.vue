@@ -12,8 +12,6 @@
       @edit-segment-start="handleEditStart"
       @edit-segment-finish="handleEditFinish"
       @edit-segment-cancel="handleEditCancel"
-      @synthesize-audio="handleSynthesizeAudio"
-      @play-audio="handlePlayAudio"
       @add-sentence-after="handleAddSentenceAfter"
       @add-gap="handleAddGap"
       @delete-segment="handleDeleteSegment"
@@ -44,28 +42,28 @@
         </div>
         <div class="gap-presets">
           <span class="preset-label">快速设置：</span>
-          <el-button-group class="preset-buttons">
-            <el-button
+          <div class="preset-buttons">
+            <button
               v-for="preset in gapPresets"
               :key="preset"
               @click="gapDuration = preset"
-              size="small"
-              :type="gapDuration === preset ? 'primary' : 'default'"
+              class="preset-btn"
+              :class="{ active: gapDuration === preset }"
             >
               {{ preset }}s
-            </el-button>
-          </el-button-group>
+            </button>
+          </div>
         </div>
       </div>
       <template #footer>
         <div class="dialog-footer">
           <div class="dialog-left-actions">
-            <el-button @click="resetGap" type="info">重置为1秒</el-button>
-            <el-button @click="removeGap" type="danger">删除间隔</el-button>
+            <button @click="resetGap" class="action-btn reset-btn">重置为1秒</button>
+            <button @click="removeGap" class="action-btn delete-btn">删除间隔</button>
           </div>
           <div class="dialog-right-actions">
-            <el-button type="primary" @click="confirmGapChange">确认</el-button>
-            <el-button @click="closeGapDialog">取消</el-button>
+            <button @click="confirmGapChange" class="action-btn confirm-btn">确认</button>
+            <button @click="closeGapDialog" class="action-btn cancel-btn">取消</button>
           </div>
         </div>
       </template>
@@ -116,8 +114,6 @@ interface Emits {
   (e: 'segment-delete', segmentId: string): void
   (e: 'segment-add-after', segmentId: string, index: number): void
   (e: 'gap-add', beforeSegmentId: string, afterSegmentId: string): void
-  (e: 'audio-synthesize', segment: SegmentWithTiming): void
-  (e: 'audio-play', segment: SegmentWithTiming): void
   (e: 'gap-select', gap: SegmentGap): void
   (e: 'gap-update', gapId: string, duration: number): void
   (e: 'gap-remove', gapId: string): void
@@ -154,11 +150,9 @@ function handleSegmentSelect(segment: SegmentWithTiming) {
 
 function handleEditStart(segmentId: string, text: string) {
   // 直接透传，不使用弹框
-  console.log('TimelineSegments - handleEditStart:', segmentId, text)
 }
 
 function handleEditFinish(segmentId: string, text: string) {
-  console.log('TimelineSegments - handleEditFinish:', segmentId, text)
 
   // 验证参数
   if (!segmentId) {
@@ -174,23 +168,16 @@ function handleEditFinish(segmentId: string, text: string) {
 }
 
 function handleEditCancel(segmentId: string) {
-  console.log('TimelineSegments - handleEditCancel:', segmentId)
   // 取消编辑，不做任何操作
 }
 
-function handleSynthesizeAudio(segment: SegmentWithTiming) {
-  emit('audio-synthesize', segment)
-}
-
-function handlePlayAudio(segment: SegmentWithTiming) {
-  emit('audio-play', segment)
-}
 
 function handleAddSentenceAfter(segmentId: string, index: number) {
   emit('segment-add-after', segmentId, index)
 }
 
 function handleAddGap(beforeSegmentId: string, afterSegmentId: string) {
+
   emit('gap-add', beforeSegmentId, afterSegmentId)
 }
 
@@ -199,18 +186,12 @@ function handleDeleteSegment(segmentId: string) {
 }
 
 function handleGapSelect(gap: any) {
-  console.log('=== TimelineSegments - handleGapSelect START ===')
-  console.log('TimelineSegments - handleGapSelect received gap:', gap)
-  console.log('TimelineSegments - gap.duration type:', typeof gap.duration, 'value:', gap.duration)
-  console.log('TimelineSegments - available props.gaps:', props.gaps)
 
   // 先清理所有 NaN 数据（临时修复方案）
   // TODO: 这个应该在应用启动时调用，这里是紧急修复
   if (props.gaps && props.gaps.some(g => isNaN(g.duration))) {
-    console.log('WARNING: Detected NaN in props.gaps, attempting cleanup...')
     props.gaps.forEach((g, index) => {
       if (isNaN(g.duration)) {
-        console.log(`Fixing NaN in gap ${index}, setting to 1`)
         g.duration = 1
       }
     })
@@ -223,18 +204,14 @@ function handleGapSelect(gap: any) {
     // 优先通过beforeSegmentId查找，因为这是最准确的方法
     if (gap.beforeSegmentId) {
       realGap = props.gaps.find(g => g.beforeSegmentId === gap.beforeSegmentId)
-      console.log('TimelineSegments - searching by beforeSegmentId:', gap.beforeSegmentId, 'found:', realGap)
       if (realGap) {
-        console.log('Real gap duration type:', typeof realGap.duration, 'value:', realGap.duration)
       }
     }
 
     // 如果通过beforeSegmentId找不到，尝试通过ID直接查找
     if (!realGap && gap.id) {
       realGap = props.gaps.find(g => g.id === gap.id)
-      console.log('TimelineSegments - searching by id:', gap.id, 'found:', realGap)
       if (realGap) {
-        console.log('Real gap duration type (by id):', typeof realGap.duration, 'value:', realGap.duration)
       }
     }
 
@@ -243,40 +220,30 @@ function handleGapSelect(gap: any) {
       const segmentAtIndex = props.segments[gap.index]
       if (segmentAtIndex) {
         realGap = props.gaps.find(g => g.beforeSegmentId === segmentAtIndex.id)
-        console.log('TimelineSegments - searching by segment index:', gap.index, 'segmentId:', segmentAtIndex.id, 'found:', realGap)
         if (realGap) {
-          console.log('Real gap duration type (by index):', typeof realGap.duration, 'value:', realGap.duration)
         }
       }
     }
   }
 
   if (realGap) {
-    console.log('TimelineSegments - using real gap duration:', realGap.duration)
-    console.log('Real gap duration is NaN?', isNaN(realGap.duration))
 
     // 添加 NaN 检查和修复
     const safeDuration = isNaN(realGap.duration) ? 1 : realGap.duration
-    console.log('TimelineSegments - safeDuration after NaN check:', safeDuration)
 
     // 创建副本而不是直接引用，避免修改原始数据
     currentGap.value = { ...realGap }
     gapDuration.value = safeDuration
   } else {
-    console.log('TimelineSegments - real gap not found, using temp gap duration:', gap.duration || 1)
 
     // 对临时 gap 也进行 NaN 检查
     const tempSafeDuration = isNaN(gap.duration) ? 1 : (gap.duration || 1)
-    console.log('TimelineSegments - temp safeDuration after NaN check:', tempSafeDuration)
 
     // 如果找不到真正的gap，使用传入的gap数据的副本
     currentGap.value = { ...gap }
     gapDuration.value = tempSafeDuration
   }
 
-  console.log('TimelineSegments - final gapDuration set to:', gapDuration.value)
-  console.log('TimelineSegments - final gapDuration is NaN?', isNaN(gapDuration.value))
-  console.log('=== TimelineSegments - handleGapSelect END ===')
 
   showGapDialog.value = true
   emit('gap-select', realGap || gap)
@@ -287,47 +254,28 @@ function formatGapTooltip(value: number): string {
 }
 
 function confirmGapChange() {
-  console.log('=== TimelineSegments - confirmGapChange START ===')
-  console.log('currentGap.value:', currentGap.value)
-  console.log('gapDuration.value:', gapDuration.value)
-  console.log('gapDuration.value type:', typeof gapDuration.value)
-  console.log('gapDuration.value is NaN?', isNaN(gapDuration.value))
 
   if (currentGap.value) {
     // 确保 duration 是有效数字
     const safeDuration = isNaN(gapDuration.value) ? 1 : Number(gapDuration.value)
-    console.log('safeDuration after conversion:', safeDuration, 'type:', typeof safeDuration)
 
-    console.log('About to emit gap-update with:')
-    console.log('  gapId:', currentGap.value.id)
-    console.log('  duration:', safeDuration)
-    console.log('  Parameters will be passed as:', [currentGap.value.id, safeDuration])
 
     emit('gap-update', currentGap.value.id, safeDuration)
 
-    console.log('gap-update event emitted successfully')
     ElMessage.success(`间隔已调整为 ${safeDuration} 秒`)
   } else {
-    console.log('ERROR: currentGap.value is null/undefined')
   }
 
-  console.log('=== TimelineSegments - confirmGapChange END ===')
   closeGapDialog()
 }
 
 function closeGapDialog() {
-  console.log('=== TimelineSegments - closeGapDialog START ===')
-  console.log('Before close - currentGap.value:', currentGap.value)
-  console.log('Before close - gapDuration.value:', gapDuration.value)
 
   showGapDialog.value = false
   currentGap.value = null
   // 不要重置 gapDuration.value，让它保持上次的值
   // gapDuration.value = 1  // 这行是问题的根源
 
-  console.log('After close - currentGap.value:', currentGap.value)
-  console.log('After close - gapDuration.value (not reset):', gapDuration.value)
-  console.log('=== TimelineSegments - closeGapDialog END ===')
 }
 
 function resetGap() {
@@ -363,7 +311,6 @@ function removeGap() {
 // 监听segments变化
 watch(() => props.segments, (newSegments) => {
   if (newSegments && newSegments.length > 0) {
-    console.log('TimelineSegments - segments updated:', newSegments.length, 'segments')
   }
 }, { immediate: true, deep: true })
 </script>
@@ -422,7 +369,6 @@ watch(() => props.segments, (newSegments) => {
 
 .input-label {
   font-size: 14px;
-  color: #e4e7ed;
   white-space: nowrap;
 }
 
@@ -448,6 +394,97 @@ watch(() => props.segments, (newSegments) => {
   gap: 8px;
   flex-wrap: wrap;
   justify-content: center;
+}
+
+.preset-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+  min-width: 40px;
+}
+
+.preset-btn:hover {
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+}
+
+.preset-btn.active {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+  transform: scale(1.05);
+}
+
+.preset-btn.active:hover {
+  background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+  box-shadow: 0 6px 16px rgba(76, 175, 80, 0.5);
+}
+
+/* 对话框底部按钮样式 */
+.action-btn {
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 80px;
+}
+
+.confirm-btn {
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+.confirm-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+  background: linear-gradient(135deg, #45a049 0%, #3d8b40 100%);
+}
+
+.cancel-btn {
+  background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(108, 117, 125, 0.3);
+}
+
+.cancel-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(108, 117, 125, 0.4);
+  background: linear-gradient(135deg, #5a6268 0%, #495057 100%);
+}
+
+.reset-btn {
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(23, 162, 184, 0.3);
+}
+
+.reset-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(23, 162, 184, 0.4);
+  background: linear-gradient(135deg, #138496 0%, #117a8b 100%);
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+  color: white;
+  box-shadow: 0 2px 8px rgba(220, 53, 69, 0.3);
+}
+
+.delete-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+  background: linear-gradient(135deg, #c82333 0%, #bd2130 100%);
 }
 
 .dialog-footer {

@@ -49,6 +49,8 @@
         @volume-update="handleVolumeUpdate"
         @speed-update="handleSpeedUpdate"
         @pitch-update="handlePitchUpdate"
+        @update-pause-marks="handlePauseMarksUpdate"
+        @update-pronunciation-marks="handlePronunciationMarksUpdate"
         @close-voice-editor="closeSentenceVoiceEditor"
       />
     </div>
@@ -57,7 +59,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, watch } from 'vue'
-import { ElMessage, ElMessageBox } from 'element-plus'
+import { ElMessage } from 'element-plus'
 import { storeToRefs } from 'pinia'
 import { useAudioStore, useProjectStore, useAppStore } from '../stores'
 import { TextSegmentation } from '../utils/textSegmentation'
@@ -162,8 +164,8 @@ const timelineGaps = computed(() => {
   tracks.value.forEach(track => {
     if (track.isSegmented && track.segments && track.gaps) {
       track.gaps.forEach((gap, index) => {
-        const beforeSegment = track.segments.find(s => s.id === gap.beforeSegmentId)
-        const afterSegment = track.segments.find(s => s.id === gap.afterSegmentId)
+        const beforeSegment = track.segments?.find(s => s.id === gap.beforeSegmentId)
+        const afterSegment = track.segments?.find(s => s.id === gap.afterSegmentId)
 
         if (beforeSegment && afterSegment) {
           const gapStartTime = currentTime + ((beforeSegment as any).duration || 3)
@@ -231,12 +233,10 @@ const exportProject = async () => {
 }
 
 const handleStartSegmentation = (text: string) => {
-  console.log('Editor - handleStartSegmentation called with text:', text)
   // 文本已经在TextInputStage中处理，这里不需要额外操作
 }
 
 const handleSegmentationConfirm = (method: 'punctuation' | 'paragraph' | 'ai', text: string) => {
-  console.log('Editor - handleSegmentationConfirm called with method:', method, 'text:', text)
   performSegmentation(text, method)
 }
 
@@ -256,7 +256,13 @@ const performSegmentation = (text: string, method: 'punctuation' | 'paragraph' |
 
     const segmentsWithDuration = segments.map((segment, index) => ({
       ...segment,
-      duration: 3
+      duration: 3,
+      voice: 'zhichu',  // 初始化语音设置
+      speed: 1.0,
+      pitch: 1.0,
+      volume: 1.0,
+      pauseMarks: [],  // 初始化停顿标记
+      pronunciationMarks: []  // 初始化发音标记
     }))
 
     clearTracks()
@@ -276,10 +282,7 @@ const performSegmentation = (text: string, method: 'punctuation' | 'paragraph' |
 
     // 确保在segmentTrack完成后立即初始化gaps
     if (segments.length > 1) {
-      console.log('Editor - performSegmentation: About to initialize gaps for trackId:', trackId)
-      console.log('Editor - performSegmentation: segments count:', segments.length)
       audioStore.initializeGaps(trackId)
-      console.log('Editor - performSegmentation: gaps initialization completed')
     }
 
     ElMessage.success(`成功分句为 ${segments.length} 个句子`)
@@ -327,7 +330,6 @@ const handleAddText = (position: number) => {
 }
 
 const handleUpdateSegmentText = (segmentId: string, newText: string) => {
-  console.log('Editor - handleUpdateSegmentText:', segmentId, newText)
 
   // 找到包含此segment的track
   const track = tracks.value.find(t => t.isSegmented && t.segments)
@@ -343,7 +345,6 @@ const handleUpdateSegmentText = (segmentId: string, newText: string) => {
       }
 
       ElMessage.success('句子内容已更新')
-      console.log('Editor - segment text updated via store:', newText)
     } else {
       console.error('Editor - segment not found:', segmentId)
     }
@@ -376,21 +377,14 @@ const handleDeleteSegment = (segmentId: string) => {
 }
 
 const handleAddSentenceAfter = (segmentId: string, index: number) => {
-  console.log('=== Editor - handleAddSentenceAfter START ===')
-  console.log('segmentId:', segmentId)
-  console.log('index passed from UI:', index)
 
   const track = tracks.value.find(t => t.isSegmented && t.segments)
   if (track && track.segments) {
-    console.log('Track found with segments:', track.segments.length)
-    console.log('BEFORE INSERTION - Current segments order:')
     track.segments.forEach((seg, idx) => {
-      console.log(`  ${idx}: ${seg.id} - "${seg.text}"`)
     })
 
     // 确认当前选中的segment的实际位置
     const actualIndex = track.segments.findIndex(seg => seg.id === segmentId)
-    console.log('Actual index of selected segment in track.segments:', actualIndex)
 
     // 检查是否存在原来的间隔需要处理
     let originalGapToRemove = null
@@ -402,7 +396,6 @@ const handleAddSentenceAfter = (segmentId: string, index: number) => {
           gap.beforeSegmentId === segmentId && gap.afterSegmentId === nextSegment.id
         )
         if (originalGapToRemove) {
-          console.log('Found original gap to replace:', originalGapToRemove.id)
         }
       }
     }
@@ -412,19 +405,21 @@ const handleAddSentenceAfter = (segmentId: string, index: number) => {
       text: '',
       startIndex: 0,
       endIndex: 0,
-      type: 'sentence' as const
+      type: 'sentence' as const,
+      voice: 'zhichu',  // 初始化语音设置
+      speed: 1.0,
+      pitch: 1.0,
+      volume: 1.0,
+      pauseMarks: [],  // 初始化停顿标记
+      pronunciationMarks: []  // 初始化发音标记
     }
 
     // 使用实际找到的索引位置，在其后面插入
     const insertIndex = actualIndex + 1
-    console.log('Will insert new segment at index:', insertIndex)
-    console.log('This means after segment at actual index:', actualIndex, 'which is:', track.segments[actualIndex]?.id)
 
     track.segments.splice(insertIndex, 0, newSegment)
 
-    console.log('AFTER INSERTION - New segments order:')
     track.segments.forEach((seg, idx) => {
-      console.log(`  ${idx}: ${seg.id} - "${seg.text}"`)
     })
 
     // 处理间隔：
@@ -433,7 +428,6 @@ const handleAddSentenceAfter = (segmentId: string, index: number) => {
       const gapIndex = track.gaps.findIndex(g => g.id === originalGapToRemove.id)
       if (gapIndex > -1) {
         track.gaps.splice(gapIndex, 1)
-        console.log('Removed original gap:', originalGapToRemove.id)
       }
     }
 
@@ -441,7 +435,6 @@ const handleAddSentenceAfter = (segmentId: string, index: number) => {
     // 创建 "前一句 -> 新句子" 的间隔
     const prevSegment = track.segments[insertIndex - 1]
     if (prevSegment) {
-      console.log('Creating gap: prev -> new:', prevSegment.id, '->', newSegment.id)
       audioStore.addGap(track.id, prevSegment.id, newSegment.id, 1)
     }
 
@@ -449,7 +442,6 @@ const handleAddSentenceAfter = (segmentId: string, index: number) => {
     if (insertIndex < track.segments.length - 1) {
       const nextSegment = track.segments[insertIndex + 1]
       if (nextSegment) {
-        console.log('Creating gap: new -> next:', newSegment.id, '->', nextSegment.id)
         audioStore.addGap(track.id, newSegment.id, nextSegment.id, 1)
       }
     }
@@ -457,26 +449,18 @@ const handleAddSentenceAfter = (segmentId: string, index: number) => {
     selectedSegmentId.value = newSegment.id
 
     // 打印最终的时间轴数据
-    console.log('=== FINAL DATA CHECK ===')
-    console.log('Final track.segments:')
     track.segments.forEach((seg, idx) => {
-      console.log(`  segments[${idx}]: ${seg.id} - "${seg.text}"`)
     })
 
-    console.log('Final track.gaps:')
     if (track.gaps) {
       track.gaps.forEach((gap, idx) => {
-        console.log(`  gaps[${idx}]: ${gap.beforeSegmentId} -> ${gap.afterSegmentId} (${gap.duration}s)`)
       })
     }
 
-    console.log('Final timelineSegments computed:')
     const finalTimelineSegments = timelineSegments.value
     finalTimelineSegments.forEach((seg, idx) => {
-      console.log(`  timelineSegments[${idx}]: ${seg.id} - "${seg.text}"`)
     })
 
-    console.log('=== Editor - handleAddSentenceAfter END ===')
     ElMessage.success('新句子已添加，请编辑内容')
   } else {
     console.error('Track not found or no segments')
@@ -484,24 +468,18 @@ const handleAddSentenceAfter = (segmentId: string, index: number) => {
 }
 
 const handleAddGap = (beforeSegmentId: string, afterSegmentId: string) => {
-  console.log('=== Editor - handleAddGap START ===')
-  console.log('beforeSegmentId:', beforeSegmentId)
-  console.log('afterSegmentId:', afterSegmentId)
 
   const track = tracks.value.find(t => t.isSegmented && t.segments)
   if (track && track.segments) {
-    console.log('Track found with segments:', track.segments.length)
 
     // 检查是否已经存在间隔
     const existingGap = track.gaps?.find(gap => gap.beforeSegmentId === beforeSegmentId)
     if (existingGap) {
-      console.log('Gap already exists between segments:', beforeSegmentId, '->', afterSegmentId)
       ElMessage.warning('这两个句子之间已经存在间隔')
       return
     }
 
     // 创建新的间隔，默认1秒
-    console.log('Creating new gap between:', beforeSegmentId, '->', afterSegmentId)
     audioStore.addGap(track.id, beforeSegmentId, afterSegmentId, 1)
     ElMessage.success('已添加1秒间隔')
   } else {
@@ -509,7 +487,6 @@ const handleAddGap = (beforeSegmentId: string, afterSegmentId: string) => {
     ElMessage.error('添加间隔失败：未找到对应的轨道数据')
   }
 
-  console.log('=== Editor - handleAddGap END ===')
 }
 
 // 间隔相关事件处理
@@ -520,23 +497,14 @@ const handleSelectGap = (gap: any) => {
 }
 
 const handleUpdateGapDuration = (gapId: string, duration: number) => {
-  console.log('=== Editor - handleUpdateGapDuration START ===')
-  console.log('Received gapId:', gapId)
-  console.log('Received duration:', duration)
-  console.log('Duration type:', typeof duration)
-  console.log('Duration is NaN?', isNaN(duration))
 
   const track = tracks.value.find(t => t.isSegmented && t.gaps)
-  console.log('Found track for gap update:', track ? track.id : 'NOT FOUND')
 
   if (track && track.gaps) {
     const gap = track.gaps.find(g => g.id === gapId)
-    console.log('Found gap in track:', gap ? gap : 'NOT FOUND')
 
     if (gap) {
-      console.log('Gap current duration before update:', gap.duration, 'type:', typeof gap.duration)
       audioStore.updateGapDuration(track.id, gapId, duration)
-      ElMessage.success('间隔时长已更新')
     } else {
       console.error('Gap not found with gapId:', gapId)
     }
@@ -544,49 +512,87 @@ const handleUpdateGapDuration = (gapId: string, duration: number) => {
     console.error('Track not found or has no gaps')
   }
 
-  console.log('=== Editor - handleUpdateGapDuration END ===')
 }
 
 const handleRemoveGap = (gapId: string) => {
-  console.log('=== Editor - handleRemoveGap START ===')
-  console.log('gapId to remove:', gapId)
 
   const track = tracks.value.find(t => t.isSegmented && t.gaps)
-  console.log('Found track for gap removal:', track ? track.id : 'NOT FOUND')
 
   if (track && track.gaps) {
-    console.log('Track has gaps before removal:', track.gaps.length)
 
     // 调用store方法删除gap
     audioStore.removeGap(track.id, gapId)
 
     // 清理选中状态
     if (selectedGapId.value === gapId) {
-      console.log('Clearing selected gap as it was removed')
       selectedGapId.value = ''
     }
 
     // 清理语音编辑器状态（如果当前正在编辑）
     if (showSentenceVoiceEditor.value) {
-      console.log('Closing voice editor after gap removal')
       showSentenceVoiceEditor.value = false
       selectedSegmentForVoice.value = null
     }
 
-    console.log('Gap removal completed successfully')
     ElMessage.success('间隔已删除')
   } else {
     console.error('Track not found or has no gaps')
     ElMessage.error('删除间隔失败：未找到对应的轨道数据')
   }
 
-  console.log('=== Editor - handleRemoveGap END ===')
 }
 
 // 语音编辑相关事件处理
+
 const handleOpenVoiceEditor = (segment: any) => {
-  selectedSegmentForVoice.value = segment
+  console.log('=== Editor - handleOpenVoiceEditor START ===')
+  console.log('segment:', segment.id, segment.text)
+  
+  // 从store中获取已保存的语音设置
+  const track = tracks.value.find(t => t.isSegmented && t.segments)
+  console.log('found track:', track?.id)
+  
+  if (track) {
+    console.log('Editor - calling audioStore.getSegmentVoiceSettings with:', track.id, segment.id)
+    
+    const savedSettings = audioStore.getSegmentVoiceSettings(track.id, segment.id)
+    console.log('Editor - savedSettings from store:', savedSettings)
+    console.log('savedSettings type:', typeof savedSettings)
+    console.log('savedSettings is null:', savedSettings === null)
+    if (savedSettings) {
+      console.log('savedSettings.pauseMarks:', savedSettings.pauseMarks)
+      console.log('savedSettings.pronunciationMarks:', savedSettings.pronunciationMarks)
+    }
+    
+    // 创建带有默认值的segment对象
+    const createSegmentWithDefaults = (baseSegment: any, savedSettings?: any) => ({
+      ...baseSegment,
+      voice: savedSettings?.voice || baseSegment.voice || 'zhichu',
+      speed: savedSettings?.speed ?? baseSegment.speed ?? 1,
+      pitch: savedSettings?.pitch ?? baseSegment.pitch ?? 1,
+      volume: savedSettings?.volume ?? baseSegment.volume ?? 1,
+      ssml: savedSettings?.ssml || baseSegment.ssml || '',
+      pauseMarks: savedSettings?.pauseMarks || baseSegment.pauseMarks || [],
+      pronunciationMarks: savedSettings?.pronunciationMarks || baseSegment.pronunciationMarks || []
+    })
+
+    if (savedSettings) {
+      console.log('Editor - 合并保存的设置到segment对象')
+      selectedSegmentForVoice.value = createSegmentWithDefaults(segment, savedSettings)
+    } else {
+      console.log('Editor - 使用原始segment并添加默认值')
+      selectedSegmentForVoice.value = createSegmentWithDefaults(segment)
+    }
+    
+    console.log('Editor - 初始化后的selectedSegmentForVoice:', selectedSegmentForVoice.value)
+    console.log('Editor - pauseMarks in selectedSegmentForVoice:', selectedSegmentForVoice.value.pauseMarks)
+    console.log('Editor - pronunciationMarks in selectedSegmentForVoice:', selectedSegmentForVoice.value.pronunciationMarks)
+  } else {
+    console.log('Editor - 没有找到track')
+    selectedSegmentForVoice.value = segment
+  }
   showSentenceVoiceEditor.value = true
+  console.log('=== Editor - handleOpenVoiceEditor END ===')
 }
 
 const closeSentenceVoiceEditor = () => {
@@ -610,40 +616,85 @@ const handlePlayAudio = (segment: any) => {
   }
 }
 
+// 统一的语音设置保存方法
+const saveCurrentVoiceSettings = () => {
+  if (!selectedSegmentForVoice.value) return
+  
+  const track = tracks.value.find(t => t.isSegmented && t.segments)
+  if (!track) return
+  
+  // 收集所有语音设置，使用默认值确保完整性
+  const allSettings = {
+    voice: selectedSegmentForVoice.value.voice || 'zhichu',
+    speed: selectedSegmentForVoice.value.speed ?? 1,
+    pitch: selectedSegmentForVoice.value.pitch ?? 1,
+    volume: selectedSegmentForVoice.value.volume ?? 1,
+    ssml: selectedSegmentForVoice.value.ssml || '',
+    pauseMarks: selectedSegmentForVoice.value.pauseMarks || [],
+    pronunciationMarks: selectedSegmentForVoice.value.pronunciationMarks || []
+  }
+  
+  console.log('Editor - saving ALL voice settings to store:', allSettings)
+  audioStore.updateSegmentVoiceSettings(track.id, selectedSegmentForVoice.value.id, allSettings)
+}
+
 const handleSSMLUpdate = (ssml: string) => {
+  console.log('=== Editor - handleSSMLUpdate START ===')
+  console.log('ssml received:', ssml)
+  console.log('selectedSegmentForVoice:', selectedSegmentForVoice.value?.id)
+  
   if (selectedSegmentForVoice.value) {
     selectedSegmentForVoice.value.ssml = ssml
+    // 使用统一保存方法
+    saveCurrentVoiceSettings()
   }
+  console.log('=== Editor - handleSSMLUpdate END ===')
 }
 
 const handleVoiceUpdate = (voice: any) => {
   if (selectedSegmentForVoice.value) {
     selectedSegmentForVoice.value.voice = voice.id
+    saveCurrentVoiceSettings()
   }
 }
 
 const handleVolumeUpdate = (volume: number) => {
   if (selectedSegmentForVoice.value) {
     selectedSegmentForVoice.value.volume = volume
+    saveCurrentVoiceSettings()
   }
 }
 
 const handleSpeedUpdate = (speed: number) => {
   if (selectedSegmentForVoice.value) {
     selectedSegmentForVoice.value.speed = speed
+    saveCurrentVoiceSettings()
   }
 }
 
 const handlePitchUpdate = (pitch: number) => {
   if (selectedSegmentForVoice.value) {
     selectedSegmentForVoice.value.pitch = pitch
+    saveCurrentVoiceSettings()
+  }
+}
+
+const handlePauseMarksUpdate = (pauseMarks: any[]) => {
+  if (selectedSegmentForVoice.value) {
+    selectedSegmentForVoice.value.pauseMarks = pauseMarks
+    saveCurrentVoiceSettings()
+  }
+}
+
+const handlePronunciationMarksUpdate = (pronunciationMarks: any[]) => {
+  if (selectedSegmentForVoice.value) {
+    selectedSegmentForVoice.value.pronunciationMarks = pronunciationMarks
+    saveCurrentVoiceSettings()
   }
 }
 
 // 监控tracks变化
 watch(tracks, (newTracks) => {
-  console.log('=== Editor - tracks watch triggered ===')
-  console.log('newTracks count:', newTracks.length)
 
   if (newTracks.length > 0 && !selectedSegmentId.value && timelineSegments.value.length > 0) {
     const firstSegment = timelineSegments.value[0]
@@ -657,67 +708,290 @@ watch(tracks, (newTracks) => {
   // 检查新tracks是否需要初始化gaps
   newTracks.forEach((track, index) => {
     if (track.isSegmented && track.segments && track.segments.length > 1) {
-      console.log(`Editor - watch: checking track ${index} (${track.id}) for gaps...`)
 
       if (!track.gaps || track.gaps.length === 0) {
-        console.log(`Editor - watch: initializing gaps for track ${track.id}...`)
         audioStore.initializeGaps(track.id)
       } else {
         // 检查现有gaps是否有NaN值
         let hasNaN = false
         track.gaps.forEach((gap, gapIndex) => {
           if (isNaN(gap.duration)) {
-            console.log(`  WARNING: Found NaN in gap ${gapIndex} during watch, fixing...`)
             gap.duration = 1
             hasNaN = true
           }
         })
         if (hasNaN) {
-          console.log(`Editor - watch: fixed NaN values in track ${track.id} gaps`)
         }
       }
     }
   })
 
-  console.log('=== Editor - tracks watch completed ===')
 }, { immediate: true, deep: true })
 
 // 生命周期
 onMounted(() => {
-  console.log('=== Editor - onMounted START ===')
   appStore.init()
 
+  // AudioStore 测试功能
+  console.log('🔧 AudioStore 测试开始...')
+
+  // 暴露AudioStore到全局window对象供测试使用
+  ;(window as any).audioStore = audioStore
+  ;(window as any).testVoiceSettingsFlow = () => {
+    console.log('🧪 开始语音设置流程测试...')
+
+    // 测试完整的语音设置保存和恢复流程
+    if (tracks.value.length > 0) {
+      const track = tracks.value[0]
+      console.log('📦 使用track:', track.id)
+
+      if (track.isSegmented && track.segments && track.segments.length >= 2) {
+        console.log('🎯 测试两个segment之间的设置保存和恢复...')
+
+        // 获取前两个segment
+        const segment1 = track.segments[0]
+        const segment2 = track.segments[1]
+
+        console.log('📝 Segment 1:', segment1.id, segment1.text)
+        console.log('📝 Segment 2:', segment2.id, segment2.text)
+
+        // 1. 为segment1设置特定的语音参数
+        const settings1 = {
+          voice: 'caocao',
+          speed: 1.5,
+          volume: 0.8,
+          pitch: 1.2,
+          pauseMarks: [{ charIndex: 2, duration: 1.5 }],
+           pronunciationMarks: [{ charIndex: 4, pinyin: 'test1' }]
+        }
+
+        console.log('💾 为segment1保存设置:', settings1)
+        audioStore.updateSegmentVoiceSettings(track.id, segment1.id, settings1)
+
+        // 2. 验证设置是否保存成功
+        const retrieved1 = audioStore.getSegmentVoiceSettings(track.id, segment1.id)
+        console.log('🔍 从store获取segment1设置:', retrieved1)
+
+        // 3. 为segment2设置不同的语音参数
+        const settings2 = {
+          voice: 'zhichu',
+          speed: 0.8,
+          volume: 1.2,
+          pitch: 0.9,
+          pauseMarks: [{ charIndex: 1, duration: 2.0 }],
+           pronunciationMarks: [{ charIndex: 3, pinyin: 'test2' }]
+        }
+
+        console.log('💾 为segment2保存设置:', settings2)
+        audioStore.updateSegmentVoiceSettings(track.id, segment2.id, settings2)
+
+        // 4. 验证segment2设置是否保存成功
+        const retrieved2 = audioStore.getSegmentVoiceSettings(track.id, segment2.id)
+        console.log('🔍 从store获取segment2设置:', retrieved2)
+
+        // 5. 再次获取segment1的设置，确认没有被覆盖
+        const retrieved1Again = audioStore.getSegmentVoiceSettings(track.id, segment1.id)
+        console.log('🔍 再次从store获取segment1设置:', retrieved1Again)
+
+         // 6. 比较设置是否正确保持
+         const segment1Match = retrieved1Again ? JSON.stringify(settings1) === JSON.stringify({
+           voice: retrieved1Again.voice,
+           speed: retrieved1Again.speed,
+           volume: retrieved1Again.volume,
+           pitch: retrieved1Again.pitch,
+           pauseMarks: retrieved1Again.pauseMarks,
+           pronunciationMarks: retrieved1Again.pronunciationMarks
+         }) : false
+
+         const segment2Match = retrieved2 ? JSON.stringify(settings2) === JSON.stringify({
+           voice: retrieved2.voice,
+           speed: retrieved2.speed,
+           volume: retrieved2.volume,
+           pitch: retrieved2.pitch,
+           pauseMarks: retrieved2.pauseMarks,
+           pronunciationMarks: retrieved2.pronunciationMarks
+         }) : false
+
+        console.log(`📊 Segment1设置保持: ${segment1Match ? '✅' : '❌'}`)
+        console.log(`📊 Segment2设置保持: ${segment2Match ? '✅' : '❌'}`)
+
+        return {
+          success: segment1Match && segment2Match,
+          segment1: { saved: settings1, retrieved: retrieved1Again },
+          segment2: { saved: settings2, retrieved: retrieved2 }
+        }
+      } else {
+        console.log('⚠️ 需要至少2个分段来测试切换')
+        return { success: false, reason: '需要至少2个分段' }
+      }
+    } else {
+      console.log('⚠️ 没有track数据')
+      return { success: false, reason: '没有track数据' }
+    }
+  }
+
+  ;(window as any).testAudioStore = () => {
+    console.log('🧪 开始AudioStore功能测试...')
+
+    // 测试1: 检查store方法是否存在
+    const methods = [
+      'getSegmentVoiceSettings',
+      'updateSegmentVoiceSettings',
+      'addTrack',
+      'updateTrack'
+    ]
+
+    methods.forEach(method => {
+      const exists = typeof audioStore[method] === 'function'
+      console.log(`📋 ${method}: ${exists ? '✅ 存在' : '❌ 不存在'}`)
+    })
+
+    // 测试2: 如果有tracks，测试语音设置功能
+    if (tracks.value.length > 0) {
+      const track = tracks.value[0]
+      console.log('📦 当前tracks数量:', tracks.value.length)
+      console.log('📊 第一个track状态:', {
+        id: track.id,
+        isSegmented: track.isSegmented,
+        segmentsCount: track.segments?.length || 0
+      })
+
+      if (track.isSegmented && track.segments && track.segments.length > 0) {
+        const segment = track.segments[0]
+        console.log('🎯 测试第一个segment的语音设置...')
+
+        // 尝试获取语音设置
+        const currentSettings = audioStore.getSegmentVoiceSettings(track.id, segment.id)
+        console.log('📤 获取到的设置:', currentSettings)
+
+        // 尝试更新语音设置
+        const testSettings = {
+          voice: 'test-voice',
+          speed: 1.5,
+          volume: 0.8,
+          pitch: 1.2,
+          pauseMarks: [{ charIndex: 5, duration: 1.0 }],
+           pronunciationMarks: [{ charIndex: 3, pinyin: 'test' }]
+        }
+
+        console.log('📥 尝试保存设置:', testSettings)
+        audioStore.updateSegmentVoiceSettings(track.id, segment.id, testSettings)
+
+        // 验证设置是否保存成功
+        const updatedSettings = audioStore.getSegmentVoiceSettings(track.id, segment.id)
+        console.log('🔍 验证保存结果:', updatedSettings)
+
+        // 比较设置是否一致 - 只比较我们设置的字段
+        const fieldsToCheck = ['voice', 'speed', 'volume', 'pitch', 'pauseMarks', 'pronunciationMarks']
+        let settingsMatch = true
+        let mismatchDetails = []
+
+        for (const field of fieldsToCheck) {
+          const testValue = JSON.stringify(testSettings[field])
+          const updatedValue = JSON.stringify(updatedSettings[field])
+
+          if (testValue !== updatedValue) {
+            settingsMatch = false
+            mismatchDetails.push(`${field}: 期望 ${testValue}, 实际 ${updatedValue}`)
+          }
+        }
+
+        if (settingsMatch) {
+          console.log('📊 设置保存✅ 成功')
+        } else {
+          console.log('📊 设置保存❌ 失败')
+          console.log('❌ 不匹配的字段:', mismatchDetails)
+        }
+
+        return {
+          success: settingsMatch,
+          originalSettings: currentSettings,
+          testSettings,
+          updatedSettings
+        }
+      } else {
+        console.log('⚠️ 没有分段数据可供测试')
+        return { success: false, reason: '没有分段数据' }
+      }
+    } else {
+      console.log('⚠️ 没有track数据可供测试')
+      return { success: false, reason: '没有track数据' }
+    }
+  }
+
+   ;(window as any).debugMarks = (trackId: string, segmentId: string) => {
+    console.log('🔍 开始调试标记数据...')
+    console.log('参数:', { trackId, segmentId })
+
+    // 1. 直接从store检查
+    const storeData = audioStore.getSegmentVoiceSettings(trackId, segmentId)
+    console.log('📦 Store中的完整数据:', storeData)
+    console.log('📦 Store中的pauseMarks:', storeData?.pauseMarks)
+    console.log('📦 Store中的pronunciationMarks:', storeData?.pronunciationMarks)
+    console.log('📦 pauseMarks类型:', typeof storeData?.pauseMarks)
+    console.log('📦 pronunciationMarks类型:', typeof storeData?.pronunciationMarks)
+    console.log('📦 pauseMarks是否为数组:', Array.isArray(storeData?.pauseMarks))
+    console.log('📦 pronunciationMarks是否为数组:', Array.isArray(storeData?.pronunciationMarks))
+
+    // 2. 检查tracks中的原始数据
+    const track = tracks.value.find(t => t.id === trackId)
+    const segment = track?.segments?.find(s => s.id === segmentId)
+    console.log('📊 Segment原始数据:', segment)
+    console.log('📊 Segment中的pauseMarks:', segment?.pauseMarks)
+    console.log('📊 Segment中的pronunciationMarks:', segment?.pronunciationMarks)
+
+    // 3. 模拟handleOpenVoiceEditor的逻辑
+    if (track && segment && storeData) {
+      const testSelectedSegment = {
+        ...segment,
+        voice: storeData.voice || segment.voice,
+        speed: storeData.speed || segment.speed,
+        pitch: storeData.pitch || segment.pitch,
+        volume: storeData.volume || segment.volume,
+        ssml: storeData.ssml || segment.ssml,
+        pauseMarks: storeData.pauseMarks || [],
+        pronunciationMarks: storeData.pronunciationMarks || []
+      }
+      console.log('🧪 模拟合并结果:', testSelectedSegment)
+      console.log('🧪 模拟合并后pauseMarks:', testSelectedSegment.pauseMarks)
+      console.log('🧪 模拟合并后pronunciationMarks:', testSelectedSegment.pronunciationMarks)
+    }
+
+    return {
+      storeData,
+      segmentData: segment,
+      trackFound: !!track,
+      segmentFound: !!segment
+    }
+  }
+
+  console.log('🎉 AudioStore已暴露到window对象')
+  console.log('📚 可以在控制台运行测试:')
+  console.log('  - window.testAudioStore() - 基础功能测试')
+  console.log('  - window.testVoiceSettingsFlow() - 语音设置切换测试')
+  console.log('  - window.debugMarks(trackId, segmentId) - 调试标记数据丢失问题')
+
   // 检查现有的分句数据并初始化gaps
-  console.log('Editor - checking existing tracks for gap initialization...')
   tracks.value.forEach((track, index) => {
-    console.log(`Editor - checking track ${index} (${track.id}):`)
-    console.log(`  isSegmented: ${track.isSegmented}`)
-    console.log(`  segments count: ${track.segments?.length || 0}`)
-    console.log(`  gaps count: ${track.gaps?.length || 0}`)
 
     if (track.isSegmented && track.segments && track.segments.length > 1) {
       if (!track.gaps || track.gaps.length === 0) {
-        console.log(`Editor - initializing gaps for track ${track.id}...`)
         audioStore.initializeGaps(track.id)
       } else {
-        console.log(`Editor - track ${track.id} already has gaps, checking for NaN values...`)
         // 检查现有gaps是否有NaN值
         let hasNaN = false
         track.gaps.forEach((gap, gapIndex) => {
           if (isNaN(gap.duration)) {
-            console.log(`  WARNING: Found NaN in gap ${gapIndex}, fixing...`)
             gap.duration = 1
             hasNaN = true
           }
         })
         if (hasNaN) {
-          console.log(`Editor - fixed NaN values in track ${track.id} gaps`)
         }
       }
     }
   })
 
-  console.log('=== Editor - onMounted END ===')
 })
 </script>
 

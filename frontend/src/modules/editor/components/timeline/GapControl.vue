@@ -39,7 +39,9 @@ const emit = defineEmits<Emits>()
 .gap-control {
   position: relative;
   width: 60px;
-  height: 100%;
+  height: 30px;
+  margin-top: 30px;
+  height: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,8 +56,7 @@ const emit = defineEmits<Emits>()
 }
 
 .gap-control.active {
-  background: rgba(64, 158, 255, 0.2);
-  border: 1px solid #409eff;
+  background: rgba(50, 65, 81, 0.2);
   border-radius: 4px;
 }
 
@@ -68,7 +69,7 @@ const emit = defineEmits<Emits>()
 
 .gap-line {
   width: 2px;
-  height: 30px;
+  height: 20px;
   background: #67c23a;
   border-radius: 1px;
 }

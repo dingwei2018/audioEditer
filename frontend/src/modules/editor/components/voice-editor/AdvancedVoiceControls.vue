@@ -160,7 +160,6 @@ function handleRemovePause() {
 }
 
 function handlePronunciationChange(pinyin: string) {
-  console.log('AdvancedVoiceControls - 发音选择改变:', pinyin)
   emit('update-pronunciation', pinyin)
 }
 

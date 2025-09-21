@@ -9,9 +9,12 @@
       :hovered-char-index="hoveredCharIndex"
       :pause-marks="pauseMarks"
       :pronunciation-marks="pronunciationMarks"
+      :current-segment="currentSegment || null"
       @char-select="handleCharSelect"
       @char-hover="handleCharHover"
       @char-unhover="handleCharUnhover"
+      @synthesize-audio="handleSynthesizeAudio"
+      @play-audio="handlePlayAudio"
       ref="contentDisplayRef"
     />
 
@@ -57,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { ref, computed, watch, nextTick } from 'vue'
 import { ElMessage } from 'element-plus'
 import SentenceContentDisplay from './SentenceContentDisplay.vue'
 import BasicVoiceControls from './BasicVoiceControls.vue'
@@ -96,6 +99,21 @@ interface PronunciationMark {
   pinyin: string
 }
 
+interface SegmentWithTiming {
+  id: string
+  text: string
+  startTime: number
+  endTime: number
+  duration: number
+  isPlaying: boolean
+  audioUrl?: string
+  voice?: string
+  speed?: number
+  pitch?: number
+  volume?: number
+  ssml?: string
+}
+
 interface Props {
   sentenceText: string
   sentenceIndex: number
@@ -104,6 +122,7 @@ interface Props {
   initialVolume?: number
   initialSpeed?: number
   initialPitch?: number
+  currentSegment?: SegmentWithTiming | null
 }
 
 interface Emits {
@@ -112,6 +131,10 @@ interface Emits {
   (e: 'update-volume', volume: number): void
   (e: 'update-speed', speed: number): void
   (e: 'update-pitch', pitch: number): void
+  (e: 'update-pause-marks', pauseMarks: PauseMark[]): void
+  (e: 'update-pronunciation-marks', pronunciationMarks: PronunciationMark[]): void
+  (e: 'synthesize-audio', segment: SegmentWithTiming): void
+  (e: 'play-audio', segment: SegmentWithTiming): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -131,15 +154,24 @@ const hoveredCharIndex = ref<number | null>(null)
 const showPolyphoneSelection = ref(false)
 const selectedPronunciation = ref('')
 
-// 语音设置
-const currentVoice = ref<Voice>(props.initialVoice || getDefaultVoice())
-const volume = ref(props.initialVolume)
-const speed = ref(props.initialSpeed)
-const pitch = ref(props.initialPitch)
+// 语音设置 - 先定义默认值，稍后在voiceCategories定义后重新初始化
+const currentVoice = ref<Voice>(props.initialVoice || {
+  id: 'zhichu',
+  name: '知初',
+  category: '现代人物',
+  avatar: '/header/zc.jpeg',
+  description: '清新自然，适合日常对话',
+  ssmlName: 'zh-CN-XiaoxiaoNeural'
+})
 
-// 编辑标记
-const pauseMarks = ref<PauseMark[]>([])
-const pronunciationMarks = ref<PronunciationMark[]>([])
+const volume = ref((props.currentSegment as any)?.volume ?? props.initialVolume)
+const speed = ref((props.currentSegment as any)?.speed ?? props.initialSpeed)
+const pitch = ref((props.currentSegment as any)?.pitch ?? props.initialPitch)
+
+// 编辑标记 - 从currentSegment中读取已保存的设置
+const pauseMarks = ref<PauseMark[]>((props.currentSegment as any)?.pauseMarks || [])
+const pronunciationMarks = ref<PronunciationMark[]>((props.currentSegment as any)?.pronunciationMarks || [])
+
 
 // 多音字数据
 const polyphoneOptions = ref<PolyphoneOption[]>([])
@@ -162,7 +194,7 @@ const voiceCategories = ref<VoiceCategory[]>([
         id: 'caocao',
         name: '曹操',
         category: '古典人物',
-        avatar: 'https://via.placeholder.com/60x60/4A90E2/FFFFFF?text=曹',
+        avatar: '/header/cc.jpeg',
         description: '雄浑有力，适合历史题材',
         ssmlName: 'zh-CN-XiaoxiaoNeural'
       },
@@ -170,7 +202,7 @@ const voiceCategories = ref<VoiceCategory[]>([
         id: 'liubang',
         name: '刘邦',
         category: '古典人物',
-        avatar: 'https://via.placeholder.com/60x60/7ED321/FFFFFF?text=刘',
+        avatar: '/header/lb.jpeg',
         description: '威严庄重，帝王风范',
         ssmlName: 'zh-CN-YunxiNeural'
       },
@@ -178,7 +210,7 @@ const voiceCategories = ref<VoiceCategory[]>([
         id: 'zhugeliang',
         name: '诸葛亮',
         category: '古典人物',
-        avatar: 'https://via.placeholder.com/60x60/F5A623/FFFFFF?text=诸',
+        avatar: '/header/zgl.jpeg',
         description: '智慧深沉，谋士风范',
         ssmlName: 'zh-CN-YunyangNeural'
       }
@@ -192,7 +224,7 @@ const voiceCategories = ref<VoiceCategory[]>([
         id: 'zhichu',
         name: '知初',
         category: '现代人物',
-        avatar: 'https://via.placeholder.com/60x60/50E3C2/FFFFFF?text=知',
+        avatar: '/header/zc.jpeg',
         description: '清新自然，适合日常对话',
         ssmlName: 'zh-CN-XiaoxiaoNeural'
       },
@@ -200,7 +232,7 @@ const voiceCategories = ref<VoiceCategory[]>([
         id: 'zhimei',
         name: '知美',
         category: '现代人物',
-        avatar: 'https://via.placeholder.com/60x60/BD10E0/FFFFFF?text=美',
+        avatar: '/header/zc.jpeg',
         description: '温柔甜美，适合情感表达',
         ssmlName: 'zh-CN-XiaohanNeural'
       },
@@ -208,7 +240,7 @@ const voiceCategories = ref<VoiceCategory[]>([
         id: 'zhiwen',
         name: '知文',
         category: '现代人物',
-        avatar: 'https://via.placeholder.com/60x60/B8E986/FFFFFF?text=文',
+        avatar: '/header/zc.jpeg',
         description: '文雅知性，适合知识讲解',
         ssmlName: 'zh-CN-YunxiNeural'
       }
@@ -251,14 +283,58 @@ function getDefaultVoice(): Voice {
   return voiceCategories.value[0].voices[0]
 }
 
+// 获取初始语音设置
+const getInitialVoice = (): Voice => {
+  if (props.currentSegment && (props.currentSegment as any).voice) {
+    const savedVoice = voiceCategories.value
+      .reduce((acc, cat) => [...acc, ...cat.voices], [] as Voice[])
+      .find(voice => voice.id === (props.currentSegment as any).voice)
+    return savedVoice || getDefaultVoice()
+  }
+  return props.initialVoice || getDefaultVoice()
+}
+
+// 初始化语音设置
+if (props.currentSegment && (props.currentSegment as any).voice) {
+  currentVoice.value = getInitialVoice()
+}
+
+// 按单词分割文本的函数
+function splitTextByWords(text: string): string[] {
+  const result: string[] = []
+  let currentWord = ''
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i]
+    
+    // 如果是英文字母或数字，累积成单词
+    if (/^[a-zA-Z0-9]$/.test(char)) {
+      currentWord += char
+    } else {
+      // 如果当前有累积的单词，先添加单词
+      if (currentWord) {
+        result.push(currentWord)
+        currentWord = ''
+      }
+      // 添加当前字符
+      result.push(char)
+    }
+  }
+  
+  // 处理最后的单词
+  if (currentWord) {
+    result.push(currentWord)
+  }
+  
+  return result
+}
+
 function handleCharSelect(index: number) {
-  console.log('SentenceVoiceEditor - 选择字符:', index, '字符:', displayText.value[index])
   selectedCharIndex.value = index
   const selectedItem = displayText.value[index]
 
   // 检查是否为多音字
   const polyphoneData = getPolyphoneData(selectedItem)
-  console.log('SentenceVoiceEditor - 多音字数据:', polyphoneData)
   if (polyphoneData && polyphoneData.length > 1) {
     polyphoneOptions.value = polyphoneData
     showPolyphoneSelection.value = true
@@ -266,7 +342,6 @@ function handleCharSelect(index: number) {
     // 设置当前选中的发音
     const existingPronunciation = pronunciationMarks.value.find(p => p.charIndex === index)
     selectedPronunciation.value = existingPronunciation ? existingPronunciation.pinyin : ''
-    console.log('SentenceVoiceEditor - 设置选中发音:', selectedPronunciation.value)
   } else {
     showPolyphoneSelection.value = false
   }
@@ -317,19 +392,37 @@ function handlePitchUpdate(newPitch: number) {
   updateSSML()
 }
 
+function handleSynthesizeAudio(segment: SegmentWithTiming) {
+  emit('synthesize-audio', segment)
+}
+
+function handlePlayAudio(segment: SegmentWithTiming) {
+  emit('play-audio', segment)
+}
+
 function handleAddPause(duration: number) {
+  
   if (selectedCharIndex.value !== null) {
     // 移除现有的停顿标记
     pauseMarks.value = pauseMarks.value.filter(p => p.charIndex !== selectedCharIndex.value)
 
     // 添加新的停顿标记
-    pauseMarks.value.push({
+    const newPauseMark = {
       charIndex: selectedCharIndex.value,
       duration: duration
+    }
+    pauseMarks.value.push(newPauseMark)
+    
+    // 发出停顿标记更新事件
+    emit('update-pause-marks', pauseMarks.value)
+    
+    // 延迟更新SSML，确保pauseMarks先保存到store
+    nextTick(() => {
+      updateSSML()
     })
-
-    updateSSML()
     ElMessage.success(`在"${displayText.value[selectedCharIndex.value]}"后添加了${duration}秒停顿`)
+  } else {
+    console.error('SentenceVoiceEditor - selectedCharIndex is null')
   }
 }
 
@@ -338,7 +431,14 @@ function handleRemovePause() {
     const existingPause = pauseMarks.value.find(p => p.charIndex === selectedCharIndex.value)
     if (existingPause) {
       pauseMarks.value = pauseMarks.value.filter(p => p.charIndex !== selectedCharIndex.value)
-      updateSSML()
+      
+      // 发出停顿标记更新事件
+      emit('update-pause-marks', pauseMarks.value)
+      
+      // 延迟更新SSML，确保pauseMarks先保存到store
+      nextTick(() => {
+        updateSSML()
+      })
       ElMessage.success(`已移除"${displayText.value[selectedCharIndex.value]}"后的停顿`)
     } else {
       ElMessage.warning(`"${displayText.value[selectedCharIndex.value]}"后没有停顿标记`)
@@ -347,7 +447,6 @@ function handleRemovePause() {
 }
 
 function handlePronunciationUpdate(pinyin: string) {
-  console.log('SentenceVoiceEditor - 处理发音更新:', pinyin, '选中字符索引:', selectedCharIndex.value)
   if (selectedCharIndex.value !== null && pinyin) {
     // 移除现有的发音标记
     pronunciationMarks.value = pronunciationMarks.value.filter(p => p.charIndex !== selectedCharIndex.value)
@@ -361,7 +460,8 @@ function handlePronunciationUpdate(pinyin: string) {
     // 更新选中的发音
     selectedPronunciation.value = pinyin
 
-    console.log('SentenceVoiceEditor - 更新后的发音标记:', pronunciationMarks.value)
+    // 发出发音标记更新事件
+    emit('update-pronunciation-marks', pronunciationMarks.value)
     updateSSML()
     ElMessage.success(`已设置"${displayText.value[selectedCharIndex.value]}"的发音为：${pinyin}`)
   }
@@ -375,22 +475,27 @@ function handleCancelPronunciation() {
     // 重置选中的发音
     selectedPronunciation.value = ''
     
+    // 发出发音标记更新事件
+    emit('update-pronunciation-marks', pronunciationMarks.value)
     updateSSML()
     ElMessage.success(`已取消"${displayText.value[selectedCharIndex.value]}"的多音字设置`)
   }
 }
 
 function updateSSML() {
+  
   let ssml = `<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="zh-CN">`
 
   // 添加语音设置
   ssml += `<voice name="${currentVoice.value.ssmlName}">`
   ssml += `<prosody rate="${speed.value}" pitch="${pitch.value}" volume="${Math.round(volume.value * 100)}%">`
 
-  // 构建文本内容
+  // 构建文本内容 - 使用当前句子的文本
   let textContent = ''
-  for (let i = 0; i < displayText.value.length; i++) {
-    const char = displayText.value[i]
+  const textArray = splitTextByWords(props.sentenceText)
+  
+  for (let i = 0; i < textArray.length; i++) {
+    const char = textArray[i]
 
     // 检查是否有发音标记
     const pronunciation = pronunciationMarks.value.find(p => p.charIndex === i)
@@ -424,6 +529,59 @@ watch(() => props.sentenceText, () => {
   showPolyphoneSelection.value = false
   updateSSML()
 })
+
+// 监听currentSegment变化，重新加载已保存的设置
+watch(() => props.currentSegment, (newSegment, oldSegment) => {
+  console.log('=== SentenceVoiceEditor - currentSegment watch triggered ===')
+  console.log('oldSegment:', oldSegment?.id, oldSegment?.text)
+  console.log('newSegment:', newSegment?.id, newSegment?.text)
+  
+  if (newSegment) {
+    console.log('SentenceVoiceEditor - currentSegment changed, loading saved settings:', newSegment)
+    
+    // 加载已保存的停顿标记和发音标记
+    pauseMarks.value = (newSegment as any).pauseMarks || []
+    pronunciationMarks.value = (newSegment as any).pronunciationMarks || []
+    
+    console.log('SentenceVoiceEditor - loaded pauseMarks:', pauseMarks.value)
+    console.log('SentenceVoiceEditor - loaded pronunciationMarks:', pronunciationMarks.value)
+    
+    // 加载已保存的语音设置
+    if ((newSegment as any).voice) {
+      const savedVoice = voiceCategories.value
+        .reduce((acc, cat) => [...acc, ...cat.voices], [] as Voice[])
+        .find(voice => voice.id === (newSegment as any).voice)
+      if (savedVoice) {
+        currentVoice.value = savedVoice
+        console.log('SentenceVoiceEditor - loaded saved voice:', savedVoice.name)
+      }
+    }
+    
+    if ((newSegment as any).volume !== undefined) {
+      volume.value = (newSegment as any).volume
+      console.log('SentenceVoiceEditor - loaded saved volume:', volume.value)
+    }
+    if ((newSegment as any).speed !== undefined) {
+      speed.value = (newSegment as any).speed
+      console.log('SentenceVoiceEditor - loaded saved speed:', speed.value)
+    }
+    if ((newSegment as any).pitch !== undefined) {
+      pitch.value = (newSegment as any).pitch
+      console.log('SentenceVoiceEditor - loaded saved pitch:', pitch.value)
+    }
+    
+    console.log('SentenceVoiceEditor - final loaded settings:', {
+      voice: currentVoice.value,
+      volume: volume.value,
+      speed: speed.value,
+      pitch: pitch.value,
+      pauseMarks: pauseMarks.value,
+      pronunciationMarks: pronunciationMarks.value
+    })
+    
+    updateSSML()
+  }
+}, { immediate: true })
 
 // 初始化
 updateSSML()

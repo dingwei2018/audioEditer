@@ -1,13 +1,26 @@
+export interface PauseMark {
+  charIndex: number
+  duration: number
+}
+
+export interface PronunciationMark {
+  charIndex: number
+  pinyin: string
+}
+
 export interface TextSegment {
   id: string
   text: string
   startIndex: number
   endIndex: number
-  type: 'sentence' | 'paragraph' | 'custom'
+  type: 'sentence' | 'paragraph' | 'custom' | 'ai'
   voice?: string
   speed?: number
   pitch?: number
   volume?: number
+  ssml?: string
+  pauseMarks?: PauseMark[]
+  pronunciationMarks?: PronunciationMark[]
 }
 
 export interface AudioTrack {
@@ -73,14 +86,22 @@ export const createTextSegment = (
   text: string,
   startIndex: number,
   endIndex: number,
-  type: 'sentence' | 'paragraph' | 'custom' = 'sentence'
+  type: 'sentence' | 'paragraph' | 'custom' | 'ai' = 'sentence'
 ): TextSegment => {
   return {
     id: `segment_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
     text,
     startIndex,
     endIndex,
-    type
+    type,
+    // 设置默认的语音参数
+    voice: 'zhichu',
+    speed: 1,
+    pitch: 1,
+    volume: 1,
+    ssml: '',
+    pauseMarks: [],
+    pronunciationMarks: []
   }
 }
 
@@ -89,15 +110,9 @@ export const createSegmentGap = (
   afterSegmentId: string,
   duration = 1
 ): SegmentGap => {
-  console.log('=== createSegmentGap START ===')
-  console.log('beforeSegmentId:', beforeSegmentId)
-  console.log('afterSegmentId:', afterSegmentId)
-  console.log('duration:', duration, 'type:', typeof duration)
-  console.log('duration is NaN?', isNaN(duration))
 
   // 确保 duration 是有效数字
   const safeDuration = isNaN(duration) ? 1 : Number(duration)
-  console.log('safeDuration after check:', safeDuration)
 
   const gap: SegmentGap = {
     id: `gap_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
@@ -107,8 +122,6 @@ export const createSegmentGap = (
     isSelected: false
   }
 
-  console.log('Created gap:', gap)
-  console.log('=== createSegmentGap END ===')
 
   return gap
 }

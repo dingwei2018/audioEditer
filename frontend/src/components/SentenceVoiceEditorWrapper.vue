@@ -9,11 +9,14 @@
       :initial-volume="initialVolume"
       :initial-speed="initialSpeed"
       :initial-pitch="initialPitch"
+      :current-segment="currentSegment"
       @update-ssml="handleSSMLUpdate"
       @update-voice="handleVoiceUpdate"
       @update-volume="handleVolumeUpdate"
       @update-speed="handleSpeedUpdate"
       @update-pitch="handlePitchUpdate"
+      @update-pause-marks="handlePauseMarksUpdate"
+      @update-pronunciation-marks="handlePronunciationMarksUpdate"
     />
   </div>
 </template>
@@ -38,6 +41,7 @@ interface Props {
   initialVolume?: number
   initialSpeed?: number
   initialPitch?: number
+  currentSegment?: any
 }
 
 interface Emits {
@@ -46,6 +50,8 @@ interface Emits {
   (e: 'update-volume', volume: number): void
   (e: 'update-speed', speed: number): void
   (e: 'update-pitch', pitch: number): void
+  (e: 'update-pause-marks', pauseMarks: any[]): void
+  (e: 'update-pronunciation-marks', pronunciationMarks: any[]): void
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -76,11 +82,19 @@ function handleSpeedUpdate(speed: number) {
 function handlePitchUpdate(pitch: number) {
   emit('update-pitch', pitch)
 }
+
+function handlePauseMarksUpdate(pauseMarks: any[]) {
+  emit('update-pause-marks', pauseMarks)
+}
+
+function handlePronunciationMarksUpdate(pronunciationMarks: any[]) {
+  emit('update-pronunciation-marks', pronunciationMarks)
+}
 </script>
 
 <script lang="ts">
 export default {
-  name: 'SentenceVoiceEditor'
+  name: 'SentenceVoiceEditorWrapper'
 }
 </script>
 

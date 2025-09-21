@@ -22,8 +22,6 @@
             @edit-start="handleEditStart"
             @edit-finish="handleEditFinish"
             @edit-cancel="handleEditCancel"
-            @synthesize="$emit('synthesize-audio', item.data)"
-            @play="$emit('play-audio', item.data)"
             @add-after="handleAddAfterClick"
             @delete="$emit('delete-segment', item.data.id)"
           />
@@ -37,21 +35,17 @@
           />
 
           <!-- 添加间隔按钮 -->
-          <div
+          <button
             v-else-if="item.type === 'add-gap'"
-            class="add-gap-control"
-            @click.stop="handleAddGapClick(item.data.beforeSegmentId, item.data.afterSegmentId)"
+            class="add-gap-control plus-btn"
+            @click.stop.prevent="handleAddGapClick(item.data.beforeSegmentId, item.data.afterSegmentId)"
+            type="button"
+            title="添加间隔"
           >
-            <el-button
-              type="primary"
-              size="small"
-              icon="Plus"
-              circle
-              class="add-gap-btn"
-              title="添加间隔"
-              @click.stop="handleAddGapClick(item.data.beforeSegmentId, item.data.afterSegmentId)"
-            />
-          </div>
+            <svg class="plus-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            </svg>
+          </button>
         </div>
 
         <!-- 时间轴结束标记 -->
@@ -106,8 +100,6 @@ interface Emits {
   (e: 'edit-segment-start', segmentId: string, text: string): void
   (e: 'edit-segment-finish', segmentId: string, text: string): void
   (e: 'edit-segment-cancel', segmentId: string): void
-  (e: 'synthesize-audio', segment: SegmentWithTiming): void
-  (e: 'play-audio', segment: SegmentWithTiming): void
   (e: 'add-sentence-after', segmentId: string, index: number): void
   (e: 'add-gap', beforeSegmentId: string, afterSegmentId: string): void
   (e: 'delete-segment', segmentId: string): void
@@ -133,36 +125,27 @@ const timelineWidth = computed(() => {
 
 // 生成包含句子和间隔的时间轴项目
 const timelineItems = computed(() => {
-  console.log('=== TimelineDisplay - timelineItems computed START ===')
-  console.log('props.segments:', props.segments?.length || 0, 'segments')
-  console.log('props.gaps:', props.gaps?.length || 0, 'gaps')
 
   const items = []
   if (!props.segments || !Array.isArray(props.segments)) {
-    console.log('TimelineDisplay - no segments, returning empty items')
     return items
   }
 
   // 打印输入的segments
-  console.log('Input segments:')
-  props.segments.forEach((segment, index) => {
-    console.log(`  segments[${index}]: ${segment.id} - "${segment.text}"`)
-  })
+  // props.segments.forEach((segment, index) => {
+  // })
 
   // 打印输入的gaps
-  console.log('Input gaps:')
-  if (props.gaps) {
-    props.gaps.forEach((gap, index) => {
-      console.log(`  gaps[${index}]: ${gap.beforeSegmentId} -> ${gap.afterSegmentId} (${gap.duration}s)`)
-    })
-  }
+  // if (props.gaps) {
+  //   props.gaps.forEach((gap, index) => {
+  //   })
+  // }
 
   // 强制依赖于gaps的变化，确保计算属性在gaps更新时重新计算
   const gapsData = props.gaps
 
   props.segments.forEach((segment, index) => {
     if (!segment || !segment.id) {
-      console.log(`Skipping invalid segment at index ${index}`)
       return
     }
 
@@ -172,7 +155,6 @@ const timelineItems = computed(() => {
       data: segment,
       index: index
     })
-    console.log(`Added segment to timeline: index=${index}, id=${segment.id}`)
 
     // 检查是否存在真正的gap数据，只有存在时才添加间隔
     if (index < props.segments.length - 1) {
@@ -183,7 +165,6 @@ const timelineItems = computed(() => {
 
       // 只有当确实存在gap数据时才显示间隔
       if (realGap && realGap.duration > 0) {
-        console.log(`TimelineDisplay - Adding gap between ${segment.id} and ${nextSegment?.id}, duration: ${realGap.duration}`)
 
         items.push({
           type: 'gap',
@@ -200,15 +181,11 @@ const timelineItems = computed(() => {
           index: index
         })
       } else {
-        console.log(`TimelineDisplay - No gap found or gap duration is 0 between ${segment.id} and ${nextSegment?.id}`)
-        if (realGap) {
-          console.log(`  - realGap exists but duration is: ${realGap.duration}`)
-        } else {
-          console.log(`  - realGap does not exist at all`)
-        }
+        // if (realGap) {
+        // } else {
+        // }
 
         // 在没有间隔时，添加一个"添加间隔"控件
-        console.log(`TimelineDisplay - Adding add-gap control between ${segment.id} and ${nextSegment?.id}`)
         items.push({
           type: 'add-gap',
           data: {
@@ -223,41 +200,29 @@ const timelineItems = computed(() => {
     }
   })
 
-  console.log('=== TimelineDisplay - Final timeline items ===')
-  items.forEach((item, idx) => {
-    if (item.type === 'segment') {
-      console.log(`  item[${idx}] SEGMENT: index=${item.index}, id=${item.data.id}, text="${item.data.text}"`)
-    } else if (item.type === 'gap') {
-      console.log(`  item[${idx}] GAP: ${item.data.beforeSegmentId} -> ${item.data.afterSegmentId}`)
-    } else if (item.type === 'add-gap') {
-      console.log(`  item[${idx}] ADD-GAP: ${item.data.beforeSegmentId} -> ${item.data.afterSegmentId}`)
-    }
-  })
+  // items.forEach((item, idx) => {
+  //   if (item.type === 'segment') {
+  //   } else if (item.type === 'gap') {
+  //   } else if (item.type === 'add-gap') {
+  //   }
+  // })
 
-  console.log('TimelineDisplay - timelineItems computed, total items:', items.length)
-  console.log('=== TimelineDisplay - timelineItems computed END ===')
   return items
 })
 
 // 方法
 function getGapDuration(index: number) {
   try {
-    console.log('TimelineDisplay - getGapDuration called with index:', index)
 
     if (!props.gaps || !props.segments || !props.segments[index]) {
-      console.log('TimelineDisplay - getGapDuration: no gaps or segments, returning default 1')
       return 1
     }
 
     const currentSegment = props.segments[index]
-    console.log('TimelineDisplay - currentSegment:', currentSegment.id)
 
     const gap = props.gaps.find(g => g.beforeSegmentId === currentSegment?.id)
-    console.log('TimelineDisplay - found gap:', gap)
 
     if (gap) {
-      console.log('TimelineDisplay - gap.duration type:', typeof gap.duration, 'value:', gap.duration)
-      console.log('TimelineDisplay - gap.duration is NaN?', isNaN(gap.duration))
 
       // 添加 NaN 检查
       if (isNaN(gap.duration)) {
@@ -267,7 +232,6 @@ function getGapDuration(index: number) {
 
       return gap.duration
     } else {
-      console.log('TimelineDisplay - no gap found for segment, using default 1')
       return 1
     }
   } catch (error) {
@@ -283,7 +247,6 @@ function handleEditStart(segmentId: string, text: string) {
 }
 
 function handleEditFinish(segmentId: string, text: string) {
-  console.log('TimelineDisplay - handleEditFinish:', segmentId, text)
 
   // 发出编辑完成事件
   emit('edit-segment-finish', segmentId, text)
@@ -292,7 +255,6 @@ function handleEditFinish(segmentId: string, text: string) {
   setTimeout(() => {
     editingSegmentId.value = ''
     editingText.value = ''
-    console.log('TimelineDisplay - editing state cleared after timeout')
   }, 100)
 }
 
@@ -307,14 +269,9 @@ function handleGapSelect(gap: any) {
 }
 
 function handleAddAfterClick(segmentId: string, index: number) {
-  console.log('=== TimelineDisplay - handleAddAfterClick ===')
-  console.log('segmentId:', segmentId)
-  console.log('index from SentenceBlock:', index)
-  console.log('props.segments length:', props.segments?.length)
 
   // 找到这个segment在props.segments中的实际位置
   const actualIndex = props.segments?.findIndex(seg => seg.id === segmentId) ?? -1
-  console.log('actualIndex found in props.segments:', actualIndex)
 
   // 检查传入的index和实际index是否匹配
   if (actualIndex !== index) {
@@ -325,17 +282,13 @@ function handleAddAfterClick(segmentId: string, index: number) {
 }
 
 function handleAddGapClick(beforeSegmentId: string, afterSegmentId: string) {
-  console.log('=== TimelineDisplay - handleAddGapClick ===')
-  console.log('beforeSegmentId:', beforeSegmentId)
-  console.log('afterSegmentId:', afterSegmentId)
-  console.log('Button was clicked!')
+
   emit('add-gap', beforeSegmentId, afterSegmentId)
 }
 
 // 监听segments变化
 watch(() => props.segments, (newSegments) => {
   try {
-    console.log('TimelineDisplay - segments changed:', newSegments?.length, 'segments')
   } catch (error) {
     console.error('TimelineDisplay - error processing segments:', error)
   }
@@ -344,9 +297,7 @@ watch(() => props.segments, (newSegments) => {
 // 监听gaps变化
 watch(() => props.gaps, (newGaps) => {
   try {
-    console.log('TimelineDisplay - gaps changed:', newGaps?.length, 'gaps')
     newGaps?.forEach(gap => {
-      console.log(`Gap ${gap.id}: ${gap.beforeSegmentId} -> ${gap.afterSegmentId}, duration: ${gap.duration}`)
     })
   } catch (error) {
     console.error('TimelineDisplay - error processing gaps:', error)
@@ -442,6 +393,26 @@ watch(() => props.gaps, (newGaps) => {
   .sentences-timeline {
     height: 100px;
   }
+  
+  .add-gap-control.plus-btn {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .add-gap-control.plus-btn .plus-icon {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .add-gap-control.plus-btn {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .add-gap-control.plus-btn .plus-icon {
+    font-size: 14px;
+  }
 }
 
 /* 添加间隔控件样式 */
@@ -450,29 +421,71 @@ watch(() => props.gaps, (newGaps) => {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  margin: 0 10px;
-  z-index: 10;
+  margin: 0 8px;
+  z-index: 999 !important;
   cursor: pointer;
+  pointer-events: all !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.add-gap-control .add-gap-btn {
+/* +号按钮样式 */
+.add-gap-control.plus-btn {
   width: 32px;
   height: 32px;
-  border: 2px dashed #409eff;
-  background-color: rgba(64, 158, 255, 0.1);
-  color: #409eff;
-  transition: all 0.2s;
-  font-size: 14px;
-}
-
-.add-gap-control .add-gap-btn:hover {
-  background-color: #409eff;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
-  border: 2px solid #409eff;
-  transform: scale(1.05);
+  border: none;
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.add-gap-control:hover {
-  transform: translateY(-2px);
+.add-gap-control.plus-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
 }
+
+.add-gap-control.plus-btn:hover::before {
+  left: 100%;
+}
+
+.add-gap-control.plus-btn:hover {
+  transform: translateY(-2px) scale(1.1);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+}
+
+.add-gap-control.plus-btn:active {
+  transform: translateY(0) scale(0.95);
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.add-gap-control.plus-btn .plus-icon {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 2s infinite;
+}
+
+/* 脉冲动画 */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
 </style>

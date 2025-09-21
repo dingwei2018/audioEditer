@@ -147,6 +147,10 @@ watch(() => props.initialVolume, (newVolume) => {
 watch(() => props.initialSpeed, (newSpeed) => {
   speed.value = newSpeed
 })
+
+// 监听currentVoice变化，确保音色选择正确显示
+watch(() => props.currentVoice, (newVoice) => {
+}, { immediate: true, deep: true })
 </script>
 
 <style scoped>
