@@ -327,24 +327,28 @@ watch(() => props.segments, (newSegments) => {
 
 /* 间隔设置对话框样式 */
 :deep(.gap-setting-dialog) {
-  background: #2a2a2a;
-  color: white;
+  background: #ffffff;
+  color: #333333;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
 
 :deep(.gap-setting-dialog .el-dialog__header) {
-  background: #333;
-  color: white;
-  border-bottom: 1px solid #444;
+  background: #ffffff;
+  color: #333333;
+  border-bottom: 1px solid #e4e7ed;
 }
 
 :deep(.gap-setting-dialog .el-dialog__body) {
-  background: #2a2a2a;
+  background: #ffffff;
   padding: 20px;
+  color: #333333;
 }
 
 :deep(.gap-setting-dialog .el-dialog__footer) {
-  background: #333;
-  border-top: 1px solid #444;
+  background: #ffffff;
+  border-top: 1px solid #e4e7ed;
 }
 
 .gap-dialog-content {

@@ -99,9 +99,10 @@ export default {
 
 <style scoped>
 .segmentation-dialog :deep(.el-dialog) {
-  background: #1a1a1a;
-  border: 1px solid #333;
-  border-radius: 8px;
+  background: #ffffff;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
 
 .segmentation-dialog :deep(.el-dialog__header) {
@@ -112,10 +113,14 @@ export default {
   padding: 0;
 }
 
+.segmentation-dialog :deep(.el-overlay) {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
 .dialog-content {
   padding: 24px;
-  background: #1a1a1a;
-  color: white;
+  background: #ffffff;
+  color: #333333;
 }
 
 .options-list {
@@ -126,37 +131,42 @@ export default {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 16px;
-  border: 1px solid #333;
-  border-radius: 6px;
-  margin-bottom: 8px;
+  padding: 16px 20px;
+  border: 1px solid #e4e7ed;
+  border-radius: 8px;
+  margin-bottom: 12px;
   cursor: pointer;
   transition: all 0.3s ease;
+  background: #ffffff;
 }
 
 .option-item:hover {
   border-color: #409eff;
-  background: #2a2a2a;
+  background: #f0f9ff;
+  box-shadow: 0 2px 8px rgba(64, 158, 255, 0.1);
 }
 
 .option-item.selected {
   border-color: #409eff;
-  background: #1e3a5f;
+  background: #e6f7ff;
+  box-shadow: 0 2px 8px rgba(64, 158, 255, 0.15);
 }
 
 .radio-circle {
-  width: 16px;
-  height: 16px;
-  border: 1px solid #666;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #d9d9d9;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  background: #ffffff;
 }
 
 .option-item.selected .radio-circle {
   border-color: #409eff;
+  background: #ffffff;
 }
 
 .radio-dot {
@@ -179,8 +189,9 @@ export default {
 }
 
 .option-text {
-  font-size: 14px;
-  color: white;
+  font-size: 15px;
+  color: #333333;
+  font-weight: 500;
 }
 
 .confirm-button {
@@ -191,9 +202,11 @@ export default {
   background: #409eff;
   border-color: #409eff;
   color: white;
-  padding: 8px 32px;
-  border-radius: 6px;
-  font-size: 14px;
+  padding: 10px 36px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  min-width: 100px;
 }
 
 .confirm-btn:hover {
@@ -202,9 +215,9 @@ export default {
 }
 
 .confirm-btn:disabled {
-  background: #666;
-  border-color: #666;
-  color: #999;
+  background: #c0c4cc;
+  border-color: #c0c4cc;
+  color: #ffffff;
   cursor: not-allowed;
 }
 </style>
