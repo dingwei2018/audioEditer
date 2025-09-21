@@ -1,0 +1,157 @@
+# Node.js 后端项目特定忽略文件
+
+# 依赖
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# 运行时数据
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# 日志文件
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage
+.grunt
+
+# Bower dependency directory
+bower_components
+
+# node-waf configuration
+.lock-wscript
+
+# Compiled binary addons
+build/Release
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# TypeScript v1 declaration files
+typings/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# parcel-bundler cache
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
+
+# 环境变量文件
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 配置文件（包含敏感信息）
+config/database.js
+config/redis.js
+config/config.js
+
+# 上传文件目录
+uploads/
+temp/
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# 音频文件
+*.mp3
+*.wav
+*.ogg
+*.m4a
+*.aac
+
+# 测试相关
+coverage/
+.nyc_output/
+test-results/
+test-results.xml
+
+# 编辑器文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# 备份文件
+*.bak
+*.backup
+*.old
+
+# 压缩文件
+*.zip
+*.tar.gz
+*.rar
+
+# 本地开发文件
+*.local
+.local

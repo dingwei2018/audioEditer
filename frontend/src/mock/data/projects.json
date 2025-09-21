@@ -1,0 +1,90 @@
+{
+  "projects": [
+    {
+      "id": "project_1",
+      "name": "音频项目示例1",
+      "description": "这是一个示例音频项目，用于演示TTS功能",
+      "createdAt": "2025-01-15T10:00:00.000Z",
+      "updatedAt": "2025-01-15T12:30:00.000Z",
+      "tracks": ["track_1", "track_2"],
+      "settings": {
+        "outputFormat": "mp3",
+        "sampleRate": 44100,
+        "bitRate": 128,
+        "channels": 2
+      }
+    },
+    {
+      "id": "project_2",
+      "name": "新闻播报项目",
+      "description": "用于新闻播报的音频项目",
+      "createdAt": "2025-01-14T09:15:00.000Z",
+      "updatedAt": "2025-01-14T16:45:00.000Z",
+      "tracks": ["track_3"],
+      "settings": {
+        "outputFormat": "wav",
+        "sampleRate": 48000,
+        "bitRate": 256,
+        "channels": 2
+      }
+    }
+  ],
+  "tracks": [
+    {
+      "id": "track_1",
+      "name": "开场白",
+      "text": "欢迎收听今天的节目，我们将为您带来精彩的内容。",
+      "voice": "zhichu",
+      "speed": 1.0,
+      "pitch": 1.0,
+      "volume": 1.0,
+      "duration": 8.5,
+      "audioUrl": "/mock/audio/track_1.mp3",
+      "isPlaying": false,
+      "isSynthesizing": false,
+      "isSegmented": true,
+      "segmentMethod": "punctuation",
+      "segments": [
+        {
+          "id": "segment_1_1",
+          "text": "欢迎收听今天的节目，",
+          "startIndex": 0,
+          "endIndex": 11,
+          "type": "sentence",
+          "duration": 3.2
+        },
+        {
+          "id": "segment_1_2",
+          "text": "我们将为您带来精彩的内容。",
+          "startIndex": 11,
+          "endIndex": 25,
+          "type": "sentence",
+          "duration": 5.3
+        }
+      ],
+      "gaps": [
+        {
+          "id": "gap_1_1",
+          "beforeSegmentId": "segment_1_1",
+          "afterSegmentId": "segment_1_2",
+          "duration": 1.0,
+          "isSelected": false
+        }
+      ]
+    },
+    {
+      "id": "track_2",
+      "name": "内容介绍",
+      "text": "今天我们要讨论的主题是人工智能在现代生活中的应用。",
+      "voice": "zhiwen",
+      "speed": 0.9,
+      "pitch": 1.0,
+      "volume": 0.8,
+      "duration": 12.3,
+      "audioUrl": "/mock/audio/track_2.mp3",
+      "isPlaying": false,
+      "isSynthesizing": false,
+      "isSegmented": false
+    }
+  ]
+}

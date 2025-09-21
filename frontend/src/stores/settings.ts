@@ -1,15 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-
-export interface TTSSettings {
-  provider: 'aliyun' | 'gpt-sovits'
-  voice: string
-  speed: number
-  pitch: number
-  volume: number
-  apiKey: string
-  apiUrl: string
-}
+import type { AppSettings, TTSSettings } from '@/models/Settings'
+import { createDefaultAppSettings, createDefaultTTSSettings } from '@/models/Settings'
 
 export interface AudioSettings {
   outputFormat: 'mp3' | 'wav' | 'aac'
@@ -19,26 +11,9 @@ export interface AudioSettings {
   normalize: boolean
 }
 
-export interface UISettings {
-  theme: 'light' | 'dark' | 'auto'
-  language: 'zh-CN' | 'en-US'
-  fontSize: 'small' | 'medium' | 'large'
-  showGrid: boolean
-  autoSave: boolean
-  autoSaveInterval: number
-}
-
 export const useSettingsStore = defineStore('settings', () => {
   // 状态
-  const ttsSettings = ref<TTSSettings>({
-    provider: 'aliyun',
-    voice: 'zhichu',
-    speed: 1.0,
-    pitch: 1.0,
-    volume: 1.0,
-    apiKey: '',
-    apiUrl: ''
-  })
+  const ttsSettings = ref<TTSSettings>(createDefaultTTSSettings())
 
   const audioSettings = ref<AudioSettings>({
     outputFormat: 'mp3',
@@ -48,14 +23,7 @@ export const useSettingsStore = defineStore('settings', () => {
     normalize: true
   })
 
-  const uiSettings = ref<UISettings>({
-    theme: 'auto',
-    language: 'zh-CN',
-    fontSize: 'medium',
-    showGrid: true,
-    autoSave: true,
-    autoSaveInterval: 30
-  })
+  const uiSettings = ref<AppSettings>(createDefaultAppSettings())
 
   // 操作
   const updateTTSSettings = (settings: Partial<TTSSettings>) => {
@@ -68,7 +36,7 @@ export const useSettingsStore = defineStore('settings', () => {
     saveSettings()
   }
 
-  const updateUISettings = (settings: Partial<UISettings>) => {
+  const updateUISettings = (settings: Partial<AppSettings>) => {
     Object.assign(uiSettings.value, settings)
     saveSettings()
   }
@@ -105,15 +73,7 @@ export const useSettingsStore = defineStore('settings', () => {
   }
 
   const resetSettings = () => {
-    ttsSettings.value = {
-      provider: 'aliyun',
-      voice: 'zhichu',
-      speed: 1.0,
-      pitch: 1.0,
-      volume: 1.0,
-      apiKey: '',
-      apiUrl: ''
-    }
+    ttsSettings.value = createDefaultTTSSettings()
 
     audioSettings.value = {
       outputFormat: 'mp3',
@@ -123,14 +83,7 @@ export const useSettingsStore = defineStore('settings', () => {
       normalize: true
     }
 
-    uiSettings.value = {
-      theme: 'auto',
-      language: 'zh-CN',
-      fontSize: 'medium',
-      showGrid: true,
-      autoSave: true,
-      autoSaveInterval: 30
-    }
+    uiSettings.value = createDefaultAppSettings()
 
     saveSettings()
   }

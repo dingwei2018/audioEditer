@@ -1,0 +1,196 @@
+# 依赖文件
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# 构建输出
+dist/
+build/
+out/
+.next/
+.nuxt/
+.vuepress/dist
+
+# 环境变量文件
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 日志文件
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# 运行时数据
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# 覆盖率目录
+coverage/
+*.lcov
+.nyc_output
+
+# 缓存文件
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+
+# 临时文件
+.tmp/
+.temp/
+tmp/
+temp/
+
+# IDE 和编辑器文件
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# 操作系统生成的文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Microbundle cache
+.rpt2_cache/
+.rts2_cache_cjs/
+.rts2_cache_es/
+.rts2_cache_umd/
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env
+.env.test
+
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+public
+
+# Storybook build outputs
+.out
+.storybook-out
+
+# Temporary folders
+tmp/
+temp/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# 测试相关
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+test-results.xml
+
+# 数据库文件
+*.db
+*.sqlite
+*.sqlite3
+
+# 上传文件目录
+uploads/
+public/uploads/
+
+# 本地配置文件
+config/local.js
+config/local.json
+
+# 备份文件
+*.bak
+*.backup
+*.old
+
+# 压缩文件
+*.zip
+*.tar.gz
+*.rar
+
+# 音频文件（如果不需要版本管理）
+*.mp3
+*.wav
+*.ogg
+*.m4a
+*.aac
+
+# 视频文件
+*.mp4
+*.avi
+*.mov
+*.wmv
+
+# 图片文件（如果需要版本管理可以删除这些行）
+# *.jpg
+# *.jpeg
+# *.png
+# *.gif
+# *.bmp
+# *.svg
+
+# 文档文件
+*.pdf
+*.doc
+*.docx
+*.ppt
+*.pptx
+
+# 特定于项目的文件
+# 根据您的项目需要添加
+*.local
+.local

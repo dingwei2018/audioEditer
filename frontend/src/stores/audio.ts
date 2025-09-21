@@ -1,34 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import type { TextSegment } from '@/utils/textSegmentation'
-
-export interface AudioTrack {
-  id: string
-  name: string
-  text: string
-  voice: string
-  speed: number
-  pitch: number
-  volume: number
-  audioUrl?: string
-  duration?: number
-  isPlaying: boolean
-  isSynthesizing: boolean
-  // 新增分句相关字段
-  segments?: TextSegment[]
-  isSegmented: boolean
-  segmentMethod?: 'punctuation' | 'paragraph' | 'ai'
-  // 新增间隔时间字段
-  gaps?: SegmentGap[]
-}
-
-export interface SegmentGap {
-  id: string
-  beforeSegmentId: string // 在哪个分句之前
-  afterSegmentId: string // 在哪个分句之后
-  duration: number // 间隔时长（秒）
-  isSelected: boolean
-}
+import type { AudioTrack, SegmentGap, TextSegment } from '@/models/Audio'
+import { createAudioTrack, createSegmentGap } from '@/models/Audio'
 
 export const useAudioStore = defineStore('audio', () => {
   // 状态
@@ -57,13 +30,14 @@ export const useAudioStore = defineStore('audio', () => {
 
   // 操作
   const addTrack = (track: Omit<AudioTrack, 'id' | 'isPlaying' | 'isSynthesizing' | 'isSegmented'>) => {
-    const newTrack: AudioTrack = {
-      ...track,
-      id: Date.now().toString(),
-      isPlaying: false,
-      isSynthesizing: false,
-      isSegmented: false
-    }
+    const newTrack = createAudioTrack(
+      track.name,
+      track.text,
+      track.voice,
+      track.speed,
+      track.pitch,
+      track.volume
+    )
     tracks.value.push(newTrack)
     if (!currentTrackId.value) {
       currentTrackId.value = newTrack.id
@@ -191,14 +165,7 @@ export const useAudioStore = defineStore('audio', () => {
         track.gaps = []
       }
       
-      const gapId = `gap_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
-      const gap: SegmentGap = {
-        id: gapId,
-        beforeSegmentId,
-        afterSegmentId,
-        duration,
-        isSelected: false
-      }
+      const gap: SegmentGap = createSegmentGap(beforeSegmentId, afterSegmentId, duration)
       
       track.gaps.push(gap)
     }

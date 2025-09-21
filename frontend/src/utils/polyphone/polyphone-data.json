@@ -1,0 +1,1403 @@
+{
+  "多音字": {
+    "阿": [
+      { "pinyin": "ā", "tone": "1", "meaning": "阿姨、阿爸", "example": "阿姨" },
+      { "pinyin": "ē", "tone": "1", "meaning": "阿胶、阿房宫", "example": "阿胶" },
+      { "pinyin": "ǎ", "tone": "3", "meaning": "阿谀奉承", "example": "阿谀" }
+    ],
+    "挨": [
+      { "pinyin": "āi", "tone": "1", "meaning": "挨近、挨着", "example": "挨近" },
+      { "pinyin": "ái", "tone": "2", "meaning": "挨打、挨骂", "example": "挨打" }
+    ],
+    "拗": [
+      { "pinyin": "ào", "tone": "4", "meaning": "拗口", "example": "拗口令" },
+      { "pinyin": "ǎo", "tone": "3", "meaning": "拗断", "example": "拗断树枝" },
+      { "pinyin": "niù", "tone": "4", "meaning": "执拗", "example": "执拗" }
+    ],
+    "八": [
+      { "pinyin": "bā", "tone": "1", "meaning": "数字八", "example": "八个" },
+      { "pinyin": "bá", "tone": "2", "meaning": "八字胡", "example": "八字胡" }
+    ],
+    "扒": [
+      { "pinyin": "bā", "tone": "1", "meaning": "扒开、扒拉", "example": "扒开" },
+      { "pinyin": "pá", "tone": "2", "meaning": "扒手", "example": "扒手" }
+    ],
+    "把": [
+      { "pinyin": "bǎ", "tone": "3", "meaning": "把握、把手", "example": "把握" },
+      { "pinyin": "bà", "tone": "4", "meaning": "把柄、刀把", "example": "刀把" }
+    ],
+    "蚌": [
+      { "pinyin": "bàng", "tone": "4", "meaning": "蚌埠", "example": "蚌埠" },
+      { "pinyin": "bèng", "tone": "4", "meaning": "蚌壳", "example": "河蚌" }
+    ],
+    "薄": [
+      { "pinyin": "báo", "tone": "2", "meaning": "薄片、单薄", "example": "薄片" },
+      { "pinyin": "bó", "tone": "2", "meaning": "薄弱、淡薄", "example": "薄弱" },
+      { "pinyin": "bò", "tone": "4", "meaning": "薄荷", "example": "薄荷" }
+    ],
+    "堡": [
+      { "pinyin": "bǎo", "tone": "3", "meaning": "城堡、堡垒", "example": "城堡" },
+      { "pinyin": "bǔ", "tone": "3", "meaning": "瓦窑堡", "example": "瓦窑堡" },
+      { "pinyin": "pù", "tone": "4", "meaning": "十里堡", "example": "十里堡" }
+    ],
+    "背": [
+      { "pinyin": "bèi", "tone": "4", "meaning": "后背、背景", "example": "后背" },
+      { "pinyin": "bēi", "tone": "1", "meaning": "背负、背包", "example": "背包" }
+    ],
+    "奔": [
+      { "pinyin": "bēn", "tone": "1", "meaning": "奔跑、奔波", "example": "奔跑" },
+      { "pinyin": "bèn", "tone": "4", "meaning": "投奔", "example": "投奔" }
+    ],
+    "本": [
+      { "pinyin": "běn", "tone": "3", "meaning": "根本、本来", "example": "根本" },
+      { "pinyin": "bēn", "tone": "1", "meaning": "本草纲目", "example": "本草" }
+    ],
+    "臂": [
+      { "pinyin": "bì", "tone": "4", "meaning": "手臂、臂膀", "example": "手臂" },
+      { "pinyin": "bei", "tone": "0", "meaning": "胳臂", "example": "胳臂" }
+    ],
+    "辟": [
+      { "pinyin": "pì", "tone": "4", "meaning": "开辟、辟谣", "example": "开辟" },
+      { "pinyin": "bì", "tone": "4", "meaning": "复辟", "example": "复辟" }
+    ],
+    "扁": [
+      { "pinyin": "biǎn", "tone": "3", "meaning": "扁平、扁担", "example": "扁平" },
+      { "pinyin": "piān", "tone": "1", "meaning": "扁舟", "example": "一叶扁舟" }
+    ],
+    "便": [
+      { "pinyin": "biàn", "tone": "4", "meaning": "方便、便利", "example": "方便" },
+      { "pinyin": "pián", "tone": "2", "meaning": "便宜", "example": "便宜" }
+    ],
+    "骠": [
+      { "pinyin": "piào", "tone": "4", "meaning": "骠勇", "example": "骠骑" },
+      { "pinyin": "biāo", "tone": "1", "meaning": "黄骠马", "example": "黄骠马" }
+    ],
+    "屏": [
+      { "pinyin": "píng", "tone": "2", "meaning": "屏幕、屏风", "example": "屏幕" },
+      { "pinyin": "bǐng", "tone": "3", "meaning": "屏气、屏息", "example": "屏气" }
+    ],
+    "剥": [
+      { "pinyin": "bāo", "tone": "1", "meaning": "剥皮、剥夺", "example": "剥皮" },
+      { "pinyin": "bō", "tone": "1", "meaning": "剥削", "example": "剥削" }
+    ],
+    "泊": [
+      { "pinyin": "bó", "tone": "2", "meaning": "淡泊、停泊", "example": "淡泊" },
+      { "pinyin": "pō", "tone": "1", "meaning": "血泊", "example": "血泊" }
+    ],
+    "簸": [
+      { "pinyin": "bǒ", "tone": "3", "meaning": "簸箕", "example": "簸箕" },
+      { "pinyin": "bò", "tone": "4", "meaning": "簸动", "example": "簸动" }
+    ],
+    "参": [
+      { "pinyin": "cān", "tone": "1", "meaning": "参加、参与", "example": "参加" },
+      { "pinyin": "cēn", "tone": "1", "meaning": "参差", "example": "参差不齐" },
+      { "pinyin": "shēn", "tone": "1", "meaning": "人参", "example": "人参" }
+    ],
+    "藏": [
+      { "pinyin": "cáng", "tone": "2", "meaning": "隐藏、收藏", "example": "隐藏" },
+      { "pinyin": "zàng", "tone": "4", "meaning": "西藏、宝藏", "example": "西藏" }
+    ],
+    "曾": [
+      { "pinyin": "céng", "tone": "2", "meaning": "曾经", "example": "曾经" },
+      { "pinyin": "zēng", "tone": "1", "meaning": "曾孙、姓曾", "example": "曾孙" }
+    ],
+    "差": [
+      { "pinyin": "chā", "tone": "1", "meaning": "差别、差距", "example": "差别" },
+      { "pinyin": "chà", "tone": "4", "meaning": "差劲", "example": "差劲" },
+      { "pinyin": "chāi", "tone": "1", "meaning": "出差、差事", "example": "出差" },
+      { "pinyin": "cī", "tone": "1", "meaning": "参差", "example": "参差" }
+    ],
+    "禅": [
+      { "pinyin": "chán", "tone": "2", "meaning": "禅师、禅宗", "example": "禅师" },
+      { "pinyin": "shàn", "tone": "4", "meaning": "禅让", "example": "禅让" }
+    ],
+    "颤": [
+      { "pinyin": "chàn", "tone": "4", "meaning": "颤抖", "example": "颤抖" },
+      { "pinyin": "zhàn", "tone": "4", "meaning": "颤栗", "example": "颤栗" }
+    ],
+    "场": [
+      { "pinyin": "chǎng", "tone": "3", "meaning": "场所、广场", "example": "广场" },
+      { "pinyin": "cháng", "tone": "2", "meaning": "场院", "example": "打谷场" }
+    ],
+    "朝": [
+      { "pinyin": "cháo", "tone": "2", "meaning": "朝代、朝廷", "example": "朝代" },
+      { "pinyin": "zhāo", "tone": "1", "meaning": "朝阳、朝夕", "example": "朝阳" }
+    ],
+    "车": [
+      { "pinyin": "chē", "tone": "1", "meaning": "汽车、车辆", "example": "汽车" },
+      { "pinyin": "jū", "tone": "1", "meaning": "车马炮", "example": "象棋车" }
+    ],
+    "乘": [
+      { "pinyin": "chéng", "tone": "2", "meaning": "乘坐、乘法", "example": "乘坐" },
+      { "pinyin": "shèng", "tone": "4", "meaning": "千乘之国", "example": "千乘" }
+    ],
+    "匙": [
+      { "pinyin": "chí", "tone": "2", "meaning": "汤匙", "example": "汤匙" },
+      { "pinyin": "shi", "tone": "0", "meaning": "钥匙", "example": "钥匙" }
+    ],
+    "冲": [
+      { "pinyin": "chōng", "tone": "1", "meaning": "冲击、冲动", "example": "冲击" },
+      { "pinyin": "chòng", "tone": "4", "meaning": "冲着、冲劲", "example": "冲着" }
+    ],
+    "臭": [
+      { "pinyin": "chòu", "tone": "4", "meaning": "臭味", "example": "臭味" },
+      { "pinyin": "xiù", "tone": "4", "meaning": "无声无臭", "example": "无声无臭" }
+    ],
+    "处": [
+      { "pinyin": "chù", "tone": "4", "meaning": "地方、住处", "example": "住处" },
+      { "pinyin": "chǔ", "tone": "3", "meaning": "处理、相处", "example": "处理" }
+    ],
+    "畜": [
+      { "pinyin": "chù", "tone": "4", "meaning": "牲畜", "example": "牲畜" },
+      { "pinyin": "xù", "tone": "4", "meaning": "畜牧、畜养", "example": "畜牧" }
+    ],
+    "创": [
+      { "pinyin": "chuàng", "tone": "4", "meaning": "创造、创新", "example": "创造" },
+      { "pinyin": "chuāng", "tone": "1", "meaning": "创伤", "example": "创伤" }
+    ],
+    "绰": [
+      { "pinyin": "chuò", "tone": "4", "meaning": "绰号", "example": "绰号" },
+      { "pinyin": "chāo", "tone": "1", "meaning": "绰约", "example": "绰约" }
+    ],
+    "伺": [
+      { "pinyin": "cì", "tone": "4", "meaning": "伺候", "example": "伺候" },
+      { "pinyin": "sì", "tone": "4", "meaning": "伺机", "example": "伺机" }
+    ],
+    "枞": [
+      { "pinyin": "cōng", "tone": "1", "meaning": "枞树", "example": "枞树" },
+      { "pinyin": "zōng", "tone": "1", "meaning": "枞阳", "example": "枞阳县" }
+    ],
+    "攒": [
+      { "pinyin": "cuán", "tone": "2", "meaning": "攒聚", "example": "攒聚" },
+      { "pinyin": "zǎn", "tone": "3", "meaning": "攒钱", "example": "攒钱" }
+    ],
+    "撮": [
+      { "pinyin": "cuō", "tone": "1", "meaning": "撮合", "example": "撮合" },
+      { "pinyin": "zuǒ", "tone": "3", "meaning": "一撮盐", "example": "一撮盐" }
+    ],
+    "答": [
+      { "pinyin": "dá", "tone": "2", "meaning": "回答、答案", "example": "回答" },
+      { "pinyin": "dā", "tone": "1", "meaning": "答应", "example": "答应" }
+    ],
+    "大": [
+      { "pinyin": "dà", "tone": "4", "meaning": "大小、伟大", "example": "伟大" },
+      { "pinyin": "dài", "tone": "4", "meaning": "大夫", "example": "大夫" }
+    ],
+    "逮": [
+      { "pinyin": "dài", "tone": "3", "meaning": "逮捕", "example": "逮捕" },
+      { "pinyin": "dǎi", "tone": "3", "meaning": "逮着", "example": "逮着" }
+    ],
+    "担": [
+      { "pinyin": "dān", "tone": "1", "meaning": "担心、承担", "example": "担心" },
+      { "pinyin": "dàn", "tone": "4", "meaning": "重担、担子", "example": "重担" }
+    ],
+    "单": [
+      { "pinyin": "dān", "tone": "1", "meaning": "单独、简单", "example": "单独" },
+      { "pinyin": "chán", "tone": "2", "meaning": "单于", "example": "匈奴单于" },
+      { "pinyin": "shàn", "tone": "4", "meaning": "姓单", "example": "单姓" }
+    ],
+    "当": [
+      { "pinyin": "dāng", "tone": "1", "meaning": "当时、应当", "example": "当时" },
+      { "pinyin": "dàng", "tone": "4", "meaning": "当作、典当", "example": "当作" }
+    ],
+    "倒": [
+      { "pinyin": "dǎo", "tone": "3", "meaning": "倒下、跌倒", "example": "跌倒" },
+      { "pinyin": "dào", "tone": "4", "meaning": "倒退、倒车", "example": "倒退" }
+    ],
+    "得": [
+      { "pinyin": "dé", "tone": "2", "meaning": "得到、获得", "example": "得到" },
+      { "pinyin": "de", "tone": "0", "meaning": "跑得快", "example": "跑得快" },
+      { "pinyin": "děi", "tone": "3", "meaning": "得去", "example": "得去" }
+    ],
+    "的": [
+      { "pinyin": "de", "tone": "0", "meaning": "结构助词", "example": "我的" },
+      { "pinyin": "dí", "tone": "2", "meaning": "的确", "example": "的确" },
+      { "pinyin": "dì", "tone": "4", "meaning": "目的", "example": "目的" }
+    ],
+    "地": [
+      { "pinyin": "dì", "tone": "4", "meaning": "土地、地方", "example": "土地" },
+      { "pinyin": "de", "tone": "0", "meaning": "慢慢地", "example": "慢慢地" }
+    ],
+    "掂": [
+      { "pinyin": "diān", "tone": "1", "meaning": "掂量", "example": "掂量" },
+      { "pinyin": "diàn", "tone": "4", "meaning": "掂掇", "example": "掂掇" }
+    ],
+    "调": [
+      { "pinyin": "diào", "tone": "4", "meaning": "调整、强调", "example": "调整" },
+      { "pinyin": "tiáo", "tone": "2", "meaning": "调和、调料", "example": "调和" }
+    ],
+    "丢": [
+      { "pinyin": "diū", "tone": "1", "meaning": "丢失", "example": "丢失" },
+      { "pinyin": "diù", "tone": "4", "meaning": "丢人", "example": "丢人" }
+    ],
+    "都": [
+      { "pinyin": "dōu", "tone": "1", "meaning": "都是、全都", "example": "都是" },
+      { "pinyin": "dū", "tone": "1", "meaning": "首都、古都", "example": "首都" }
+    ],
+    "读": [
+      { "pinyin": "dú", "tone": "2", "meaning": "读书、阅读", "example": "读书" },
+      { "pinyin": "dòu", "tone": "4", "meaning": "句读", "example": "句读" }
+    ],
+    "度": [
+      { "pinyin": "dù", "tone": "4", "meaning": "温度、度量", "example": "温度" },
+      { "pinyin": "duó", "tone": "2", "meaning": "揣度", "example": "揣度" }
+    ],
+    "舵": [
+      { "pinyin": "duò", "tone": "4", "meaning": "船舵", "example": "船舵" },
+      { "pinyin": "tuó", "tone": "2", "meaning": "舵手", "example": "舵手" }
+    ],
+    "恶": [
+      { "pinyin": "è", "tone": "4", "meaning": "恶劣、邪恶", "example": "邪恶" },
+      { "pinyin": "wù", "tone": "4", "meaning": "厌恶", "example": "厌恶" },
+      { "pinyin": "ě", "tone": "3", "meaning": "恶心", "example": "恶心" }
+    ],
+    "发": [
+      { "pinyin": "fā", "tone": "1", "meaning": "发现、发生", "example": "发现" },
+      { "pinyin": "fà", "tone": "4", "meaning": "头发", "example": "头发" }
+    ],
+    "番": [
+      { "pinyin": "fān", "tone": "1", "meaning": "番茄、番薯", "example": "番茄" },
+      { "pinyin": "pān", "tone": "1", "meaning": "番禺", "example": "番禺" }
+    ],
+    "繁": [
+      { "pinyin": "fán", "tone": "2", "meaning": "繁华、繁忙", "example": "繁华" },
+      { "pinyin": "pó", "tone": "2", "meaning": "繁峙", "example": "繁峙县" }
+    ],
+    "方": [
+      { "pinyin": "fāng", "tone": "1", "meaning": "方向、方法", "example": "方向" },
+      { "pinyin": "fáng", "tone": "2", "meaning": "方士", "example": "方士" }
+    ],
+    "分": [
+      { "pinyin": "fēn", "tone": "1", "meaning": "分开、分别", "example": "分开" },
+      { "pinyin": "fèn", "tone": "4", "meaning": "本分、过分", "example": "本分" }
+    ],
+    "缝": [
+      { "pinyin": "féng", "tone": "2", "meaning": "缝补、缝纫", "example": "缝补" },
+      { "pinyin": "fèng", "tone": "4", "meaning": "缝隙", "example": "门缝" }
+    ],
+    "服": [
+      { "pinyin": "fú", "tone": "2", "meaning": "服装、服务", "example": "服装" },
+      { "pinyin": "fù", "tone": "4", "meaning": "量词", "example": "一服药" }
+    ],
+    "浮": [
+      { "pinyin": "fú", "tone": "2", "meaning": "浮动、漂浮", "example": "漂浮" },
+      { "pinyin": "fū", "tone": "1", "meaning": "浮萍", "example": "浮萍" }
+    ],
+    "干": [
+      { "pinyin": "gān", "tone": "1", "meaning": "干燥、干净", "example": "干燥" },
+      { "pinyin": "gàn", "tone": "4", "meaning": "干活、干部", "example": "干活" }
+    ],
+    "杆": [
+      { "pinyin": "gān", "tone": "1", "meaning": "旗杆、电线杆", "example": "旗杆" },
+      { "pinyin": "gǎn", "tone": "3", "meaning": "枪杆、笔杆", "example": "枪杆" }
+    ],
+    "革": [
+      { "pinyin": "gé", "tone": "2", "meaning": "革命、改革", "example": "革命" },
+      { "pinyin": "jí", "tone": "2", "meaning": "病革", "example": "病革" }
+    ],
+    "给": [
+      { "pinyin": "gěi", "tone": "3", "meaning": "给予、送给", "example": "给予" },
+      { "pinyin": "jǐ", "tone": "3", "meaning": "给养", "example": "给养" }
+    ],
+    "更": [
+      { "pinyin": "gēng", "tone": "1", "meaning": "更换、更新", "example": "更换" },
+      { "pinyin": "gèng", "tone": "4", "meaning": "更加、更好", "example": "更加" }
+    ],
+    "供": [
+      { "pinyin": "gōng", "tone": "1", "meaning": "供应、提供", "example": "供应" },
+      { "pinyin": "gòng", "tone": "4", "meaning": "供养、供奉", "example": "供养" }
+    ],
+    "勾": [
+      { "pinyin": "gōu", "tone": "1", "meaning": "勾画、勾结", "example": "勾画" },
+      { "pinyin": "gòu", "tone": "4", "meaning": "勾当", "example": "勾当" }
+    ],
+    "骨": [
+      { "pinyin": "gǔ", "tone": "3", "meaning": "骨头、骨骼", "example": "骨头" },
+      { "pinyin": "gū", "tone": "1", "meaning": "花骨朵", "example": "花骨朵" }
+    ],
+    "冠": [
+      { "pinyin": "guān", "tone": "1", "meaning": "皇冠、帽冠", "example": "皇冠" },
+      { "pinyin": "guàn", "tone": "4", "meaning": "冠军、夺冠", "example": "冠军" }
+    ],
+    "光": [
+      { "pinyin": "guāng", "tone": "1", "meaning": "光明、阳光", "example": "阳光" },
+      { "pinyin": "guàng", "tone": "4", "meaning": "光景", "example": "光景" }
+    ],
+    "归": [
+      { "pinyin": "guī", "tone": "1", "meaning": "归来、归还", "example": "归来" },
+      { "pinyin": "kuì", "tone": "4", "meaning": "归宿", "example": "归宿" }
+    ],
+    "国": [
+      { "pinyin": "guó", "tone": "2", "meaning": "国家、祖国", "example": "祖国" },
+      { "pinyin": "guō", "tone": "1", "meaning": "虢国", "example": "虢国" }
+    ],
+    "过": [
+      { "pinyin": "guò", "tone": "4", "meaning": "过去、经过", "example": "过去" },
+      { "pinyin": "guo", "tone": "0", "meaning": "看过", "example": "看过" },
+      { "pinyin": "guō", "tone": "1", "meaning": "过错", "example": "过错" }
+    ],
+    "还": [
+      { "pinyin": "hái", "tone": "2", "meaning": "还有、还是", "example": "还有" },
+      { "pinyin": "huán", "tone": "2", "meaning": "归还、还债", "example": "归还" }
+    ],
+    "汗": [
+      { "pinyin": "hán", "tone": "2", "meaning": "汗水、出汗", "example": "出汗" },
+      { "pinyin": "hàn", "tone": "4", "meaning": "可汗", "example": "成吉思汗" }
+    ],
+    "号": [
+      { "pinyin": "hào", "tone": "4", "meaning": "号码、记号", "example": "号码" },
+      { "pinyin": "háo", "tone": "2", "meaning": "号啕", "example": "号啕大哭" }
+    ],
+    "和": [
+      { "pinyin": "hé", "tone": "2", "meaning": "和谐、和平", "example": "和谐" },
+      { "pinyin": "hè", "tone": "4", "meaning": "和诗、应和", "example": "和诗" },
+      { "pinyin": "huò", "tone": "4", "meaning": "和面、和稀泥", "example": "和面" },
+      { "pinyin": "hú", "tone": "2", "meaning": "和牌", "example": "麻将和牌" }
+    ],
+    "横": [
+      { "pinyin": "héng", "tone": "2", "meaning": "横行、纵横", "example": "纵横" },
+      { "pinyin": "hèng", "tone": "4", "meaning": "蛮横", "example": "蛮横" }
+    ],
+    "虹": [
+      { "pinyin": "hóng", "tone": "2", "meaning": "彩虹", "example": "彩虹" },
+      { "pinyin": "jiàng", "tone": "4", "meaning": "虹桥", "example": "虹桥" }
+    ],
+    "划": [
+      { "pinyin": "huá", "tone": "2", "meaning": "划船、划算", "example": "划船" },
+      { "pinyin": "huà", "tone": "4", "meaning": "规划、计划", "example": "规划" }
+    ],
+    "华": [
+      { "pinyin": "huá", "tone": "2", "meaning": "中华、华丽", "example": "中华" },
+      { "pinyin": "huà", "tone": "4", "meaning": "华山", "example": "华山" },
+      { "pinyin": "huā", "tone": "1", "meaning": "华而不实", "example": "华而不实" }
+    ],
+    "画": [
+      { "pinyin": "huà", "tone": "4", "meaning": "绘画、图画", "example": "绘画" },
+      { "pinyin": "huá", "tone": "2", "meaning": "画一", "example": "画一" }
+    ],
+    "会": [
+      { "pinyin": "huì", "tone": "4", "meaning": "开会、会议", "example": "开会" },
+      { "pinyin": "kuài", "tone": "4", "meaning": "会计", "example": "会计" }
+    ],
+    "混": [
+      { "pinyin": "hùn", "tone": "4", "meaning": "混合、混乱", "example": "混合" },
+      { "pinyin": "hún", "tone": "2", "meaning": "混沌", "example": "混沌" }
+    ],
+    "豁": [
+      { "pinyin": "huò", "tone": "4", "meaning": "豁达", "example": "豁达" },
+      { "pinyin": "huō", "tone": "1", "meaning": "豁口", "example": "豁口" }
+    ],
+    "稽": [
+      { "pinyin": "jī", "tone": "1", "meaning": "稽查", "example": "稽查" },
+      { "pinyin": "qǐ", "tone": "3", "meaning": "稽首", "example": "稽首" }
+    ],
+    "几": [
+      { "pinyin": "jǐ", "tone": "3", "meaning": "几个、几次", "example": "几个" },
+      { "pinyin": "jī", "tone": "1", "meaning": "茶几", "example": "茶几" }
+    ],
+    "济": [
+      { "pinyin": "jì", "tone": "4", "meaning": "救济、经济", "example": "救济" },
+      { "pinyin": "jǐ", "tone": "3", "meaning": "济南", "example": "济南" }
+    ],
+    "夹": [
+      { "pinyin": "jiā", "tone": "1", "meaning": "夹子、夹击", "example": "夹子" },
+      { "pinyin": "jiá", "tone": "2", "meaning": "夹袄", "example": "夹袄" },
+      { "pinyin": "gā", "tone": "1", "meaning": "夹肢窝", "example": "夹肢窝" }
+    ],
+    "假": [
+      { "pinyin": "jiǎ", "tone": "3", "meaning": "真假、虚假", "example": "虚假" },
+      { "pinyin": "jià", "tone": "4", "meaning": "假期、放假", "example": "放假" }
+    ],
+    "间": [
+      { "pinyin": "jiān", "tone": "1", "meaning": "中间、时间", "example": "中间" },
+      { "pinyin": "jiàn", "tone": "4", "meaning": "间隔、间接", "example": "间隔" }
+    ],
+    "将": [
+      { "pinyin": "jiāng", "tone": "1", "meaning": "将来、将要", "example": "将来" },
+      { "pinyin": "jiàng", "tone": "4", "meaning": "将军、将领", "example": "将军" }
+    ],
+    "角": [
+      { "pinyin": "jiǎo", "tone": "3", "meaning": "角度、三角", "example": "角度" },
+      { "pinyin": "jué", "tone": "2", "meaning": "角色、主角", "example": "角色" }
+    ],
+    "脚": [
+      { "pinyin": "jiǎo", "tone": "3", "meaning": "双脚", "example": "双脚" },
+      { "pinyin": "jué", "tone": "2", "meaning": "脚夫", "example": "脚夫" }
+    ],
+    "教": [
+      { "pinyin": "jiāo", "tone": "1", "meaning": "教书、教学", "example": "教书" },
+      { "pinyin": "jiào", "tone": "4", "meaning": "宗教、教育", "example": "宗教" }
+    ],
+    "结": [
+      { "pinyin": "jié", "tone": "2", "meaning": "结果、团结", "example": "结果" },
+      { "pinyin": "jiē", "tone": "1", "meaning": "结实", "example": "结实" }
+    ],
+    "解": [
+      { "pinyin": "jiě", "tone": "3", "meaning": "解决、了解", "example": "解决" },
+      { "pinyin": "jiè", "tone": "4", "meaning": "解送", "example": "解送" },
+      { "pinyin": "xiè", "tone": "4", "meaning": "解数", "example": "浑身解数" }
+    ],
+    "矜": [
+      { "pinyin": "jīn", "tone": "1", "meaning": "矜持", "example": "矜持" },
+      { "pinyin": "qín", "tone": "2", "meaning": "矜寡", "example": "鳏寡孤独" }
+    ],
+    "尽": [
+      { "pinyin": "jìn", "tone": "4", "meaning": "尽力、尽快", "example": "尽力" },
+      { "pinyin": "jǐn", "tone": "3", "meaning": "尽管、尽量", "example": "尽管" }
+    ],
+    "劲": [
+      { "pinyin": "jìn", "tone": "4", "meaning": "力气、劲头", "example": "力气" },
+      { "pinyin": "jīng", "tone": "1", "meaning": "强劲、劲敌", "example": "强劲" }
+    ],
+    "究": [
+      { "pinyin": "jiū", "tone": "1", "meaning": "研究、追究", "example": "研究" },
+      { "pinyin": "jiù", "tone": "4", "meaning": "究竟", "example": "究竟" }
+    ],
+    "卷": [
+      { "pinyin": "juàn", "tone": "4", "meaning": "试卷、书卷", "example": "试卷" },
+      { "pinyin": "juǎn", "tone": "3", "meaning": "卷起、卷曲", "example": "卷起" }
+    ],
+    "咖": [
+      { "pinyin": "kā", "tone": "1", "meaning": "咖啡", "example": "咖啡" },
+      { "pinyin": "gā", "tone": "1", "meaning": "咖喱", "example": "咖喱" }
+    ],
+    "看": [
+      { "pinyin": "kàn", "tone": "4", "meaning": "看见、观看", "example": "看见" },
+      { "pinyin": "kān", "tone": "1", "meaning": "看守、看护", "example": "看守" }
+    ],
+    "壳": [
+      { "pinyin": "ké", "tone": "2", "meaning": "贝壳、蛋壳", "example": "贝壳" },
+      { "pinyin": "qiào", "tone": "4", "meaning": "地壳", "example": "地壳" }
+    ],
+    "空": [
+      { "pinyin": "kōng", "tone": "1", "meaning": "天空、空气", "example": "天空" },
+      { "pinyin": "kòng", "tone": "4", "meaning": "空隙、有空", "example": "有空" }
+    ],
+    "框": [
+      { "pinyin": "kuàng", "tone": "4", "meaning": "框架", "example": "框架" },
+      { "pinyin": "kuāng", "tone": "1", "meaning": "门框", "example": "门框" }
+    ],
+    "括": [
+      { "pinyin": "kuò", "tone": "4", "meaning": "括号、包括", "example": "括号" },
+      { "pinyin": "guā", "tone": "1", "meaning": "括弧", "example": "括弧" }
+    ],
+    "蜡": [
+      { "pinyin": "là", "tone": "4", "meaning": "蜡烛、石蜡", "example": "蜡烛" },
+      { "pinyin": "zhà", "tone": "4", "meaning": "蜡月", "example": "蜡月" }
+    ],
+    "累": [
+      { "pinyin": "lèi", "tone": "4", "meaning": "疲累、劳累", "example": "疲累" },
+      { "pinyin": "léi", "tone": "2", "meaning": "累积", "example": "累积" },
+      { "pinyin": "lěi", "tone": "3", "meaning": "累赘", "example": "累赘" }
+    ],
+    "擂": [
+      { "pinyin": "léi", "tone": "2", "meaning": "擂鼓", "example": "擂鼓" },
+      { "pinyin": "lèi", "tone": "4", "meaning": "擂台", "example": "擂台" }
+    ],
+    "棱": [
+      { "pinyin": "léng", "tone": "2", "meaning": "棱角", "example": "棱角" },
+      { "pinyin": "lēng", "tone": "1", "meaning": "不棱登", "example": "不棱登" }
+    ],
+    "厘": [
+      { "pinyin": "lí", "tone": "2", "meaning": "厘米", "example": "厘米" },
+      { "pinyin": "lī", "tone": "1", "meaning": "毫厘", "example": "毫厘" }
+    ],
+    "漓": [
+      { "pinyin": "lí", "tone": "2", "meaning": "漓江", "example": "漓江" },
+      { "pinyin": "lī", "tone": "1", "meaning": "淋漓", "example": "淋漓" }
+    ],
+    "量": [
+      { "pinyin": "liàng", "tone": "4", "meaning": "数量、重量", "example": "数量" },
+      { "pinyin": "liáng", "tone": "2", "meaning": "丈量、测量", "example": "丈量" }
+    ],
+    "了": [
+      { "pinyin": "le", "tone": "0", "meaning": "语气助词", "example": "走了" },
+      { "pinyin": "liǎo", "tone": "3", "meaning": "了解、明了", "example": "了解" }
+    ],
+    "撩": [
+      { "pinyin": "liáo", "tone": "2", "meaning": "撩拨", "example": "撩拨" },
+      { "pinyin": "liào", "tone": "4", "meaning": "撩起", "example": "撩起" }
+    ],
+    "咧": [
+      { "pinyin": "liē", "tone": "1", "meaning": "咧嘴", "example": "咧嘴" },
+      { "pinyin": "lie", "tone": "0", "meaning": "好咧", "example": "好咧" }
+    ],
+    "趔": [
+      { "pinyin": "liè", "tone": "4", "meaning": "趔趄", "example": "趔趄" },
+      { "pinyin": "lia", "tone": "0", "meaning": "我俩", "example": "我俩" }
+    ],
+    "拎": [
+      { "pinyin": "līn", "tone": "1", "meaning": "拎起", "example": "拎起" },
+      { "pinyin": "līng", "tone": "1", "meaning": "拎包", "example": "拎包" }
+    ],
+    "溜": [
+      { "pinyin": "liū", "tone": "1", "meaning": "溜走", "example": "溜走" },
+      { "pinyin": "liù", "tone": "4", "meaning": "光溜溜", "example": "光溜溜" }
+    ],
+    "笼": [
+      { "pinyin": "lóng", "tone": "2", "meaning": "笼子", "example": "鸟笼" },
+      { "pinyin": "lǒng", "tone": "3", "meaning": "笼罩", "example": "笼罩" }
+    ],
+    "搂": [
+      { "pinyin": "lōu", "tone": "1", "meaning": "搂抱", "example": "搂抱" },
+      { "pinyin": "lǒu", "tone": "3", "meaning": "搂钱", "example": "搂钱" }
+    ],
+    "露": [
+      { "pinyin": "lù", "tone": "4", "meaning": "露水、甘露", "example": "露水" },
+      { "pinyin": "lòu", "tone": "4", "meaning": "露面、暴露", "example": "露面" }
+    ],
+    "绿": [
+      { "pinyin": "lǜ", "tone": "4", "meaning": "绿色、绿叶", "example": "绿色" },
+      { "pinyin": "lù", "tone": "4", "meaning": "绿林", "example": "绿林好汉" }
+    ],
+    "络": [
+      { "pinyin": "luò", "tone": "4", "meaning": "网络、联络", "example": "网络" },
+      { "pinyin": "lào", "tone": "4", "meaning": "络绎", "example": "络绎不绝" }
+    ],
+    "脉": [
+      { "pinyin": "mài", "tone": "4", "meaning": "脉搏、血脉", "example": "脉搏" },
+      { "pinyin": "mò", "tone": "4", "meaning": "脉脉", "example": "脉脉含情" }
+    ],
+    "埋": [
+      { "pinyin": "mái", "tone": "2", "meaning": "埋葬、掩埋", "example": "掩埋" },
+      { "pinyin": "mán", "tone": "2", "meaning": "埋怨", "example": "埋怨" }
+    ],
+    "蔓": [
+      { "pinyin": "màn", "tone": "4", "meaning": "蔓延", "example": "蔓延" },
+      { "pinyin": "wàn", "tone": "4", "meaning": "瓜蔓", "example": "瓜蔓" }
+    ],
+    "蒙": [
+      { "pinyin": "méng", "tone": "2", "meaning": "蒙古、蒙昧", "example": "蒙古" },
+      { "pinyin": "mēng", "tone": "1", "meaning": "蒙骗", "example": "蒙骗" },
+      { "pinyin": "měng", "tone": "3", "meaning": "蒙懂", "example": "蒙懂" }
+    ],
+    "靡": [
+      { "pinyin": "mí", "tone": "2", "meaning": "靡费、奢靡", "example": "奢靡" },
+      { "pinyin": "mǐ", "tone": "3", "meaning": "靡不", "example": "靡不有初" }
+    ],
+    "秘": [
+      { "pinyin": "mì", "tone": "4", "meaning": "秘密", "example": "秘密" },
+      { "pinyin": "bì", "tone": "4", "meaning": "秘鲁", "example": "秘鲁" }
+    ],
+    "模": [
+      { "pinyin": "mó", "tone": "2", "meaning": "模型、模式", "example": "模型" },
+      { "pinyin": "mú", "tone": "2", "meaning": "模样", "example": "模样" }
+    ],
+    "摩": [
+      { "pinyin": "mó", "tone": "2", "meaning": "摩擦", "example": "摩擦" },
+      { "pinyin": "mā", "tone": "1", "meaning": "摩挲", "example": "摩挲" }
+    ],
+    "磨": [
+      { "pinyin": "mó", "tone": "2", "meaning": "磨练、折磨", "example": "磨练" },
+      { "pinyin": "mò", "tone": "4", "meaning": "石磨、磨坊", "example": "石磨" }
+    ],
+    "没": [
+      { "pinyin": "méi", "tone": "2", "meaning": "没有", "example": "没有" },
+      { "pinyin": "mò", "tone": "4", "meaning": "淹没", "example": "淹没" }
+    ],
+    "哪": [
+      { "pinyin": "nǎ", "tone": "3", "meaning": "哪个、哪里", "example": "哪个" },
+      { "pinyin": "nǎi", "tone": "3", "meaning": "哪吒", "example": "哪吒" },
+      { "pinyin": "né", "tone": "2", "meaning": "哪能", "example": "哪能" }
+    ],
+    "难": [
+      { "pinyin": "nán", "tone": "2", "meaning": "困难", "example": "困难" },
+      { "pinyin": "nàn", "tone": "4", "meaning": "灾难", "example": "灾难" }
+    ],
+    "挠": [
+      { "pinyin": "náo", "tone": "2", "meaning": "挠痒", "example": "挠痒" },
+      { "pinyin": "ráo", "tone": "2", "meaning": "挠头", "example": "挠头" }
+    ],
+    "能": [
+      { "pinyin": "néng", "tone": "2", "meaning": "能够、能力", "example": "能够" },
+      { "pinyin": "nài", "tone": "4", "meaning": "能耐", "example": "能耐" }
+    ],
+    "宁": [
+      { "pinyin": "níng", "tone": "2", "meaning": "宁静、安宁", "example": "安宁" },
+      { "pinyin": "nìng", "tone": "4", "meaning": "宁可", "example": "宁可" },
+      { "pinyin": "zhù", "tone": "4", "meaning": "宁夏", "example": "宁夏" }
+    ],
+    "弄": [
+      { "pinyin": "nòng", "tone": "4", "meaning": "弄清、摆弄", "example": "弄清" },
+      { "pinyin": "lòng", "tone": "4", "meaning": "弄堂", "example": "弄堂" }
+    ],
+    "女": [
+      { "pinyin": "nǚ", "tone": "3", "meaning": "女人", "example": "女人" },
+      { "pinyin": "rǔ", "tone": "3", "meaning": "女红", "example": "女红" }
+    ],
+    "疟": [
+      { "pinyin": "nüè", "tone": "4", "meaning": "疟疾", "example": "疟疾" },
+      { "pinyin": "yào", "tone": "4", "meaning": "疟子", "example": "疟子" }
+    ],
+    "排": [
+      { "pinyin": "pái", "tone": "2", "meaning": "排列、排队", "example": "排列" },
+      { "pinyin": "pǎi", "tone": "3", "meaning": "排子车", "example": "排子车" }
+    ],
+    "胖": [
+      { "pinyin": "pàng", "tone": "4", "meaning": "肥胖", "example": "肥胖" },
+      { "pinyin": "pán", "tone": "2", "meaning": "心宽体胖", "example": "心宽体胖" }
+    ],
+    "刨": [
+      { "pinyin": "páo", "tone": "2", "meaning": "刨除", "example": "刨除" },
+      { "pinyin": "bào", "tone": "4", "meaning": "刨子", "example": "刨子" }
+    ],
+    "跑": [
+      { "pinyin": "pǎo", "tone": "3", "meaning": "跑步、奔跑", "example": "跑步" },
+      { "pinyin": "páo", "tone": "2", "meaning": "跑马", "example": "跑马" }
+    ],
+    "喷": [
+      { "pinyin": "pēn", "tone": "1", "meaning": "喷射", "example": "喷射" },
+      { "pinyin": "pèn", "tone": "4", "meaning": "喷香", "example": "喷香" }
+    ],
+    "劈": [
+      { "pinyin": "pī", "tone": "1", "meaning": "劈开", "example": "劈开" },
+      { "pinyin": "pǐ", "tone": "3", "meaning": "劈柴", "example": "劈柴" }
+    ],
+    "片": [
+      { "pinyin": "piàn", "tone": "4", "meaning": "片段、照片", "example": "照片" },
+      { "pinyin": "piān", "tone": "1", "meaning": "片刻", "example": "片刻" }
+    ],
+    "飘": [
+      { "pinyin": "piāo", "tone": "1", "meaning": "飘浮", "example": "飘浮" },
+      { "pinyin": "piǎo", "tone": "3", "meaning": "飘摇", "example": "飘摇" }
+    ],
+    "撇": [
+      { "pinyin": "piē", "tone": "1", "meaning": "撇开", "example": "撇开" },
+      { "pinyin": "piě", "tone": "3", "meaning": "撇嘴", "example": "撇嘴" }
+    ],
+    "普": [
+      { "pinyin": "pǔ", "tone": "3", "meaning": "普通、普及", "example": "普通" },
+      { "pinyin": "pú", "tone": "2", "meaning": "普陀", "example": "普陀山" }
+    ],
+    "期": [
+      { "pinyin": "qī", "tone": "1", "meaning": "期望、期待", "example": "期望" },
+      { "pinyin": "jī", "tone": "1", "meaning": "期年", "example": "期年" }
+    ],
+    "栖": [
+      { "pinyin": "qī", "tone": "1", "meaning": "栖息", "example": "栖息" },
+      { "pinyin": "xī", "tone": "1", "meaning": "两栖", "example": "两栖动物" }
+    ],
+    "蹊": [
+      { "pinyin": "qī", "tone": "1", "meaning": "蹊径", "example": "蹊径" },
+      { "pinyin": "xī", "tone": "1", "meaning": "蹊跷", "example": "蹊跷" }
+    ],
+    "荠": [
+      { "pinyin": "qí", "tone": "2", "meaning": "荠菜", "example": "荠菜" },
+      { "pinyin": "jì", "tone": "4", "meaning": "马荠", "example": "马荠" }
+    ],
+    "契": [
+      { "pinyin": "qì", "tone": "4", "meaning": "契约", "example": "契约" },
+      { "pinyin": "xiè", "tone": "4", "meaning": "契合", "example": "契合" }
+    ],
+    "切": [
+      { "pinyin": "qiē", "tone": "1", "meaning": "切菜、切割", "example": "切菜" },
+      { "pinyin": "qiè", "tone": "4", "meaning": "切实、迫切", "example": "切实" }
+    ],
+    "亲": [
+      { "pinyin": "qīn", "tone": "1", "meaning": "亲人、亲近", "example": "亲人" },
+      { "pinyin": "qìng", "tone": "4", "meaning": "亲家", "example": "亲家" }
+    ],
+    "曲": [
+      { "pinyin": "qū", "tone": "1", "meaning": "弯曲、曲折", "example": "弯曲" },
+      { "pinyin": "qǔ", "tone": "3", "meaning": "歌曲、乐曲", "example": "歌曲" }
+    ],
+    "圈": [
+      { "pinyin": "quān", "tone": "1", "meaning": "圆圈、圈子", "example": "圆圈" },
+      { "pinyin": "juàn", "tone": "4", "meaning": "猪圈", "example": "猪圈" }
+    ],
+    "雀": [
+      { "pinyin": "què", "tone": "4", "meaning": "麻雀", "example": "麻雀" },
+      { "pinyin": "qiāo", "tone": "1", "meaning": "雀斑", "example": "雀斑" }
+    ],
+    "任": [
+      { "pinyin": "rèn", "tone": "4", "meaning": "任务、责任", "example": "任务" },
+      { "pinyin": "rén", "tone": "2", "meaning": "姓任", "example": "任姓" }
+    ],
+    "塞": [
+      { "pinyin": "sāi", "tone": "1", "meaning": "塞子、堵塞", "example": "堵塞" },
+      { "pinyin": "sài", "tone": "4", "meaning": "边塞、要塞", "example": "边塞" },
+      { "pinyin": "sè", "tone": "4", "meaning": "闭塞", "example": "闭塞" }
+    ],
+    "散": [
+      { "pinyin": "sàn", "tone": "4", "meaning": "分散、散布", "example": "分散" },
+      { "pinyin": "sǎn", "tone": "3", "meaning": "散漫", "example": "散漫" }
+    ],
+    "丧": [
+      { "pinyin": "sāng", "tone": "1", "meaning": "丧事", "example": "丧事" },
+      { "pinyin": "sàng", "tone": "4", "meaning": "丧失", "example": "丧失" }
+    ],
+    "色": [
+      { "pinyin": "sè", "tone": "4", "meaning": "颜色、色彩", "example": "颜色" },
+      { "pinyin": "shǎi", "tone": "3", "meaning": "色子", "example": "色子" }
+    ],
+    "杉": [
+      { "pinyin": "shān", "tone": "1", "meaning": "杉树", "example": "杉树" },
+      { "pinyin": "shā", "tone": "1", "meaning": "杉篙", "example": "杉篙" }
+    ],
+    "扇": [
+      { "pinyin": "shàn", "tone": "4", "meaning": "扇子", "example": "扇子" },
+      { "pinyin": "shān", "tone": "1", "meaning": "扇动", "example": "扇动" }
+    ],
+    "少": [
+      { "pinyin": "shǎo", "tone": "3", "meaning": "很少、少许", "example": "很少" },
+      { "pinyin": "shào", "tone": "4", "meaning": "少年、少爷", "example": "少年" }
+    ],
+    "舍": [
+      { "pinyin": "shè", "tone": "4", "meaning": "宿舍", "example": "宿舍" },
+      { "pinyin": "shě", "tone": "3", "meaning": "舍得", "example": "舍得" }
+    ],
+    "什": [
+      { "pinyin": "shén", "tone": "2", "meaning": "什么", "example": "什么" },
+      { "pinyin": "shí", "tone": "2", "meaning": "什物", "example": "什物" }
+    ],
+    "识": [
+      { "pinyin": "shí", "tone": "2", "meaning": "认识、知识", "example": "认识" },
+      { "pinyin": "zhì", "tone": "4", "meaning": "标识", "example": "标识" }
+    ],
+    "似": [
+      { "pinyin": "sì", "tone": "4", "meaning": "相似、似乎", "example": "相似" },
+      { "pinyin": "shì", "tone": "4", "meaning": "似的", "example": "似的" }
+    ],
+    "数": [
+      { "pinyin": "shù", "tone": "4", "meaning": "数学、数字", "example": "数学" },
+      { "pinyin": "shǔ", "tone": "3", "meaning": "数数", "example": "数数" },
+      { "pinyin": "shuò", "tone": "4", "meaning": "数见不鲜", "example": "数见不鲜" }
+    ],
+    "说": [
+      { "pinyin": "shuō", "tone": "1", "meaning": "说话", "example": "说话" },
+      { "pinyin": "shuì", "tone": "4", "meaning": "说服", "example": "说服" },
+      { "pinyin": "yuè", "tone": "4", "meaning": "游说", "example": "游说" }
+    ],
+    "思": [
+      { "pinyin": "sī", "tone": "1", "meaning": "思考、思想", "example": "思考" },
+      { "pinyin": "sāi", "tone": "1", "meaning": "思想", "example": "于思" }
+    ],
+    "宿": [
+      { "pinyin": "sù", "tone": "4", "meaning": "宿舍、住宿", "example": "住宿" },
+      { "pinyin": "xiǔ", "tone": "3", "meaning": "一宿", "example": "一宿" },
+      { "pinyin": "xiù", "tone": "4", "meaning": "星宿", "example": "星宿" }
+    ],
+    "遂": [
+      { "pinyin": "suì", "tone": "4", "meaning": "遂愿", "example": "遂愿" },
+      { "pinyin": "suí", "tone": "2", "meaning": "半身不遂", "example": "半身不遂" }
+    ],
+    "踏": [
+      { "pinyin": "tà", "tone": "4", "meaning": "踏步", "example": "踏步" },
+      { "pinyin": "tā", "tone": "1", "meaning": "踏实", "example": "踏实" }
+    ],
+    "调": [
+      { "pinyin": "tiáo", "tone": "2", "meaning": "调和、调料", "example": "调和" },
+      { "pinyin": "diào", "tone": "4", "meaning": "调整、强调", "example": "调整" }
+    ],
+    "挑": [
+      { "pinyin": "tiāo", "tone": "1", "meaning": "挑选", "example": "挑选" },
+      { "pinyin": "tiǎo", "tone": "3", "meaning": "挑战", "example": "挑战" }
+    ],
+    "帖": [
+      { "pinyin": "tiē", "tone": "1", "meaning": "请帖", "example": "请帖" },
+      { "pinyin": "tiè", "tone": "4", "meaning": "字帖", "example": "字帖" },
+      { "pinyin": "tiě", "tone": "3", "meaning": "服帖", "example": "服帖" }
+    ],
+    "听": [
+      { "pinyin": "tīng", "tone": "1", "meaning": "听见、收听", "example": "听见" },
+      { "pinyin": "tìng", "tone": "4", "meaning": "听之任之", "example": "听之任之" }
+    ],
+    "血": [
+      { "pinyin": "xuè", "tone": "4", "meaning": "血液", "example": "血液" },
+      { "pinyin": "xiě", "tone": "3", "meaning": "血淋淋", "example": "血淋淋" }
+    ],
+    "行": [
+      { "pinyin": "xíng", "tone": "2", "meaning": "行走、进行", "example": "行走" },
+      { "pinyin": "háng", "tone": "2", "meaning": "银行、行业", "example": "银行" }
+    ],
+    "要": [
+      { "pinyin": "yào", "tone": "4", "meaning": "要求、需要", "example": "要求" },
+      { "pinyin": "yāo", "tone": "1", "meaning": "要挟", "example": "要挟" }
+    ],
+    "应": [
+      { "pinyin": "yīng", "tone": "1", "meaning": "应该", "example": "应该" },
+      { "pinyin": "yìng", "tone": "4", "meaning": "反应、应声", "example": "反应" }
+    ],
+    "着": [
+      { "pinyin": "zhe", "tone": "0", "meaning": "进行时态", "example": "走着" },
+      { "pinyin": "zháo", "tone": "2", "meaning": "着火", "example": "着火" },
+      { "pinyin": "zhuó", "tone": "2", "meaning": "着手", "example": "着手" },
+      { "pinyin": "zhāo", "tone": "1", "meaning": "着数", "example": "高着" }
+    ],
+    "正": [
+      { "pinyin": "zhèng", "tone": "4", "meaning": "正确、端正", "example": "正确" },
+      { "pinyin": "zhēng", "tone": "1", "meaning": "正月", "example": "正月" }
+    ],
+    "中": [
+      { "pinyin": "zhōng", "tone": "1", "meaning": "中间、中国", "example": "中间" },
+      { "pinyin": "zhòng", "tone": "4", "meaning": "中奖、命中", "example": "中奖" }
+    ],
+    "重": [
+      { "pinyin": "zhòng", "tone": "4", "meaning": "重要、重视", "example": "重要" },
+      { "pinyin": "chóng", "tone": "2", "meaning": "重复、重新", "example": "重复" }
+    ],
+    "作": [
+      { "pinyin": "zuò", "tone": "4", "meaning": "工作、作业", "example": "工作" },
+      { "pinyin": "zuō", "tone": "1", "meaning": "作坊", "example": "作坊" }
+    ],
+    "坐": [
+      { "pinyin": "zuò", "tone": "4", "meaning": "坐下", "example": "坐下" },
+      { "pinyin": "zuō", "tone": "1", "meaning": "坐坐", "example": "坐坐" }
+    ],
+    "左": [
+      { "pinyin": "zuǒ", "tone": "3", "meaning": "左边", "example": "左边" },
+      { "pinyin": "zuò", "tone": "4", "meaning": "左券", "example": "左券" }
+    ],
+    "钻": [
+      { "pinyin": "zuān", "tone": "1", "meaning": "钻孔", "example": "钻孔" },
+      { "pinyin": "zuàn", "tone": "4", "meaning": "钻石", "example": "钻石" }
+    ],
+    "嘴": [
+      { "pinyin": "zuǐ", "tone": "3", "meaning": "嘴巴", "example": "嘴巴" },
+      { "pinyin": "zuì", "tone": "4", "meaning": "嘴头", "example": "嘴头" }
+    ],
+    "醉": [
+      { "pinyin": "zuì", "tone": "4", "meaning": "喝醉", "example": "喝醉" },
+      { "pinyin": "zuí", "tone": "2", "meaning": "醉仙", "example": "醉仙" }
+    ],
+    "尊": [
+      { "pinyin": "zūn", "tone": "1", "meaning": "尊敬", "example": "尊敬" },
+      { "pinyin": "zùn", "tone": "4", "meaning": "尊贵", "example": "尊贵" }
+    ],
+    "琢": [
+      { "pinyin": "zhuó", "tone": "2", "meaning": "琢磨", "example": "琢磨" },
+      { "pinyin": "zuó", "tone": "2", "meaning": "雕琢", "example": "雕琢" }
+    ],
+    "拙": [
+      { "pinyin": "zhuō", "tone": "1", "meaning": "拙劣", "example": "拙劣" },
+      { "pinyin": "zhuó", "tone": "2", "meaning": "笨拙", "example": "笨拙" }
+    ],
+    "桌": [
+      { "pinyin": "zhuō", "tone": "1", "meaning": "桌子", "example": "桌子" },
+      { "pinyin": "zhuó", "tone": "2", "meaning": "桌椅", "example": "桌椅" }
+    ],
+    "着": [
+      { "pinyin": "zhe", "tone": "0", "meaning": "进行时态", "example": "走着" },
+      { "pinyin": "zháo", "tone": "2", "meaning": "着火", "example": "着火" },
+      { "pinyin": "zhuó", "tone": "2", "meaning": "着手", "example": "着手" },
+      { "pinyin": "zhāo", "tone": "1", "meaning": "着数", "example": "高着" }
+    ],
+    "啄": [
+      { "pinyin": "zhuó", "tone": "2", "meaning": "啄食", "example": "啄食" },
+      { "pinyin": "zuó", "tone": "2", "meaning": "啄木鸟", "example": "啄木鸟" }
+    ],
+    "濯": [
+      { "pinyin": "zhuó", "tone": "2", "meaning": "濯足", "example": "濯足" },
+      { "pinyin": "zhào", "tone": "4", "meaning": "濯濯", "example": "濯濯" }
+    ],
+    "灼": [
+      { "pinyin": "zhuó", "tone": "2", "meaning": "灼热", "example": "灼热" },
+      { "pinyin": "zhào", "tone": "4", "meaning": "灼烁", "example": "灼烁" }
+    ],
+    "捉": [
+      { "pinyin": "zhuō", "tone": "1", "meaning": "捉住", "example": "捉住" },
+      { "pinyin": "zhuó", "tone": "2", "meaning": "捉摸", "example": "捉摸" }
+    ],
+    "茁": [
+      { "pinyin": "zhuó", "tone": "2", "meaning": "茁壮", "example": "茁壮" },
+      { "pinyin": "zhào", "tone": "4", "meaning": "茁实", "example": "茁实" }
+    ],
+    "卓": [
+      { "pinyin": "zhuó", "tone": "2", "meaning": "卓越", "example": "卓越" },
+      { "pinyin": "zhāo", "tone": "1", "meaning": "卓尔", "example": "卓尔不群" }
+    ],
+    "酌": [
+      { "pinyin": "zhuó", "tone": "2", "meaning": "酌情", "example": "酌情" },
+      { "pinyin": "zhào", "tone": "4", "meaning": "酌量", "example": "酌量" }
+    ],
+    "浊": [
+      { "pinyin": "zhuó", "tone": "2", "meaning": "浑浊", "example": "浑浊" },
+      { "pinyin": "zhào", "tone": "4", "meaning": "浊世", "example": "浊世" }
+    ],
+    "缀": [
+      { "pinyin": "zhuì", "tone": "4", "meaning": "点缀", "example": "点缀" },
+      { "pinyin": "chuò", "tone": "4", "meaning": "缀合", "example": "缀合" }
+    ],
+    "锥": [
+      { "pinyin": "zhuī", "tone": "1", "meaning": "锥子", "example": "锥子" },
+      { "pinyin": "cuī", "tone": "1", "meaning": "锥形", "example": "锥形" }
+    ],
+    "椎": [
+      { "pinyin": "chuí", "tone": "2", "meaning": "椎骨", "example": "椎骨" },
+      { "pinyin": "zhuī", "tone": "1", "meaning": "椎心", "example": "椎心" }
+    ],
+    "追": [
+      { "pinyin": "zhuī", "tone": "1", "meaning": "追求", "example": "追求" },
+      { "pinyin": "duī", "tone": "1", "meaning": "追风", "example": "追风" }
+    ],
+    "准": [
+      { "pinyin": "zhǔn", "tone": "3", "meaning": "准确", "example": "准确" },
+      { "pinyin": "zhún", "tone": "2", "meaning": "准头", "example": "准头" }
+    ],
+    "拽": [
+      { "pinyin": "zhuài", "tone": "4", "meaning": "拽住", "example": "拽住" },
+      { "pinyin": "yè", "tone": "4", "meaning": "拽拽", "example": "拽拽" }
+    ],
+    "转": [
+      { "pinyin": "zhuǎn", "tone": "3", "meaning": "转弯", "example": "转弯" },
+      { "pinyin": "zhuàn", "tone": "4", "meaning": "转动", "example": "转动" }
+    ],
+    "撞": [
+      { "pinyin": "zhuàng", "tone": "4", "meaning": "撞击", "example": "撞击" },
+      { "pinyin": "chuáng", "tone": "2", "meaning": "撞钟", "example": "撞钟" }
+    ],
+    "庄": [
+      { "pinyin": "zhuāng", "tone": "1", "meaning": "庄严", "example": "庄严" },
+      { "pinyin": "zhuàng", "tone": "4", "meaning": "山庄", "example": "山庄" }
+    ],
+    "装": [
+      { "pinyin": "zhuāng", "tone": "1", "meaning": "装饰", "example": "装饰" },
+      { "pinyin": "zhuàng", "tone": "4", "meaning": "服装", "example": "服装" }
+    ],
+    "状": [
+      { "pinyin": "zhuàng", "tone": "4", "meaning": "状态", "example": "状态" },
+      { "pinyin": "zhuāng", "tone": "1", "meaning": "状元", "example": "状元" }
+    ],
+    "壮": [
+      { "pinyin": "zhuàng", "tone": "4", "meaning": "壮丽", "example": "壮丽" },
+      { "pinyin": "zhuāng", "tone": "1", "meaning": "强壮", "example": "强壮" }
+    ],
+    "抓": [
+      { "pinyin": "zhuā", "tone": "1", "meaning": "抓住", "example": "抓住" },
+      { "pinyin": "zhǎo", "tone": "3", "meaning": "抓药", "example": "抓药" }
+    ],
+    "爪": [
+      { "pinyin": "zhǎo", "tone": "3", "meaning": "爪子", "example": "爪子" },
+      { "pinyin": "zhuǎ", "tone": "3", "meaning": "鸡爪", "example": "鸡爪" }
+    ],
+    "专": [
+      { "pinyin": "zhuān", "tone": "1", "meaning": "专业", "example": "专业" },
+      { "pinyin": "tuán", "tone": "2", "meaning": "专门", "example": "专门" }
+    ],
+    "砖": [
+      { "pinyin": "zhuān", "tone": "1", "meaning": "砖头", "example": "砖头" },
+      { "pinyin": "tuán", "tone": "2", "meaning": "砖瓦", "example": "砖瓦" }
+    ],
+    "传": [
+      { "pinyin": "chuán", "tone": "2", "meaning": "传播", "example": "传播" },
+      { "pinyin": "zhuàn", "tone": "4", "meaning": "传记", "example": "传记" }
+    ],
+    "筑": [
+      { "pinyin": "zhù", "tone": "4", "meaning": "建筑", "example": "建筑" },
+      { "pinyin": "zhú", "tone": "2", "meaning": "筑台", "example": "筑台" }
+    ],
+    "著": [
+      { "pinyin": "zhù", "tone": "4", "meaning": "著作", "example": "著作" },
+      { "pinyin": "zhe", "tone": "0", "meaning": "走着", "example": "走着" },
+      { "pinyin": "zhuó", "tone": "2", "meaning": "著名", "example": "著名" }
+    ],
+    "贮": [
+      { "pinyin": "zhù", "tone": "4", "meaning": "贮存", "example": "贮存" },
+      { "pinyin": "chǔ", "tone": "3", "meaning": "贮藏", "example": "贮藏" }
+    ],
+    "助": [
+      { "pinyin": "zhù", "tone": "4", "meaning": "帮助", "example": "帮助" },
+      { "pinyin": "chù", "tone": "4", "meaning": "助手", "example": "助手" }
+    ],
+    "住": [
+      { "pinyin": "zhù", "tone": "4", "meaning": "住宿", "example": "住宿" },
+      { "pinyin": "chù", "tone": "4", "meaning": "住址", "example": "住址" }
+    ],
+    "注": [
+      { "pinyin": "zhù", "tone": "4", "meaning": "注意", "example": "注意" },
+      { "pinyin": "chù", "tone": "4", "meaning": "注释", "example": "注释" }
+    ],
+    "柱": [
+      { "pinyin": "zhù", "tone": "4", "meaning": "柱子", "example": "柱子" },
+      { "pinyin": "chù", "tone": "4", "meaning": "支柱", "example": "支柱" }
+    ],
+    "蛀": [
+      { "pinyin": "zhù", "tone": "4", "meaning": "蛀虫", "example": "蛀虫" },
+      { "pinyin": "dù", "tone": "4", "meaning": "蛀蚀", "example": "蛀蚀" }
+    ],
+    "驻": [
+      { "pinyin": "zhù", "tone": "4", "meaning": "驻守", "example": "驻守" },
+      { "pinyin": "chù", "tone": "4", "meaning": "驻地", "example": "驻地" }
+    ],
+    "抽": [
+      { "pinyin": "chōu", "tone": "1", "meaning": "抽取", "example": "抽取" },
+      { "pinyin": "tiāo", "tone": "1", "meaning": "抽签", "example": "抽签" }
+    ],
+    "稠": [
+      { "pinyin": "chóu", "tone": "2", "meaning": "稠密", "example": "稠密" },
+      { "pinyin": "zhōu", "tone": "1", "meaning": "稠粥", "example": "稠粥" }
+    ],
+    "愁": [
+      { "pinyin": "chóu", "tone": "2", "meaning": "愁苦", "example": "愁苦" },
+      { "pinyin": "qiū", "tone": "1", "meaning": "愁思", "example": "愁思" }
+    ],
+    "踌": [
+      { "pinyin": "chóu", "tone": "2", "meaning": "踌躇", "example": "踌躇" },
+      { "pinyin": "zhù", "tone": "4", "meaning": "踌躇满志", "example": "踌躇满志" }
+    ],
+    "筹": [
+      { "pinyin": "chóu", "tone": "2", "meaning": "筹划", "example": "筹划" },
+      { "pinyin": "dào", "tone": "4", "meaning": "筹码", "example": "筹码" }
+    ],
+    "仇": [
+      { "pinyin": "chóu", "tone": "2", "meaning": "仇恨", "example": "仇恨" },
+      { "pinyin": "qiú", "tone": "2", "meaning": "仇家", "example": "仇家" }
+    ],
+    "绸": [
+      { "pinyin": "chóu", "tone": "2", "meaning": "绸缎", "example": "绸缎" },
+      { "pinyin": "zhōu", "tone": "1", "meaning": "绸布", "example": "绸布" }
+    ],
+    "丑": [
+      { "pinyin": "chǒu", "tone": "3", "meaning": "丑陋", "example": "丑陋" },
+      { "pinyin": "niǔ", "tone": "3", "meaning": "丑角", "example": "丑角" }
+    ],
+    "臭": [
+      { "pinyin": "chòu", "tone": "4", "meaning": "臭味", "example": "臭味" },
+      { "pinyin": "xiù", "tone": "4", "meaning": "无声无臭", "example": "无声无臭" }
+    ],
+    "出": [
+      { "pinyin": "chū", "tone": "1", "meaning": "出来", "example": "出来" },
+      { "pinyin": "cuì", "tone": "4", "meaning": "出恭", "example": "出恭" }
+    ],
+    "初": [
+      { "pinyin": "chū", "tone": "1", "meaning": "初始", "example": "初始" },
+      { "pinyin": "tū", "tone": "1", "meaning": "初创", "example": "初创" }
+    ],
+    "除": [
+      { "pinyin": "chú", "tone": "2", "meaning": "除了", "example": "除了" },
+      { "pinyin": "tú", "tone": "2", "meaning": "除草", "example": "除草" }
+    ],
+    "储": [
+      { "pinyin": "chú", "tone": "2", "meaning": "储存", "example": "储存" },
+      { "pinyin": "zhù", "tone": "4", "meaning": "储蓄", "example": "储蓄" }
+    ],
+    "处": [
+      { "pinyin": "chù", "tone": "4", "meaning": "地方、住处", "example": "住处" },
+      { "pinyin": "chǔ", "tone": "3", "meaning": "处理、相处", "example": "处理" }
+    ],
+    "触": [
+      { "pinyin": "chù", "tone": "4", "meaning": "接触", "example": "接触" },
+      { "pinyin": "zú", "tone": "2", "meaning": "触摸", "example": "触摸" }
+    ],
+    "畜": [
+      { "pinyin": "chù", "tone": "4", "meaning": "牲畜", "example": "牲畜" },
+      { "pinyin": "xù", "tone": "4", "meaning": "畜牧、畜养", "example": "畜牧" }
+    ],
+    "搐": [
+      { "pinyin": "chù", "tone": "4", "meaning": "抽搐", "example": "抽搐" },
+      { "pinyin": "sù", "tone": "4", "meaning": "搐动", "example": "搐动" }
+    ],
+    "矗": [
+      { "pinyin": "chù", "tone": "4", "meaning": "矗立", "example": "矗立" },
+      { "pinyin": "zhù", "tone": "4", "meaning": "矗矗", "example": "矗矗" }
+    ],
+    "楚": [
+      { "pinyin": "chǔ", "tone": "3", "meaning": "清楚", "example": "清楚" },
+      { "pinyin": "sù", "tone": "4", "meaning": "楚楚", "example": "楚楚动人" }
+    ],
+    "础": [
+      { "pinyin": "chǔ", "tone": "3", "meaning": "基础", "example": "基础" },
+      { "pinyin": "qǔ", "tone": "3", "meaning": "础石", "example": "础石" }
+    ],
+    "储": [
+      { "pinyin": "chǔ", "tone": "3", "meaning": "储备", "example": "储备" },
+      { "pinyin": "zhù", "tone": "4", "meaning": "仓储", "example": "仓储" }
+    ],
+    "杵": [
+      { "pinyin": "chǔ", "tone": "3", "meaning": "杵臼", "example": "杵臼" },
+      { "pinyin": "zhù", "tone": "4", "meaning": "药杵", "example": "药杵" }
+    ],
+    "褚": [
+      { "pinyin": "chǔ", "tone": "3", "meaning": "姓褚", "example": "褚遂良" },
+      { "pinyin": "zhū", "tone": "1", "meaning": "褚衣", "example": "褚衣" }
+    ],
+    "雏": [
+      { "pinyin": "chú", "tone": "2", "meaning": "雏鸟", "example": "雏鸟" },
+      { "pinyin": "sù", "tone": "4", "meaning": "雏形", "example": "雏形" }
+    ],
+    "锄": [
+      { "pinyin": "chú", "tone": "2", "meaning": "锄头", "example": "锄头" },
+      { "pinyin": "zhú", "tone": "2", "meaning": "锄草", "example": "锄草" }
+    ],
+    "蹴": [
+      { "pinyin": "cù", "tone": "4", "meaning": "蹴鞠", "example": "蹴鞠" },
+      { "pinyin": "jiù", "tone": "4", "meaning": "一蹴而就", "example": "一蹴而就" }
+    ],
+    "簇": [
+      { "pinyin": "cù", "tone": "4", "meaning": "簇拥", "example": "簇拥" },
+      { "pinyin": "zú", "tone": "2", "meaning": "一簇", "example": "一簇" }
+    ],
+    "醋": [
+      { "pinyin": "cù", "tone": "4", "meaning": "醋酸", "example": "醋酸" },
+      { "pinyin": "zuò", "tone": "4", "meaning": "吃醋", "example": "吃醋" }
+    ],
+    "促": [
+      { "pinyin": "cù", "tone": "4", "meaning": "促进", "example": "促进" },
+      { "pinyin": "sù", "tone": "4", "meaning": "急促", "example": "急促" }
+    ],
+    "猝": [
+      { "pinyin": "cù", "tone": "4", "meaning": "猝然", "example": "猝然" },
+      { "pinyin": "zú", "tone": "2", "meaning": "猝死", "example": "猝死" }
+    ],
+    "粗": [
+      { "pinyin": "cū", "tone": "1", "meaning": "粗糙", "example": "粗糙" },
+      { "pinyin": "sū", "tone": "1", "meaning": "粗放", "example": "粗放" }
+    ],
+    "徂": [
+      { "pinyin": "cú", "tone": "2", "meaning": "徂年", "example": "徂年" },
+      { "pinyin": "zū", "tone": "1", "meaning": "徂来", "example": "徂来" }
+    ],
+    "殂": [
+      { "pinyin": "cú", "tone": "2", "meaning": "殂落", "example": "殂落" },
+      { "pinyin": "zū", "tone": "1", "meaning": "殂谢", "example": "殂谢" }
+    ],
+    "蔟": [
+      { "pinyin": "cù", "tone": "4", "meaning": "蚕蔟", "example": "蚕蔟" },
+      { "pinyin": "sù", "tone": "4", "meaning": "蔟集", "example": "蔟集" }
+    ],
+    "窜": [
+      { "pinyin": "cuàn", "tone": "4", "meaning": "窜逃", "example": "窜逃" },
+      { "pinyin": "luàn", "tone": "4", "meaning": "窜改", "example": "窜改" }
+    ],
+    "攒": [
+      { "pinyin": "cuán", "tone": "2", "meaning": "攒聚", "example": "攒聚" },
+      { "pinyin": "zǎn", "tone": "3", "meaning": "攒钱", "example": "攒钱" }
+    ],
+    "蹿": [
+      { "pinyin": "cuān", "tone": "1", "meaning": "蹿升", "example": "蹿升" },
+      { "pinyin": "luàn", "tone": "4", "meaning": "蹿跳", "example": "蹿跳" }
+    ],
+    "篡": [
+      { "pinyin": "cuàn", "tone": "4", "meaning": "篡位", "example": "篡位" },
+      { "pinyin": "zuàn", "tone": "4", "meaning": "篡改", "example": "篡改" }
+    ],
+    "爨": [
+      { "pinyin": "cuàn", "tone": "4", "meaning": "爨桂", "example": "爨桂" },
+      { "pinyin": "chuàn", "tone": "4", "meaning": "爨室", "example": "爨室" }
+    ],
+    "翠": [
+      { "pinyin": "cuì", "tone": "4", "meaning": "翠绿", "example": "翠绿" },
+      { "pinyin": "suì", "tone": "4", "meaning": "翠鸟", "example": "翠鸟" }
+    ],
+    "淬": [
+      { "pinyin": "cuì", "tone": "4", "meaning": "淬火", "example": "淬火" },
+      { "pinyin": "suì", "tone": "4", "meaning": "淬炼", "example": "淬炼" }
+    ],
+    "脆": [
+      { "pinyin": "cuì", "tone": "4", "meaning": "脆弱", "example": "脆弱" },
+      { "pinyin": "suì", "tone": "4", "meaning": "清脆", "example": "清脆" }
+    ],
+    "瘁": [
+      { "pinyin": "cuì", "tone": "4", "meaning": "憔悴", "example": "憔悴" },
+      { "pinyin": "suì", "tone": "4", "meaning": "劳瘁", "example": "劳瘁" }
+    ],
+    "粹": [
+      { "pinyin": "cuì", "tone": "4", "meaning": "纯粹", "example": "纯粹" },
+      { "pinyin": "suì", "tone": "4", "meaning": "粹然", "example": "粹然" }
+    ],
+    "萃": [
+      { "pinyin": "cuì", "tone": "4", "meaning": "荟萃", "example": "荟萃" },
+      { "pinyin": "suì", "tone": "4", "meaning": "萃取", "example": "萃取" }
+    ],
+    "悴": [
+      { "pinyin": "cuì", "tone": "4", "meaning": "憔悴", "example": "憔悴" },
+      { "pinyin": "suì", "tone": "4", "meaning": "枯悴", "example": "枯悴" }
+    ],
+    "村": [
+      { "pinyin": "cūn", "tone": "1", "meaning": "村庄", "example": "村庄" },
+      { "pinyin": "tūn", "tone": "1", "meaning": "村落", "example": "村落" }
+    ],
+    "存": [
+      { "pinyin": "cún", "tone": "2", "meaning": "存在", "example": "存在" },
+      { "pinyin": "zūn", "tone": "1", "meaning": "存储", "example": "存储" }
+    ],
+    "寸": [
+      { "pinyin": "cùn", "tone": "4", "meaning": "寸土", "example": "寸土" },
+      { "pinyin": "tuí", "tone": "2", "meaning": "寸步", "example": "寸步难行" }
+    ],
+    "搓": [
+      { "pinyin": "cuō", "tone": "1", "meaning": "搓揉", "example": "搓揉" },
+      { "pinyin": "chuō", "tone": "1", "meaning": "搓板", "example": "搓板" }
+    ],
+    "撮": [
+      { "pinyin": "cuō", "tone": "1", "meaning": "撮合", "example": "撮合" },
+      { "pinyin": "zuǒ", "tone": "3", "meaning": "一撮盐", "example": "一撮盐" }
+    ],
+    "磋": [
+      { "pinyin": "cuō", "tone": "1", "meaning": "磋商", "example": "磋商" },
+      { "pinyin": "suō", "tone": "1", "meaning": "磋磨", "example": "磋磨" }
+    ],
+    "搭": [
+      { "pinyin": "dā", "tone": "1", "meaning": "搭建", "example": "搭建" },
+      { "pinyin": "tà", "tone": "4", "meaning": "搭配", "example": "搭配" }
+    ],
+    "达": [
+      { "pinyin": "dá", "tone": "2", "meaning": "到达", "example": "到达" },
+      { "pinyin": "tà", "tone": "4", "meaning": "达人", "example": "达人" }
+    ],
+    "打": [
+      { "pinyin": "dǎ", "tone": "3", "meaning": "打击", "example": "打击" },
+      { "pinyin": "dá", "tone": "2", "meaning": "一打", "example": "一打" }
+    ],
+    "大": [
+      { "pinyin": "dà", "tone": "4", "meaning": "大小、伟大", "example": "伟大" },
+      { "pinyin": "dài", "tone": "4", "meaning": "大夫", "example": "大夫" },
+      { "pinyin": "tài", "tone": "4", "meaning": "大王", "example": "大王" }
+    ],
+    "代": [
+      { "pinyin": "dài", "tone": "4", "meaning": "代表", "example": "代表" },
+      { "pinyin": "tài", "tone": "4", "meaning": "代替", "example": "代替" }
+    ],
+    "带": [
+      { "pinyin": "dài", "tone": "4", "meaning": "带来", "example": "带来" },
+      { "pinyin": "tāi", "tone": "1", "meaning": "地带", "example": "地带" }
+    ],
+    "待": [
+      { "pinyin": "dài", "tone": "4", "meaning": "等待", "example": "等待" },
+      { "pinyin": "dāi", "tone": "1", "meaning": "待会", "example": "待会" }
+    ],
+    "逮": [
+      { "pinyin": "dài", "tone": "3", "meaning": "逮捕", "example": "逮捕" },
+      { "pinyin": "dǎi", "tone": "3", "meaning": "逮着", "example": "逮着" }
+    ],
+    "怠": [
+      { "pinyin": "dài", "tone": "4", "meaning": "懈怠", "example": "懈怠" },
+      { "pinyin": "tái", "tone": "2", "meaning": "怠慢", "example": "怠慢" }
+    ],
+    "贷": [
+      { "pinyin": "dài", "tone": "4", "meaning": "贷款", "example": "贷款" },
+      { "pinyin": "tài", "tone": "4", "meaning": "责无旁贷", "example": "责无旁贷" }
+    ],
+    "袋": [
+      { "pinyin": "dài", "tone": "4", "meaning": "口袋", "example": "口袋" },
+      { "pinyin": "tài", "tone": "4", "meaning": "袋装", "example": "袋装" }
+    ],
+    "呆": [
+      { "pinyin": "dāi", "tone": "1", "meaning": "呆滞", "example": "呆滞" },
+      { "pinyin": "ái", "tone": "2", "meaning": "呆板", "example": "呆板" }
+    ],
+    "歹": [
+      { "pinyin": "dǎi", "tone": "3", "meaning": "歹人", "example": "歹人" },
+      { "pinyin": "è", "tone": "4", "meaning": "歹意", "example": "歹意" }
+    ],
+    "担": [
+      { "pinyin": "dān", "tone": "1", "meaning": "担心、承担", "example": "担心" },
+      { "pinyin": "dàn", "tone": "4", "meaning": "重担、担子", "example": "重担" }
+    ],
+    "单": [
+      { "pinyin": "dān", "tone": "1", "meaning": "单独、简单", "example": "单独" },
+      { "pinyin": "chán", "tone": "2", "meaning": "单于", "example": "匈奴单于" },
+      { "pinyin": "shàn", "tone": "4", "meaning": "姓单", "example": "单姓" }
+    ],
+    "郸": [
+      { "pinyin": "dān", "tone": "1", "meaning": "邯郸", "example": "邯郸" },
+      { "pinyin": "tán", "tone": "2", "meaning": "郸城", "example": "郸城" }
+    ],
+    "掸": [
+      { "pinyin": "dǎn", "tone": "3", "meaning": "掸子", "example": "掸子" },
+      { "pinyin": "shàn", "tone": "4", "meaning": "掸族", "example": "掸族" }
+    ],
+    "胆": [
+      { "pinyin": "dǎn", "tone": "3", "meaning": "胆量", "example": "胆量" },
+      { "pinyin": "tǎn", "tone": "3", "meaning": "胆怯", "example": "胆怯" }
+    ],
+    "旦": [
+      { "pinyin": "dàn", "tone": "4", "meaning": "旦夕", "example": "旦夕" },
+      { "pinyin": "tàn", "tone": "4", "meaning": "元旦", "example": "元旦" }
+    ],
+    "但": [
+      { "pinyin": "dàn", "tone": "4", "meaning": "但是", "example": "但是" },
+      { "pinyin": "tàn", "tone": "4", "meaning": "但愿", "example": "但愿" }
+    ],
+    "淡": [
+      { "pinyin": "dàn", "tone": "4", "meaning": "淡薄", "example": "淡薄" },
+      { "pinyin": "tàn", "tone": "4", "meaning": "淡然", "example": "淡然" }
+    ],
+    "蛋": [
+      { "pinyin": "dàn", "tone": "4", "meaning": "鸡蛋", "example": "鸡蛋" },
+      { "pinyin": "tàn", "tone": "4", "meaning": "蛋白", "example": "蛋白" }
+    ],
+    "当": [
+      { "pinyin": "dāng", "tone": "1", "meaning": "当时、应当", "example": "当时" },
+      { "pinyin": "dàng", "tone": "4", "meaning": "当作、典当", "example": "当作" }
+    ],
+    "挡": [
+      { "pinyin": "dǎng", "tone": "3", "meaning": "阻挡", "example": "阻挡" },
+      { "pinyin": "dàng", "tone": "4", "meaning": "挡案", "example": "挡案" }
+    ],
+    "党": [
+      { "pinyin": "dǎng", "tone": "3", "meaning": "政党", "example": "政党" },
+      { "pinyin": "tǎng", "tone": "3", "meaning": "党项", "example": "党项" }
+    ],
+    "荡": [
+      { "pinyin": "dàng", "tone": "4", "meaning": "荡漾", "example": "荡漾" },
+      { "pinyin": "tàng", "tone": "4", "meaning": "浩荡", "example": "浩荡" }
+    ],
+    "档": [
+      { "pinyin": "dàng", "tone": "4", "meaning": "档案", "example": "档案" },
+      { "pinyin": "dǎng", "tone": "3", "meaning": "档次", "example": "档次" }
+    ],
+    "刀": [
+      { "pinyin": "dāo", "tone": "1", "meaning": "刀子", "example": "刀子" },
+      { "pinyin": "tāo", "tone": "1", "meaning": "刀剑", "example": "刀剑" }
+    ],
+    "导": [
+      { "pinyin": "dǎo", "tone": "3", "meaning": "导向", "example": "导向" },
+      { "pinyin": "tǎo", "tone": "3", "meaning": "导演", "example": "导演" }
+    ],
+    "倒": [
+      { "pinyin": "dǎo", "tone": "3", "meaning": "倒下、跌倒", "example": "跌倒" },
+      { "pinyin": "dào", "tone": "4", "meaning": "倒退、倒车", "example": "倒退" }
+    ],
+    "到": [
+      { "pinyin": "dào", "tone": "4", "meaning": "到达", "example": "到达" },
+      { "pinyin": "tào", "tone": "4", "meaning": "到处", "example": "到处" }
+    ],
+    "道": [
+      { "pinyin": "dào", "tone": "4", "meaning": "道路", "example": "道路" },
+      { "pinyin": "tào", "tone": "4", "meaning": "道理", "example": "道理" }
+    ],
+    "盗": [
+      { "pinyin": "dào", "tone": "4", "meaning": "盗窃", "example": "盗窃" },
+      { "pinyin": "tào", "tone": "4", "meaning": "强盗", "example": "强盗" }
+    ],
+    "稻": [
+      { "pinyin": "dào", "tone": "4", "meaning": "水稻", "example": "水稻" },
+      { "pinyin": "tào", "tone": "4", "meaning": "稻谷", "example": "稻谷" }
+    ],
+    "得": [
+      { "pinyin": "dé", "tone": "2", "meaning": "得到、获得", "example": "得到" },
+      { "pinyin": "de", "tone": "0", "meaning": "跑得快", "example": "跑得快" },
+      { "pinyin": "děi", "tone": "3", "meaning": "得去", "example": "得去" }
+    ],
+    "德": [
+      { "pinyin": "dé", "tone": "2", "meaning": "道德", "example": "道德" },
+      { "pinyin": "tè", "tone": "4", "meaning": "德国", "example": "德国" }
+    ],
+    "的": [
+      { "pinyin": "de", "tone": "0", "meaning": "结构助词", "example": "我的" },
+      { "pinyin": "dí", "tone": "2", "meaning": "的确", "example": "的确" },
+      { "pinyin": "dì", "tone": "4", "meaning": "目的", "example": "目的" }
+    ],
+    "灯": [
+      { "pinyin": "dēng", "tone": "1", "meaning": "灯光", "example": "灯光" },
+      { "pinyin": "téng", "tone": "2", "meaning": "灯笼", "example": "灯笼" }
+    ],
+    "登": [
+      { "pinyin": "dēng", "tone": "1", "meaning": "登记", "example": "登记" },
+      { "pinyin": "téng", "tone": "2", "meaning": "登山", "example": "登山" }
+    ],
+    "等": [
+      { "pinyin": "děng", "tone": "3", "meaning": "等待", "example": "等待" },
+      { "pinyin": "téng", "tone": "2", "meaning": "等级", "example": "等级" }
+    ],
+    "蹬": [
+      { "pinyin": "dèng", "tone": "4", "meaning": "蹬踏", "example": "蹬踏" },
+      { "pinyin": "téng", "tone": "2", "meaning": "蹬子", "example": "蹬子" }
+    ],
+    "凳": [
+      { "pinyin": "dèng", "tone": "4", "meaning": "凳子", "example": "凳子" },
+      { "pinyin": "téng", "tone": "2", "meaning": "板凳", "example": "板凳" }
+    ]
+  }
+}

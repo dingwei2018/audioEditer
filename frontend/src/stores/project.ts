@@ -1,22 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-
-export interface Project {
-  id: string
-  name: string
-  description: string
-  createdAt: Date
-  updatedAt: Date
-  tracks: string[] // track IDs
-  settings: ProjectSettings
-}
-
-export interface ProjectSettings {
-  outputFormat: 'mp3' | 'wav' | 'aac'
-  sampleRate: number
-  bitRate: number
-  channels: number
-}
+import type { Project, ProjectSettings } from '@/models/Project'
+import { createProject } from '@/models/Project'
 
 export const useProjectStore = defineStore('project', () => {
   // 状态
@@ -64,21 +49,8 @@ export const useProjectStore = defineStore('project', () => {
   }
 
   // 操作
-  const createProject = (name: string, description = '') => {
-    const newProject: Project = {
-      id: Date.now().toString(),
-      name,
-      description,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-      tracks: [],
-      settings: {
-        outputFormat: 'mp3',
-        sampleRate: 44100,
-        bitRate: 128,
-        channels: 2
-      }
-    }
+  const createNewProject = (name: string, description = '') => {
+    const newProject = createProject(name, description)
     projects.value.push(newProject)
     currentProjectId.value = newProject.id
     saveToLocalStorage()
@@ -185,7 +157,7 @@ export const useProjectStore = defineStore('project', () => {
     currentProject,
     hasProjects,
     // 操作
-    createProject,
+    createNewProject,
     loadProject,
     saveProject,
     deleteProject,

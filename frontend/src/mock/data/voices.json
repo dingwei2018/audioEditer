@@ -1,0 +1,86 @@
+{
+  "voices": [
+    {
+      "id": "zhichu",
+      "name": "知初",
+      "gender": "female",
+      "ageGroup": "young",
+      "style": "清新自然",
+      "language": "zh-CN",
+      "category": "现代人物",
+      "avatar": "https://via.placeholder.com/60x60/50E3C2/FFFFFF?text=知",
+      "description": "清新自然，适合日常对话",
+      "ssmlName": "zh-CN-XiaoxiaoNeural",
+      "previewUrl": "/mock/audio/zhichu_preview.mp3"
+    },
+    {
+      "id": "zhimei",
+      "name": "知美",
+      "gender": "female",
+      "ageGroup": "young",
+      "style": "温柔甜美",
+      "language": "zh-CN",
+      "category": "现代人物",
+      "avatar": "https://via.placeholder.com/60x60/BD10E0/FFFFFF?text=美",
+      "description": "温柔甜美，适合情感表达",
+      "ssmlName": "zh-CN-XiaohanNeural",
+      "previewUrl": "/mock/audio/zhimei_preview.mp3"
+    },
+    {
+      "id": "zhiwen",
+      "name": "知文",
+      "gender": "male",
+      "ageGroup": "adult",
+      "style": "文雅知性",
+      "language": "zh-CN",
+      "category": "现代人物",
+      "avatar": "https://via.placeholder.com/60x60/B8E986/FFFFFF?text=文",
+      "description": "文雅知性，适合知识讲解",
+      "ssmlName": "zh-CN-YunxiNeural",
+      "previewUrl": "/mock/audio/zhiwen_preview.mp3"
+    },
+    {
+      "id": "zhiyue",
+      "name": "知越",
+      "gender": "male",
+      "ageGroup": "adult",
+      "style": "磁性低沉",
+      "language": "zh-CN",
+      "category": "现代人物",
+      "avatar": "https://via.placeholder.com/60x60/FF6B6B/FFFFFF?text=越",
+      "description": "磁性低沉，适合新闻播报",
+      "ssmlName": "zh-CN-YunjianNeural",
+      "previewUrl": "/mock/audio/zhiyue_preview.mp3"
+    },
+    {
+      "id": "zhiling",
+      "name": "知灵",
+      "gender": "female",
+      "ageGroup": "child",
+      "style": "活泼可爱",
+      "language": "zh-CN",
+      "category": "现代人物",
+      "avatar": "https://via.placeholder.com/60x60/FFD93D/FFFFFF?text=灵",
+      "description": "活泼可爱，适合儿童故事",
+      "ssmlName": "zh-CN-XiaoyiNeural",
+      "previewUrl": "/mock/audio/zhiling_preview.mp3"
+    }
+  ],
+  "voiceCategories": [
+    {
+      "id": "modern",
+      "name": "现代人物",
+      "description": "现代风格的音色角色"
+    },
+    {
+      "id": "classic",
+      "name": "古典人物",
+      "description": "古典风格的音色角色"
+    },
+    {
+      "id": "cartoon",
+      "name": "卡通角色",
+      "description": "卡通动漫风格的音色"
+    }
+  ]
+}
