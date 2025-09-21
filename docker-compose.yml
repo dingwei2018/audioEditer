@@ -1,0 +1,136 @@
+# 音频编辑器云端 API 服务 Docker Compose 配置
+# 使用云端 TTS 服务，无需本地模型部署
+
+services:
+  # 后端服务 (Node.js + Fastify)
+  backend:
+    build:
+      context: ./backend
+      dockerfile: ../docker/backend/Dockerfile
+    container_name: audio-editor-backend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - ./uploads:/app/uploads
+      - ./temp:/app/temp
+      - ./logs:/app/logs
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - REDIS_URL=redis://redis:6379
+      - MYSQL_URL=mysql://mysql:3306/audioediter
+      # 使用云端 API 替代本地服务
+      - COSYVOICE_URL=${COSYVOICE_CLOUD_API_URL}
+      - COSYVOICE_API_KEY=${COSYVOICE_API_KEY}
+      - GPT_SOVITS_URL=${GPT_SOVITS_CLOUD_API_URL}
+      - GPT_SOVITS_API_KEY=${GPT_SOVITS_API_KEY}
+      # API 配置
+      - TTS_API_TIMEOUT=${TTS_API_TIMEOUT:-30000}
+      - TTS_API_RETRY_COUNT=${TTS_API_RETRY_COUNT:-3}
+    depends_on:
+      - redis
+      - mysql
+    networks:
+      - audio-editor-network
+    restart: unless-stopped
+
+  # 前端服务 (Vue 3)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../docker/frontend/Dockerfile
+    container_name: audio-editor-frontend
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:3000
+      - VITE_WS_URL=ws://localhost:3000
+    depends_on:
+      - backend
+    networks:
+      - audio-editor-network
+    restart: unless-stopped
+
+  # MySQL 数据库
+  mysql:
+    image: mysql:8.0
+    container_name: audio-editor-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-audioediter_root}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-audioediter}
+      - MYSQL_USER=${MYSQL_USER:-audioediter}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD:-audioediter_pass}
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d:ro
+    networks:
+      - audio-editor-network
+    restart: unless-stopped
+
+  # Redis 缓存
+  redis:
+    image: redis:7-alpine
+    container_name: audio-editor-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - audio-editor-network
+    restart: unless-stopped
+
+  # Nginx 反向代理
+  nginx:
+    image: nginx:alpine
+    container_name: audio-editor-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/nginx/nginx-cloud.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
+    networks:
+      - audio-editor-network
+
+  # TTS API 代理服务 (可选)
+  # 如果需要统一的 API 接口，可以部署这个代理服务
+  tts-proxy:
+    build:
+      context: ./docker/tts-proxy
+      dockerfile: Dockerfile
+    container_name: audio-editor-tts-proxy
+    ports:
+      - "8001:8001"  # CosyVoice 代理
+      - "8051:8051"  # GPT-SoVITS 代理
+    environment:
+      - COSYVOICE_API_URL=${COSYVOICE_CLOUD_API_URL}
+      - COSYVOICE_API_KEY=${COSYVOICE_API_KEY}
+      - GPT_SOVITS_API_URL=${GPT_SOVITS_CLOUD_API_URL}
+      - GPT_SOVITS_API_KEY=${GPT_SOVITS_API_KEY}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+    networks:
+      - audio-editor-network
+    restart: unless-stopped
+
+networks:
+  audio-editor-network:
+    driver: bridge
+    name: audio-editor-network
+
+volumes:
+  # 数据库持久化存储
+  mysql_data:
+    driver: local
+  redis_data:
+    driver: local
