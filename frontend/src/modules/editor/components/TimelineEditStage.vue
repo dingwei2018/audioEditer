@@ -14,6 +14,7 @@
           @segment-edit="handleSegmentEdit"
           @segment-delete="$emit('delete-segment', $event)"
           @segment-add-after="(...args) => $emit('add-sentence-after', ...args)"
+          @gap-add="(...args) => $emit('add-gap', ...args)"
           @gap-select="$emit('select-gap', $event)"
           @gap-update="handleGapUpdate"
           @gap-remove="$emit('remove-gap', $event)"
@@ -66,6 +67,7 @@ interface Emits {
   (e: 'update-segment-text', segmentId: string, newText: string): void
   (e: 'delete-segment', segmentId: string): void
   (e: 'add-sentence-after', segmentId: string, index: number): void
+  (e: 'add-gap', beforeSegmentId: string, afterSegmentId: string): void
   (e: 'select-gap', gap: any): void
   (e: 'update-gap-duration', gapId: string, duration: number): void
   (e: 'remove-gap', gapId: string): void

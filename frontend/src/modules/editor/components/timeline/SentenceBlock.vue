@@ -66,16 +66,6 @@
         title="在此句后添加新句子"
       />
       <el-button
-        v-if="showAddGapButton"
-        @click.stop="handleAddGapClick"
-        type="warning"
-        size="small"
-        icon="Clock"
-        circle
-        class="action-btn add-gap-btn"
-        title="在此句后添加间隔"
-      />
-      <el-button
         @click.stop="$emit('delete', segment.id)"
         type="danger"
         size="small"
@@ -89,7 +79,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch, nextTick, computed } from 'vue'
+import { ref, watch, nextTick } from 'vue'
 import type { TextSegment } from '@/utils/textSegmentation'
 
 interface SegmentWithTiming extends TextSegment {
@@ -112,8 +102,6 @@ interface Props {
   isPlaying: boolean
   isEditing: boolean
   editingText?: string
-  totalSegments?: number
-  hasGapAfter?: boolean
 }
 
 interface Emits {
@@ -124,7 +112,6 @@ interface Emits {
   (e: 'synthesize', segment: SegmentWithTiming): void
   (e: 'play', segment: SegmentWithTiming): void
   (e: 'add-after', segmentId: string, index: number): void
-  (e: 'add-gap', segmentId: string, index: number): void
   (e: 'delete', segmentId: string): void
 }
 
@@ -150,14 +137,6 @@ watch(() => props.isEditing, (newEditing) => {
   if (!newEditing) {
     isFinishing.value = false
   }
-})
-
-// 计算属性
-const showAddGapButton = computed(() => {
-  // 只有在不是最后一个句子且没有间隔时显示添加间隔按钮
-  return props.totalSegments &&
-         props.index < props.totalSegments - 1 &&
-         !props.hasGapAfter
 })
 
 // 方法
@@ -221,14 +200,6 @@ function handleAddAfterClick() {
   console.log('index from props:', props.index)
   console.log('segment.text:', props.segment.text)
   emit('add-after', props.segment.id, props.index)
-}
-
-function handleAddGapClick() {
-  console.log('=== SentenceBlock - handleAddGapClick ===')
-  console.log('segment.id:', props.segment.id)
-  console.log('index from props:', props.index)
-  console.log('segment.text:', props.segment.text)
-  emit('add-gap', props.segment.id, props.index)
 }
 </script>
 

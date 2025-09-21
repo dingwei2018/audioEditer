@@ -37,6 +37,7 @@
         @update-segment-text="handleUpdateSegmentText"
         @delete-segment="handleDeleteSegment"
         @add-sentence-after="handleAddSentenceAfter"
+        @add-gap="handleAddGap"
         @select-gap="handleSelectGap"
         @update-gap-duration="handleUpdateGapDuration"
         @remove-gap="handleRemoveGap"
@@ -480,6 +481,35 @@ const handleAddSentenceAfter = (segmentId: string, index: number) => {
   } else {
     console.error('Track not found or no segments')
   }
+}
+
+const handleAddGap = (beforeSegmentId: string, afterSegmentId: string) => {
+  console.log('=== Editor - handleAddGap START ===')
+  console.log('beforeSegmentId:', beforeSegmentId)
+  console.log('afterSegmentId:', afterSegmentId)
+
+  const track = tracks.value.find(t => t.isSegmented && t.segments)
+  if (track && track.segments) {
+    console.log('Track found with segments:', track.segments.length)
+
+    // 检查是否已经存在间隔
+    const existingGap = track.gaps?.find(gap => gap.beforeSegmentId === beforeSegmentId)
+    if (existingGap) {
+      console.log('Gap already exists between segments:', beforeSegmentId, '->', afterSegmentId)
+      ElMessage.warning('这两个句子之间已经存在间隔')
+      return
+    }
+
+    // 创建新的间隔，默认1秒
+    console.log('Creating new gap between:', beforeSegmentId, '->', afterSegmentId)
+    audioStore.addGap(track.id, beforeSegmentId, afterSegmentId, 1)
+    ElMessage.success('已添加1秒间隔')
+  } else {
+    console.error('Track not found or no segments')
+    ElMessage.error('添加间隔失败：未找到对应的轨道数据')
+  }
+
+  console.log('=== Editor - handleAddGap END ===')
 }
 
 // 间隔相关事件处理

@@ -18,8 +18,6 @@
             :is-playing="playingSegmentId === item.data.id"
             :is-editing="editingSegmentId === item.data.id"
             :editing-text="editingText"
-            :total-segments="props.segments?.length || 0"
-            :has-gap-after="hasGapAfter(item.data.id)"
             @select="$emit('select-segment', item.data)"
             @edit-start="handleEditStart"
             @edit-finish="handleEditFinish"
@@ -27,7 +25,6 @@
             @synthesize="$emit('synthesize-audio', item.data)"
             @play="$emit('play-audio', item.data)"
             @add-after="handleAddAfterClick"
-            @add-gap="handleAddGapClick"
             @delete="$emit('delete-segment', item.data.id)"
           />
 
@@ -38,6 +35,23 @@
             :is-active="selectedGapId === item.data.id"
             @select="handleGapSelect"
           />
+
+          <!-- 添加间隔按钮 -->
+          <div
+            v-else-if="item.type === 'add-gap'"
+            class="add-gap-control"
+            @click.stop="handleAddGapClick(item.data.beforeSegmentId, item.data.afterSegmentId)"
+          >
+            <el-button
+              type="primary"
+              size="small"
+              icon="Plus"
+              circle
+              class="add-gap-btn"
+              title="添加间隔"
+              @click.stop="handleAddGapClick(item.data.beforeSegmentId, item.data.afterSegmentId)"
+            />
+          </div>
         </div>
 
         <!-- 时间轴结束标记 -->
@@ -95,7 +109,7 @@ interface Emits {
   (e: 'synthesize-audio', segment: SegmentWithTiming): void
   (e: 'play-audio', segment: SegmentWithTiming): void
   (e: 'add-sentence-after', segmentId: string, index: number): void
-  (e: 'add-gap-after', segmentId: string, index: number): void
+  (e: 'add-gap', beforeSegmentId: string, afterSegmentId: string): void
   (e: 'delete-segment', segmentId: string): void
   (e: 'select-gap', gap: SegmentGap): void
 }
@@ -192,6 +206,19 @@ const timelineItems = computed(() => {
         } else {
           console.log(`  - realGap does not exist at all`)
         }
+
+        // 在没有间隔时，添加一个"添加间隔"控件
+        console.log(`TimelineDisplay - Adding add-gap control between ${segment.id} and ${nextSegment?.id}`)
+        items.push({
+          type: 'add-gap',
+          data: {
+            id: `add-gap-${segment.id}-${nextSegment?.id}`,
+            beforeSegmentId: segment.id,
+            afterSegmentId: nextSegment?.id,
+            index: index
+          },
+          index: index
+        })
       }
     }
   })
@@ -200,8 +227,10 @@ const timelineItems = computed(() => {
   items.forEach((item, idx) => {
     if (item.type === 'segment') {
       console.log(`  item[${idx}] SEGMENT: index=${item.index}, id=${item.data.id}, text="${item.data.text}"`)
-    } else {
+    } else if (item.type === 'gap') {
       console.log(`  item[${idx}] GAP: ${item.data.beforeSegmentId} -> ${item.data.afterSegmentId}`)
+    } else if (item.type === 'add-gap') {
+      console.log(`  item[${idx}] ADD-GAP: ${item.data.beforeSegmentId} -> ${item.data.afterSegmentId}`)
     }
   })
 
@@ -293,6 +322,14 @@ function handleAddAfterClick(segmentId: string, index: number) {
   }
 
   emit('add-sentence-after', segmentId, actualIndex)
+}
+
+function handleAddGapClick(beforeSegmentId: string, afterSegmentId: string) {
+  console.log('=== TimelineDisplay - handleAddGapClick ===')
+  console.log('beforeSegmentId:', beforeSegmentId)
+  console.log('afterSegmentId:', afterSegmentId)
+  console.log('Button was clicked!')
+  emit('add-gap', beforeSegmentId, afterSegmentId)
 }
 
 // 监听segments变化
@@ -405,5 +442,37 @@ watch(() => props.gaps, (newGaps) => {
   .sentences-timeline {
     height: 100px;
   }
+}
+
+/* 添加间隔控件样式 */
+.add-gap-control {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.add-gap-control .add-gap-btn {
+  width: 32px;
+  height: 32px;
+  border: 2px dashed #409eff;
+  background-color: rgba(64, 158, 255, 0.1);
+  color: #409eff;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.add-gap-control .add-gap-btn:hover {
+  background-color: #409eff;
+  color: white;
+  border: 2px solid #409eff;
+  transform: scale(1.05);
+}
+
+.add-gap-control:hover {
+  transform: translateY(-2px);
 }
 </style>

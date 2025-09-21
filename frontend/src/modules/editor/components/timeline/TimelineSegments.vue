@@ -15,6 +15,7 @@
       @synthesize-audio="handleSynthesizeAudio"
       @play-audio="handlePlayAudio"
       @add-sentence-after="handleAddSentenceAfter"
+      @add-gap="handleAddGap"
       @delete-segment="handleDeleteSegment"
       @select-gap="handleGapSelect"
     />
@@ -114,6 +115,7 @@ interface Emits {
   (e: 'segment-edit', data: { segmentId: string, newText: string }): void
   (e: 'segment-delete', segmentId: string): void
   (e: 'segment-add-after', segmentId: string, index: number): void
+  (e: 'gap-add', beforeSegmentId: string, afterSegmentId: string): void
   (e: 'audio-synthesize', segment: SegmentWithTiming): void
   (e: 'audio-play', segment: SegmentWithTiming): void
   (e: 'gap-select', gap: SegmentGap): void
@@ -186,6 +188,10 @@ function handlePlayAudio(segment: SegmentWithTiming) {
 
 function handleAddSentenceAfter(segmentId: string, index: number) {
   emit('segment-add-after', segmentId, index)
+}
+
+function handleAddGap(beforeSegmentId: string, afterSegmentId: string) {
+  emit('gap-add', beforeSegmentId, afterSegmentId)
 }
 
 function handleDeleteSegment(segmentId: string) {
